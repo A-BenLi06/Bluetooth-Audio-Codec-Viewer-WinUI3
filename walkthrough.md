@@ -117,3 +117,21 @@ errors, the unsupported horizontal content-alignment property is absent, and
 Removed redundant blank lines at the end of newly added source and project
 files after checking the completed commit itself. This keeps commit-level
 whitespace validation clean without changing runtime behavior.
+
+## 2026-07-13 23:25:24 +08:00
+
+Moved initial window sizing out of the root visual's `Loaded` handler. Resizing
+the native `AppWindow` while WinUI was already inside its first XAML layout pass
+could leave star-sized content measured against the stale client area until the
+user manually resized the window.
+
+The window now obtains its monitor DPI directly from the HWND with
+`GetDpiForWindow` and calls `MoveAndResize` in the constructor, before the window
+is activated. The first XAML measure therefore starts with the final DPI-aware
+client size, while the `Loaded` handler is limited to populating device and
+elevation state.
+
+Verification at 2026-07-13 23:26:19 +08:00: the x64 Debug project rebuilt in
+the normal output directory with zero warnings and zero errors, and
+`git diff --check` completed without whitespace errors. Per user request, no UI
+automation or automated window launch was used for this verification.
