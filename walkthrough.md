@@ -61,3 +61,53 @@ Verification completed:
 
 The live ETW callback cannot be exercised from the current non-elevated session;
 the program checks this prerequisite before creating a trace session.
+
+## 2026-07-13 20:03:36 +08:00
+
+Added a dedicated unpackaged WinUI 3 application in
+`BluetoothAudioCodec.WinUI`. The original single-file command-line utility is
+preserved unchanged, while the desktop application reuses the same ETW event
+schema, codec catalog, Core Audio endpoint lookup, and diagnostic tone behavior.
+
+The interface uses a Mica backdrop, system theme resources, a single primary
+action, a prominent codec result card, a compact status badge, and a collapsible
+technical-details section. The layout supports both light and dark Windows
+themes and remains usable at its 680 × 600 minimum size.
+
+The app starts without a UAC prompt so its state can be viewed normally. When
+the process is not elevated, the primary action explicitly restarts the app as
+administrator; this is required only when beginning the ETW capture. Detection
+runs on a worker thread, can be canceled from the UI, and distinguishes a
+timeout from user cancellation or a trace error.
+
+## 2026-07-13 20:09:23 +08:00
+
+Corrected the initial and minimum window dimensions after visually inspecting
+the running app on a high-DPI display. `AppWindow` dimensions are physical
+pixels, so the requested design size is now multiplied by the WinUI XAML root's
+rasterization scale after the root visual loads. This preserves the intended
+860 × 760 device-independent layout at 125%, 150%, and other Windows display
+scales instead of opening a cramped, prematurely scrolling window.
+
+## 2026-07-13 20:11:15 +08:00
+
+Set the main scroll viewer's horizontal content alignment to stretch. This
+keeps the centered, maximum-width content column and its primary action inside
+the intended right margin instead of letting the direct child use an
+unconstrained scroll-content width.
+
+## 2026-07-13 20:13:23 +08:00
+
+Reverted the scroll viewer content-alignment change after runtime verification
+showed that WinUI 3 collapses the star-sized sections of a constrained direct
+`StackPanel` child in this configuration. The original direct-child measurement
+behavior is restored, which brings back the full header, result card, endpoint,
+message, details, and footer layout.
+
+## 2026-07-13 20:15:45 +08:00
+
+Verified the repaired XAML with a clean build directed to an unlocked temporary
+output folder because an earlier elevated preview still held the normal Debug
+executable open. The repaired project compiled with zero warnings and zero
+errors, the unsupported horizontal content-alignment property is absent, and
+`git diff --check` reports no whitespace errors.
