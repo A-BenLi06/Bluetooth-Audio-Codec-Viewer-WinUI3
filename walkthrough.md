@@ -135,3 +135,23 @@ Verification at 2026-07-13 23:26:19 +08:00: the x64 Debug project rebuilt in
 the normal output directory with zero warnings and zero errors, and
 `git diff --check` completed without whitespace errors. Per user request, no UI
 automation or automated window launch was used for this verification.
+
+## 2026-07-14 01:10:56 +08:00
+
+Reworked the scroll-content measurement model after user screenshots showed
+that the content column could retain the correct DPI-scaled width but be laid
+out from an incorrect horizontal origin, clipping the card, status badge, and
+primary action at the right edge on some display scales.
+
+The `ScrollViewer` now explicitly disables horizontal scrolling and stretches a
+full-viewport `Grid` host. That finite-width host owns the page padding, while
+the inner `StackPanel` only owns the 780-DIP maximum content width. Star-sized
+rows are therefore measured against the viewport rather than the scroll
+content's unconstrained width, and the maximum-width column remains centered
+across DPI and window-size changes.
+
+Verification at 2026-07-14 01:12:21 +08:00: the repaired WinUI project compiled
+to an unlocked temporary output directory with zero warnings and zero errors,
+and `git diff --check` completed without whitespace errors. The normal Debug
+executable was not replaced because the user's currently running instance holds
+it open. No UI automation was used.
