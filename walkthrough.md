@@ -111,3 +111,9 @@ output folder because an earlier elevated preview still held the normal Debug
 executable open. The repaired project compiled with zero warnings and zero
 errors, the unsupported horizontal content-alignment property is absent, and
 `git diff --check` reports no whitespace errors.
+
+## 2026-07-13 20:16:23 +08:00
+
+Removed redundant blank lines at the end of newly added source and project
+files after checking the completed commit itself. This keeps commit-level
+whitespace validation clean without changing runtime behavior.

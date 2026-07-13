@@ -494,4 +494,3 @@ internal sealed record AudioEndpoint(string FriendlyName)
         int Commit();
     }
 }
-
