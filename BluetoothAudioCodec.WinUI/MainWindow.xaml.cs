@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using BluetoothAudioCodec.WinUI.Services;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -23,18 +24,18 @@ public sealed partial class MainWindow : Window
 
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(TitleBarGrid);
+        ConfigureWindow(GetWindowScale());
 
         Closed += (_, _) => _detection?.Cancel();
     }
 
-    private void ConfigureWindow()
+    private void ConfigureWindow(double scale)
     {
         const int preferredWidth = 860;
         const int preferredHeight = 760;
         const int minimumWidth = 680;
         const int minimumHeight = 600;
 
-        var scale = RootGrid.XamlRoot?.RasterizationScale ?? 1.0;
         var preferredPixelWidth = (int)Math.Round(preferredWidth * scale);
         var preferredPixelHeight = (int)Math.Round(preferredHeight * scale);
         var minimumPixelWidth = (int)Math.Round(minimumWidth * scale);
@@ -58,6 +59,13 @@ public sealed partial class MainWindow : Window
         }
     }
 
+    private double GetWindowScale()
+    {
+        var windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
+        var dpi = GetDpiForWindow(windowHandle);
+        return dpi == 0 ? 1.0 : dpi / 96.0;
+    }
+
     private void OnRootLoaded(object sender, RoutedEventArgs e)
     {
         if (_isLoaded)
@@ -66,7 +74,6 @@ public sealed partial class MainWindow : Window
         }
 
         _isLoaded = true;
-        ConfigureWindow();
         _isElevated = BluetoothCodecDetector.IsElevated;
 
         var endpoint = AudioEndpoint.TryGetDefaultRenderEndpoint();
@@ -250,4 +257,7 @@ public sealed partial class MainWindow : Window
     {
         return (Brush)Application.Current.Resources[resourceKey];
     }
+
+    [DllImport("user32.dll")]
+    private static extern uint GetDpiForWindow(IntPtr windowHandle);
 }
