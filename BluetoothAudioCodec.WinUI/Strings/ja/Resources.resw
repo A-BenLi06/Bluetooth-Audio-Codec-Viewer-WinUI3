@@ -54,7 +54,7 @@
     <value>デフォルト出力</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>短い低音トーンにより、Windows が新しいストリームを作成しやすくなります。</value>
+    <value>短い小さな音で新しいストリームを作成します。検出時に管理者の承認が求められます。</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技術詳細</value>

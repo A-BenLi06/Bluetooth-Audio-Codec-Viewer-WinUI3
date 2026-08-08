@@ -1,0 +1,12 @@
+<Project Sdk="WixToolset.Sdk/6.0.2">
+  <PropertyGroup>
+    <OutputType>Package</OutputType>
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
+    <ProductVersion Condition="'$(ProductVersion)' == ''">1.0.0</ProductVersion>
+    <ProductManufacturer Condition="'$(ProductManufacturer)' == ''">BenLi06</ProductManufacturer>
+    <AppPublishDir Condition="'$(AppPublishDir)' == ''">$(MSBuildThisFileDirectory)..\artifacts\publish\win-$(Platform)</AppPublishDir>
+    <OutputName>BluetoothAudioCodec-$(ProductVersion)-$(Platform)</OutputName>
+    <OutputPath>$(MSBuildThisFileDirectory)..\artifacts\installer\$(Platform)\</OutputPath>
+    <DefineConstants>ProductVersion=$(ProductVersion);ProductManufacturer=$(ProductManufacturer);AppPublishDir=$(AppPublishDir)</DefineConstants>
+  </PropertyGroup>
+</Project>

@@ -1,8 +1,5 @@
 {
   "profiles": {
-    "BluetoothAudioCodec.WinUI (Package)": {
-      "commandName": "MsixPackage"
-    },
     "BluetoothAudioCodec.WinUI (Unpackaged)": {
       "commandName": "Project"
     }

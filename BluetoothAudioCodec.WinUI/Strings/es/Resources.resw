@@ -54,7 +54,7 @@
     <value>SALIDA PREDETERMINADA</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>Un tono breve y suave ayuda a Windows a crear una nueva transmisión.</value>
+    <value>Un breve tono suave crea un flujo nuevo; Windows solicitará permiso de administrador para la detección.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Detalles técnicos</value>

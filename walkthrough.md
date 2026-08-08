@@ -223,3 +223,38 @@ Release StoreUpload build also succeeded for x64 and ARM64; both nested MSIX
 packages contain the WinUI runtime, `runFullTrust`, and `allowElevation`. The
 resulting `.msixupload` is approximately 108 MB. No UI automation or elevated
 launch was used during validation.
+
+## 2026-08-08 23:38:42 +08:00
+
+Replaced the MSIX Store distribution path with a traditional unpackaged Win32
+application and offline MSI installers. The package manifest and
+`allowElevation` capability are no longer used. The normal WinUI process stays
+at standard integrity; codec detection launches the same signed single-file
+executable in a hidden administrator-helper mode and exchanges the result over
+a random current-user-only named pipe authenticated with a 256-bit token.
+Cancellation is forwarded to the elevated ETW session without closing or
+elevating the UI.
+
+Added a custom WinUI entry point, x64 and ARM64 self-contained single-file
+publishing, and a WiX 6.0.2 per-machine MSI project with an embedded payload,
+Start menu shortcut, major-upgrade support, and silent `/qn /norestart`
+installation. The app now references the focused Windows App SDK WinUI package,
+and generated output directories are excluded from single-file content to
+prevent recursive packaging and oversized executables. WiX 7 was not used
+because its build required acceptance of an additional OSMF EULA.
+
+The Store build script can sign the application EXE before MSI embedding, then
+sign and timestamp the MSI, and can require a valid trusted-CA certificate for
+release builds. The locally generated artifacts remain explicitly unsigned and
+are therefore test-only until a production certificate and legal publisher name
+are supplied. The previous development MSIX registration was removed.
+
+Verification produced x64 and ARM64 installers of 51,445,760 and 48,427,008
+bytes. Both MSI packages built with zero warnings and errors and passed silent
+administrative extraction with exit code 0. Their embedded executables have the
+expected x64 (`0x8664`) and ARM64 (`0xAA64`) PE machine values. The final x64
+WinUI executable reached input-idle and stayed running with no Application log
+errors; the helper pipe protocol returned an authenticated response in a
+non-elevated test. The signing guard correctly rejected a release build without
+a certificate. No UI automation, Computer Use, installation, or UAC prompt was
+used during validation.

@@ -54,7 +54,7 @@
     <value>默认输出</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>一段短促的低音有助于 Windows 建立新的音频流。</value>
+    <value>一段短促的低音会建立新的音频流；检测时 Windows 将请求管理员许可。</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技术详情</value>

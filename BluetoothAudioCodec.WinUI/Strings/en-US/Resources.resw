@@ -54,7 +54,7 @@
     <value>DEFAULT OUTPUT</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>A short quiet tone helps Windows create a fresh stream.</value>
+    <value>A short quiet tone creates a fresh stream; Windows will request administrator approval for detection.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Technical details</value>

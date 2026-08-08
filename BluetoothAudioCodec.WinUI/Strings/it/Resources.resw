@@ -54,7 +54,7 @@
     <value>OUTPUT PREDEFINITO</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>Un breve tono silenzioso aiuta Windows a creare un nuovo flusso.</value>
+    <value>Un breve tono discreto crea un nuovo flusso; Windows richiederà l’autorizzazione dell’amministratore per il rilevamento.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Dettagli tecnici</value>

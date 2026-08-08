@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Id="BenLi06.BluetoothAudioCodec"
+    Name="Bluetooth Audio Codec"
+    Manufacturer="$(var.ProductManufacturer)"
+    Version="$(var.ProductVersion)"
+    Language="1033"
+    UpgradeCode="DFA46F66-61B3-46D0-B4B0-0A326CDB46AA"
+    Scope="perMachine"
+    InstallerVersion="500"
+    Compressed="yes">
+
+    <SummaryInformation
+      Description="Bluetooth Audio Codec installer"
+      Manufacturer="$(var.ProductManufacturer)" />
+
+    <MajorUpgrade
+      DowngradeErrorMessage="A newer version of Bluetooth Audio Codec is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Bluetooth Audio Codec">
+        <Component Id="MainExecutable" Guid="*">
+          <File
+            Id="BluetoothAudioCodecExe"
+            Source="$(var.AppPublishDir)\BluetoothAudioCodec.WinUI.exe"
+            KeyPath="yes">
+            <Shortcut
+              Id="StartMenuShortcut"
+              Directory="ProgramMenuFolder"
+              Name="Bluetooth Audio Codec"
+              Description="Inspect the active Bluetooth audio codec"
+              WorkingDirectory="INSTALLFOLDER"
+              Advertise="yes" />
+          </File>
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="Bluetooth Audio Codec" Level="1">
+      <ComponentRef Id="MainExecutable" />
+    </Feature>
+  </Package>
+</Wix>

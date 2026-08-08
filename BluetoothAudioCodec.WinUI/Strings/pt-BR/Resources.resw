@@ -54,7 +54,7 @@
     <value>SAÍDA PADRÃO</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>Um tom curto e silencioso ajuda o Windows a criar um novo fluxo.</value>
+    <value>Um breve tom discreto cria um novo fluxo; o Windows solicitará aprovação de administrador para a detecção.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Detalhes técnicos</value>

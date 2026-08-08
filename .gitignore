@@ -2,6 +2,7 @@
 **/obj/
 **/AppPackages/
 **/BundleArtifacts/
+artifacts/
 .vs/
 *.user
 *.suo
