@@ -105,16 +105,16 @@ public sealed partial class MainWindow : Window
             }
             else if (result.Canceled)
             {
-                SetReadyState();
-                ShowMessage(
-                    InfoBarSeverity.Informational,
-                    Localizer.GetString("MessageDetectionCanceledTitle"),
-                    Localizer.GetString("MessageDetectionCanceledBody"));
+                ShowDetectionCanceled();
             }
             else
             {
                 ShowNoObservation(result.Warnings);
             }
+        }
+        catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+        {
+            ShowDetectionCanceled();
         }
         catch (ElevationCanceledException)
         {
@@ -200,6 +200,15 @@ public sealed partial class MainWindow : Window
             InfoBarSeverity.Warning,
             Localizer.GetString("MessageNoEventTitle"),
             string.Format(CultureInfo.CurrentCulture, Localizer.GetString("MessageNoEventBodyFormat"), detail));
+    }
+
+    private void ShowDetectionCanceled()
+    {
+        SetReadyState();
+        ShowMessage(
+            InfoBarSeverity.Informational,
+            Localizer.GetString("MessageDetectionCanceledTitle"),
+            Localizer.GetString("MessageDetectionCanceledBody"));
     }
 
     private void ShowMessage(InfoBarSeverity severity, string title, string message)

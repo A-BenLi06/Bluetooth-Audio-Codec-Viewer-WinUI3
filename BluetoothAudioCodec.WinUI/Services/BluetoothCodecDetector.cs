@@ -100,7 +100,7 @@ internal sealed class BluetoothCodecDetector
 
         using var stopWorkerCancellation = new CancellationTokenSource();
         using var cancellationRegistration = cancellationToken.Register(
-            session.Source.StopProcessing);
+            session.Dispose);
         var stopWorker = StartStopWorker(
             session,
             timeout,
@@ -110,6 +110,10 @@ internal sealed class BluetoothCodecDetector
         try
         {
             session.Source.Process();
+        }
+        catch (ObjectDisposedException) when (cancellationToken.IsCancellationRequested)
+        {
+            // Cancellation can dispose the session just before Process starts.
         }
         finally
         {
@@ -153,7 +157,10 @@ internal sealed class BluetoothCodecDetector
                 await Task.Delay(remaining, cancellationToken);
             }
 
-            session.Source.StopProcessing();
+            // StopProcessing only takes effect when the next real-time event
+            // arrives. Disposing the session wakes Process immediately, even
+            // when the Bluetooth provider is otherwise quiet.
+            session.Dispose();
         }, CancellationToken.None);
     }
 

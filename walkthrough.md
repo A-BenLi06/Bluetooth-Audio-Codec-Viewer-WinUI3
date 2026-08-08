@@ -258,3 +258,28 @@ errors; the helper pipe protocol returned an authenticated response in a
 non-elevated test. The signing guard correctly rejected a release build without
 a certificate. No UI automation, Computer Use, installation, or UAC prompt was
 used during validation.
+
+## 2026-08-08 23:59:23 +08:00
+
+Fixed cancellation after observing an orphaned elevated helper and four stale
+`BluetoothAudioCodec-WinUI-*` ETW sessions. TraceEvent documents that
+`StopProcessing()` cannot interrupt a quiet real-time source until another
+event arrives, so both the user-cancellation callback and the 30-second timeout
+worker now dispose the `TraceEventSession`. Session disposal is thread-safe and
+forces `Process()` to wake promptly; a cancellation race immediately before
+`Process()` starts is also handled as a normal canceled result.
+
+The normal-permission UI now waits for the helper response with a linked,
+cancellation-aware read. On cancel it makes a bounded one-second attempt to send
+the authenticated cancel command, then returns control to the UI; closing the
+pipe remains a second cancellation signal to the helper. Both helper-returned
+and locally observed cancellation use the same localized ready state and
+message.
+
+The stale helper process and all four old ETW sessions were stopped without UAC.
+The x64 Debug project rebuilt with zero warnings and errors, the final x64 and
+ARM64 single-file applications and MSI packages rebuilt with zero warnings and
+errors, and both installers passed administrative extraction with exit code 0
+and exact SHA-256 payload matches. A non-elevated helper protocol test connected,
+returned an authenticated response, exited, and left zero codec ETW sessions.
+No Computer Use, UI automation, installation, or UAC prompt was used.
