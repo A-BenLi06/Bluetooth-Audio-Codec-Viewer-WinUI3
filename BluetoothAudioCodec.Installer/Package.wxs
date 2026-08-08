@@ -18,6 +18,10 @@
     <MajorUpgrade
       DowngradeErrorMessage="A newer version of Bluetooth Audio Codec is already installed." />
     <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    <Icon
+      Id="AppIcon.ico"
+      SourceFile="$(var.AppIconPath)" />
+    <Property Id="ARPPRODUCTICON" Value="AppIcon.ico" />
 
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="Bluetooth Audio Codec">

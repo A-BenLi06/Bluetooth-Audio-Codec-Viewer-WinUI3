@@ -5,8 +5,9 @@
     <ProductVersion Condition="'$(ProductVersion)' == ''">1.0.0</ProductVersion>
     <ProductManufacturer Condition="'$(ProductManufacturer)' == ''">BenLi06</ProductManufacturer>
     <AppPublishDir Condition="'$(AppPublishDir)' == ''">$(MSBuildThisFileDirectory)..\artifacts\publish\win-$(Platform)</AppPublishDir>
+    <AppIconPath Condition="'$(AppIconPath)' == ''">$(MSBuildThisFileDirectory)..\BluetoothAudioCodec.WinUI\Assets\AppIcon.ico</AppIconPath>
     <OutputName>BluetoothAudioCodec-$(ProductVersion)-$(Platform)</OutputName>
     <OutputPath>$(MSBuildThisFileDirectory)..\artifacts\installer\$(Platform)\</OutputPath>
-    <DefineConstants>ProductVersion=$(ProductVersion);ProductManufacturer=$(ProductManufacturer);AppPublishDir=$(AppPublishDir)</DefineConstants>
+    <DefineConstants>ProductVersion=$(ProductVersion);ProductManufacturer=$(ProductManufacturer);AppPublishDir=$(AppPublishDir);AppIconPath=$(AppIconPath)</DefineConstants>
   </PropertyGroup>
 </Project>
