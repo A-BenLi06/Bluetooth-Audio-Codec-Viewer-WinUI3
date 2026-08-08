@@ -305,3 +305,46 @@ and errors; both installers passed administrative extraction with exit code 0
 and exact SHA-256 payload matches. No codec ETW sessions remained after
 validation. The user's open UI was left running, and no Computer Use, UI
 automation, installation, or UAC prompt was used.
+
+## 2026-08-09 00:56:49 +08:00
+
+Prepared the application for its traditional Win32 MSI Microsoft Store
+submission. The supplied 1024-pixel icon concept was preserved as a source asset
+and adapted through the built-in imagegen edit workflow into a higher-contrast
+Fluent-style application icon that remains legible at small Windows icon sizes.
+The generated flat chroma background was removed with the imagegen skill helper,
+producing a transparent master with clean corners. The final prompt and workflow
+are recorded beside the icon assets.
+
+Generated a multi-resolution Windows ICO containing 16, 20, 24, 32, 40, 48,
+64, 96, 128, and 256 pixel entries, plus 1080 x 1080 required Store box art,
+300 x 300 tile art, recommended 720 x 1080 poster art, and two 1366 x 768
+desktop screenshots. The icon is now embedded in the single-file EXE. The WiX
+MSI supplies it to Add or Remove Programs, while the advertised Start menu
+shortcut correctly inherits the icon from its executable.
+
+Expanded the Store runbook into an end-to-end release checklist covering legal
+identity, trusted-CA signing, clean-system validation, immutable versioned HTTPS
+URLs, Partner Center availability, properties, age ratings, packages, listing
+assets, certification notes, and future updates. Added copy-ready en-US, zh-CN,
+and zh-TW listing text, certification notes explaining the user-initiated
+elevated ETW helper, and a local-only data privacy-policy draft with an explicit
+support-contact placeholder.
+
+Hardened the release script to reject missing, expired, keyless, and self-signed
+certificates and to emit a JSON release manifest containing SHA-256 hashes,
+signing state, and silent-install commands. The local self-signed development
+certificate was correctly rejected. Both final x64 and ARM64 builds completed
+with zero warnings and errors; both MSI packages passed administrative
+extraction with exit code 0 and exact payload matches; manifest hashes matched
+every EXE and MSI; the MSI Icon and ARPPRODUCTICON tables were verified; the EXE
+icon extracted successfully; all Store asset dimensions and project XML files
+validated; and no codec ETW session remained.
+
+The generated local-test packages are deliberately unsigned and remain
+ineligible for Store submission until the publisher supplies a trusted public-CA
+code-signing certificate, legal publisher name, immutable HTTPS package URLs,
+and working support contact. The unrelated untracked `app-website` source
+screenshots were read to prepare copied Store screenshots but were otherwise
+left untouched. No Computer Use, application installation, or UAC prompt was
+used.
