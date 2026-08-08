@@ -199,3 +199,27 @@ its reserved Partner Center identity to replace `CN=PlaceholderPublisher`, and
 request approval for the restricted `allowElevation` capability with a detailed
 explanation that elevation is optional and is used only to read the Windows
 Bluetooth A2DP ETW trace.
+
+## 2026-08-08 19:57:31 +08:00
+
+Diagnosed the remaining administrator restart failure from the Windows
+Application and .NET Runtime event logs. Shell elevation created the child
+process successfully, but the child crashed in the WinUI `Window` constructor
+with exception `0xC06D007E`. The framework-dependent loose package relied on
+package activation to establish the Windows App SDK dependency graph; launching
+its executable directly through the `runas` verb did not provide that graph.
+
+Enabled self-contained Windows App SDK deployment so the MSIX carries
+`Microsoft.ui.xaml.dll`, `Microsoft.WindowsAppRuntime.dll`, and the other native
+WinUI runtime files beside the application executable. The original process now
+also waits up to ten seconds for the elevated child to enter its UI message loop
+and remains open with an error message if the child exits or never becomes
+ready.
+
+The updated self-contained Debug package built successfully and was registered
+from its complete extracted package layout. A direct executable launch reached
+input-idle, stayed alive, and produced no new Application log errors. The
+Release StoreUpload build also succeeded for x64 and ARM64; both nested MSIX
+packages contain the WinUI runtime, `runFullTrust`, and `allowElevation`. The
+resulting `.msixupload` is approximately 108 MB. No UI automation or elevated
+launch was used during validation.

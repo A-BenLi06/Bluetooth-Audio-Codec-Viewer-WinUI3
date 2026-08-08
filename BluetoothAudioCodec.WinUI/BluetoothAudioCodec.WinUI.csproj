@@ -12,6 +12,7 @@
     <RuntimeIdentifier Condition="'$(Platform)' == 'ARM64'">win-arm64</RuntimeIdentifier>
     <UseWinUI>true</UseWinUI>
     <WinUISDKReferences>false</WinUISDKReferences>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>
     <AppxBundlePlatforms>x64|ARM64</AppxBundlePlatforms>
     <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
