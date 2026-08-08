@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using BluetoothAudioCodec.WinUI.Services;
 using Microsoft.UI;
@@ -77,22 +78,23 @@ public sealed partial class MainWindow : Window
         _isElevated = BluetoothCodecDetector.IsElevated;
 
         var endpoint = AudioEndpoint.TryGetDefaultRenderEndpoint();
-        DeviceText.Text = endpoint?.FriendlyName ?? "No default output found";
+        DeviceText.Text = endpoint?.FriendlyName ?? Localizer.GetString("DeviceNone");
+        ProtocolText.Text = Localizer.GetString("ProtocolDefault");
 
-        if (_isElevated)
+        if (!_isElevated)
         {
-            SetReadyState();
+            StatusText.Text = Localizer.GetString("StatusAdminRequired");
+            StatusDot.Fill = GetThemeBrush("SystemFillColorCautionBrush");
+            DetectButtonText.Text = Localizer.GetString("DetectButtonRestart");
+            DetectIcon.Glyph = "\uE7EF";
+            ShowMessage(
+                InfoBarSeverity.Informational,
+                Localizer.GetString("MessageAdminRequiredTitle"),
+                Localizer.GetString("MessageAdminRequiredBody"));
             return;
         }
 
-        StatusText.Text = "Admin required";
-        StatusDot.Fill = GetThemeBrush("SystemFillColorCautionBrush");
-        DetectButtonText.Text = "Restart as administrator";
-        DetectIcon.Glyph = "\uE7EF";
-        ShowMessage(
-            InfoBarSeverity.Informational,
-            "Administrator access required",
-            "Windows only exposes the Bluetooth codec trace to elevated processes.");
+        SetReadyState();
     }
 
     private async void OnDetectClicked(object sender, RoutedEventArgs e)
@@ -129,8 +131,8 @@ public sealed partial class MainWindow : Window
                 SetReadyState();
                 ShowMessage(
                     InfoBarSeverity.Informational,
-                    "Detection canceled",
-                    "No Bluetooth settings were changed.");
+                    Localizer.GetString("MessageDetectionCanceledTitle"),
+                    Localizer.GetString("MessageDetectionCanceledBody"));
             }
             else
             {
@@ -139,11 +141,11 @@ public sealed partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            StatusText.Text = "Error";
+            StatusText.Text = Localizer.GetString("StatusError");
             StatusDot.Fill = GetThemeBrush("SystemFillColorCriticalBrush");
             ShowMessage(
                 InfoBarSeverity.Error,
-                "Unable to inspect the codec",
+                Localizer.GetString("MessageUnableTitle"),
                 exception.Message);
         }
         finally
@@ -153,28 +155,30 @@ public sealed partial class MainWindow : Window
             DetectionProgress.Visibility = Visibility.Collapsed;
             DetectIcon.Visibility = Visibility.Visible;
             DetectIcon.Glyph = "\uE721";
-            DetectButtonText.Text = "Detect again";
+            DetectButton.IsEnabled = true;
+            DetectButtonText.Text = Localizer.GetString("DetectButtonAgain");
         }
     }
 
     private void SetListeningState()
     {
-        CodecText.Text = "Listening…";
-        ProtocolText.Text = "Waiting for an A2DP stream event";
-        StatusText.Text = "Listening";
+        CodecText.Text = Localizer.GetString("CodecListening");
+        ProtocolText.Text = Localizer.GetString("ProtocolWaiting");
+        StatusText.Text = Localizer.GetString("StatusListening");
         StatusDot.Fill = GetThemeBrush("AccentFillColorDefaultBrush");
         MessageBar.IsOpen = false;
         DetectionProgress.Visibility = Visibility.Visible;
         DetectionProgress.IsActive = true;
         DetectIcon.Visibility = Visibility.Collapsed;
-        DetectButtonText.Text = "Cancel";
+        DetectButtonText.Text = Localizer.GetString("DetectButtonCancel");
     }
 
     private void SetReadyState()
     {
-        StatusText.Text = "Ready";
+        StatusText.Text = Localizer.GetString("StatusReady");
         StatusDot.Fill = GetThemeBrush("TextFillColorSecondaryBrush");
-        DetectButtonText.Text = "Detect codec";
+        DetectButton.IsEnabled = true;
+        DetectButtonText.Text = Localizer.GetString("DetectButtonInitial");
         DetectIcon.Glyph = "\uE721";
     }
 
@@ -182,50 +186,58 @@ public sealed partial class MainWindow : Window
     {
         CodecText.Text = observation.Codec;
         ProtocolText.Text = observation.Protocol.Replace(" A2DP", " · A2DP", StringComparison.Ordinal);
-        DeviceText.Text = observation.DefaultOutput ?? "No default output found";
+        DeviceText.Text = observation.DefaultOutput ?? Localizer.GetString("DeviceNone");
         StandardIdText.Text = $"0x{observation.StandardCodecId:X2}";
         VendorIdText.Text = $"0x{observation.VendorId:X8}";
         VendorCodecIdText.Text = $"0x{observation.VendorCodecId:X4}";
         ObservedAtText.Text = observation.ObservedAt.ToLocalTime().ToString("yyyy-MM-dd  HH:mm:ss");
-        StatusText.Text = "Detected";
+        StatusText.Text = Localizer.GetString("StatusDetected");
         StatusDot.Fill = GetThemeBrush("SystemFillColorSuccessBrush");
 
         ShowMessage(
             InfoBarSeverity.Success,
-            "Codec detected",
-            "The negotiated codec was captured from the Windows Bluetooth audio trace.");
+            Localizer.GetString("MessageCodecDetectedTitle"),
+            Localizer.GetString("MessageCodecDetectedBody"));
     }
 
     private void ShowNoObservation(IReadOnlyCollection<string> warnings)
     {
-        CodecText.Text = "No event";
-        ProtocolText.Text = "Stop playback or reconnect, then try again";
-        StatusText.Text = "Try again";
+        CodecText.Text = Localizer.GetString("CodecNoEvent");
+        ProtocolText.Text = Localizer.GetString("ProtocolRetryHint");
+        StatusText.Text = Localizer.GetString("StatusTryAgain");
         StatusDot.Fill = GetThemeBrush("SystemFillColorCautionBrush");
 
         var detail = warnings.Count == 0
-            ? "Windows did not open or close an A2DP stream during the 30-second window."
+            ? Localizer.GetString("MessageNoEventDefaultBody")
             : warnings.First();
 
         ShowMessage(
             InfoBarSeverity.Warning,
-            "No codec event observed",
-            detail + " Headset microphone use may switch Windows to HFP instead.");
+            Localizer.GetString("MessageNoEventTitle"),
+            string.Format(CultureInfo.CurrentCulture, Localizer.GetString("MessageNoEventBodyFormat"), detail));
     }
 
     private void RestartElevated()
     {
         try
         {
-            var processPath = Environment.ProcessPath
-                ?? throw new InvalidOperationException("The application path is unavailable.");
+            var processPath = GetCurrentExecutablePath();
+            var workingDirectory = Path.GetDirectoryName(processPath)
+                ?? AppContext.BaseDirectory;
 
-            Process.Start(new ProcessStartInfo(processPath)
+            using var elevatedProcess = Process.Start(new ProcessStartInfo
             {
+                FileName = processPath,
                 UseShellExecute = true,
                 Verb = "runas",
-                WorkingDirectory = AppContext.BaseDirectory
+                WorkingDirectory = workingDirectory
             });
+
+            if (elevatedProcess is null)
+            {
+                throw new InvalidOperationException(
+                    "Windows did not create the elevated application process.");
+            }
 
             Application.Current.Exit();
         }
@@ -233,16 +245,35 @@ public sealed partial class MainWindow : Window
         {
             ShowMessage(
                 InfoBarSeverity.Informational,
-                "Elevation canceled",
-                "The app is still running without administrator access.");
+                Localizer.GetString("MessageElevationCanceledTitle"),
+                Localizer.GetString("MessageElevationCanceledBody"));
         }
         catch (Exception exception)
         {
             ShowMessage(
                 InfoBarSeverity.Error,
-                "Could not restart the app",
+                Localizer.GetString("MessageRestartFailedTitle"),
                 exception.Message);
         }
+    }
+
+    private static string GetCurrentExecutablePath()
+    {
+        var processPath = Environment.ProcessPath;
+        if (!string.IsNullOrWhiteSpace(processPath) && File.Exists(processPath))
+        {
+            return processPath;
+        }
+
+        using var currentProcess = Process.GetCurrentProcess();
+        processPath = currentProcess.MainModule?.FileName;
+        if (!string.IsNullOrWhiteSpace(processPath) && File.Exists(processPath))
+        {
+            return processPath;
+        }
+
+        throw new InvalidOperationException(
+            "The application executable path is unavailable.");
     }
 
     private void ShowMessage(InfoBarSeverity severity, string title, string message)

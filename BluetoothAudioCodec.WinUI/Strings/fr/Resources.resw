@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle.Text" xml:space="preserve">
+    <value>Codec audio Bluetooth</value>
+  </data>
+  <data name="HeaderTitle.Text" xml:space="preserve">
+    <value>Codec Bluetooth actif</value>
+  </data>
+  <data name="HeaderSubtitle.Text" xml:space="preserve">
+    <value>Lisez le codec que Windows a négocié avec votre casque.</value>
+  </data>
+  <data name="OutputLabel.Text" xml:space="preserve">
+    <value>SORTIE PAR DÉFAUT</value>
+  </data>
+  <data name="DetectHint.Text" xml:space="preserve">
+    <value>Un court ton calme aide Windows à créer un nouveau flux.</value>
+  </data>
+  <data name="DetailsHeader.Header" xml:space="preserve">
+    <value>Détails techniques</value>
+  </data>
+  <data name="StandardIdLabel.Text" xml:space="preserve">
+    <value>ID STANDARD</value>
+  </data>
+  <data name="VendorIdLabel.Text" xml:space="preserve">
+    <value>ID FOURNISSEUR</value>
+  </data>
+  <data name="CodecIdLabel.Text" xml:space="preserve">
+    <value>ID CODEC</value>
+  </data>
+  <data name="ObservedLabel.Text" xml:space="preserve">
+    <value>OBSERVÉ</value>
+  </data>
+  <data name="FooterNote.Text" xml:space="preserve">
+    <value>L'événement A2DP est émis lorsqu'un flux s'ouvre ou se ferme. Les appels HFP et LE Audio utilisent des codecs différents.</value>
+  </data>
+  <data name="StatusReady" xml:space="preserve">
+    <value>Prêt</value>
+  </data>
+  <data name="StatusListening" xml:space="preserve">
+    <value>Écoute</value>
+  </data>
+  <data name="StatusAdminRequired" xml:space="preserve">
+    <value>Admin requis</value>
+  </data>
+  <data name="StatusError" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="StatusDetected" xml:space="preserve">
+    <value>Détecté</value>
+  </data>
+  <data name="StatusTryAgain" xml:space="preserve">
+    <value>Réessayer</value>
+  </data>
+  <data name="ProtocolDefault" xml:space="preserve">
+    <value>Bluetooth Classic · A2DP</value>
+  </data>
+  <data name="ProtocolWaiting" xml:space="preserve">
+    <value>En attente d'un événement de flux A2DP</value>
+  </data>
+  <data name="ProtocolRetryHint" xml:space="preserve">
+    <value>Arrêtez la lecture ou reconnectez, puis réessayez</value>
+  </data>
+  <data name="DeviceChecking" xml:space="preserve">
+    <value>Vérification…</value>
+  </data>
+  <data name="DeviceNone" xml:space="preserve">
+    <value>Aucune sortie par défaut trouvée</value>
+  </data>
+  <data name="CodecListening" xml:space="preserve">
+    <value>Écoute…</value>
+  </data>
+  <data name="CodecNoEvent" xml:space="preserve">
+    <value>Aucun événement</value>
+  </data>
+  <data name="DetectButtonInitial" xml:space="preserve">
+    <value>Détecter le codec</value>
+  </data>
+  <data name="DetectButtonCancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="DetectButtonAgain" xml:space="preserve">
+    <value>Détecter à nouveau</value>
+  </data>
+  <data name="DetectButtonRestart" xml:space="preserve">
+    <value>Redémarrer en tant qu'administrateur</value>
+  </data>
+  <data name="MessageBarTitle" xml:space="preserve">
+    <value>Informations</value>
+  </data>
+  <data name="MessageAdminRequiredTitle" xml:space="preserve">
+    <value>Accès administrateur requis</value>
+  </data>
+  <data name="MessageAdminRequiredBody" xml:space="preserve">
+    <value>Windows n'expose le traçage du codec Bluetooth qu'aux processus élevés.</value>
+  </data>
+  <data name="MessageDetectionCanceledTitle" xml:space="preserve">
+    <value>Détection annulée</value>
+  </data>
+  <data name="MessageDetectionCanceledBody" xml:space="preserve">
+    <value>Aucun paramètre Bluetooth n'a été modifié.</value>
+  </data>
+  <data name="MessageUnableTitle" xml:space="preserve">
+    <value>Impossible d'inspecter le codec</value>
+  </data>
+  <data name="MessageCodecDetectedTitle" xml:space="preserve">
+    <value>Codec détecté</value>
+  </data>
+  <data name="MessageCodecDetectedBody" xml:space="preserve">
+    <value>Le codec négocié a été capturé à partir du traçage audio Bluetooth de Windows.</value>
+  </data>
+  <data name="MessageNoEventTitle" xml:space="preserve">
+    <value>Aucun événement de codec observé</value>
+  </data>
+  <data name="MessageNoEventDefaultBody" xml:space="preserve">
+    <value>Windows n'a pas ouvert ni fermé de flux A2DP pendant la fenêtre de 30 secondes.</value>
+  </data>
+  <data name="MessageNoEventBodyFormat" xml:space="preserve">
+    <value>{0} L'utilisation du microphone du casque peut basculer Windows vers HFP.</value>
+  </data>
+  <data name="MessageElevationCanceledTitle" xml:space="preserve">
+    <value>Élévation annulée</value>
+  </data>
+  <data name="MessageElevationCanceledBody" xml:space="preserve">
+    <value>L'application s'exécute toujours sans accès administrateur.</value>
+  </data>
+  <data name="MessageRestartFailedTitle" xml:space="preserve">
+    <value>Impossible de redémarrer l'application</value>
+  </data>
+  <data name="StatusNotBluetooth" xml:space="preserve">
+    <value>Pas un périph. BT</value>
+  </data>
+  <data name="MessageNotBluetoothTitle" xml:space="preserve">
+    <value>Pas un périphérique audio Bluetooth</value>
+  </data>
+  <data name="MessageNotBluetoothBody" xml:space="preserve">
+    <value>La sortie par défaut actuelle n'est pas un périphérique Bluetooth. Passez à un casque Bluetooth et réessayez.</value>
+  </data>
+  <data name="StatusLeAudio" xml:space="preserve">
+    <value>LE Audio</value>
+  </data>
+  <data name="MessageLeAudioTitle" xml:space="preserve">
+    <value>LE Audio n'est pas pris en charge</value>
+  </data>
+  <data name="MessageLeAudioBody" xml:space="preserve">
+    <value>Cet appareil utilise LE Audio avec le codec LC3, qui n'est pas détectable via le traçage A2DP.</value>
+  </data>
+</root>

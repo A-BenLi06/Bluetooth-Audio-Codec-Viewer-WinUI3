@@ -1,5 +1,8 @@
 **/bin/
 **/obj/
+**/AppPackages/
+**/BundleArtifacts/
 .vs/
 *.user
 *.suo
+*.pfx
