@@ -71,12 +71,26 @@ internal sealed class ElevatedCodecBridge
             AutoFlush = true
         };
 
-        using var cancellationRegistration = cancellationToken.Register(
-            () => TrySendCancellation(writer, token));
-
         var responseTimeout = timeout + TimeSpan.FromSeconds(15);
-        var responseLine = await reader.ReadLineAsync()
-            .WaitAsync(responseTimeout);
+        using var responseCancellation = CancellationTokenSource.CreateLinkedTokenSource(
+            cancellationToken);
+        responseCancellation.CancelAfter(responseTimeout);
+
+        string? responseLine;
+        try
+        {
+            responseLine = await reader.ReadLineAsync(responseCancellation.Token);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            await TrySendCancellationAsync(writer, token);
+            throw;
+        }
+        catch (OperationCanceledException)
+        {
+            throw new TimeoutException(
+                "The administrator helper did not return a result in time.");
+        }
 
         if (string.IsNullOrWhiteSpace(responseLine))
         {
@@ -267,12 +281,15 @@ internal sealed class ElevatedCodecBridge
         }
     }
 
-    private static void TrySendCancellation(StreamWriter writer, string token)
+    private static async Task TrySendCancellationAsync(
+        StreamWriter writer,
+        string token)
     {
         try
         {
-            writer.WriteLine(JsonSerializer.Serialize(
-                new ElevatedCodecCommand(token, "cancel")));
+            await writer.WriteLineAsync(JsonSerializer.Serialize(
+                    new ElevatedCodecCommand(token, "cancel")))
+                .WaitAsync(TimeSpan.FromSeconds(1));
         }
         catch
         {
