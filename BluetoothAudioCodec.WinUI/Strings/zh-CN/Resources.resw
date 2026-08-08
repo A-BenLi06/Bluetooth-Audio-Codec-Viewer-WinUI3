@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle.Text" xml:space="preserve">
+    <value>蓝牙音频编解码器</value>
+  </data>
+  <data name="HeaderTitle.Text" xml:space="preserve">
+    <value>当前蓝牙编解码器</value>
+  </data>
+  <data name="HeaderSubtitle.Text" xml:space="preserve">
+    <value>查看 Windows 与你的耳机协商的编解码器。</value>
+  </data>
+  <data name="OutputLabel.Text" xml:space="preserve">
+    <value>默认输出</value>
+  </data>
+  <data name="DetectHint.Text" xml:space="preserve">
+    <value>一段短促的低音有助于 Windows 建立新的音频流。</value>
+  </data>
+  <data name="DetailsHeader.Header" xml:space="preserve">
+    <value>技术详情</value>
+  </data>
+  <data name="StandardIdLabel.Text" xml:space="preserve">
+    <value>标准 ID</value>
+  </data>
+  <data name="VendorIdLabel.Text" xml:space="preserve">
+    <value>厂商 ID</value>
+  </data>
+  <data name="CodecIdLabel.Text" xml:space="preserve">
+    <value>编解码器 ID</value>
+  </data>
+  <data name="ObservedLabel.Text" xml:space="preserve">
+    <value>观察时间</value>
+  </data>
+  <data name="FooterNote.Text" xml:space="preserve">
+    <value>A2DP 事件在音频流打开或关闭时发出。HFP 通话和 LE Audio 使用不同的编解码器。</value>
+  </data>
+  <data name="StatusReady" xml:space="preserve">
+    <value>就绪</value>
+  </data>
+  <data name="StatusListening" xml:space="preserve">
+    <value>监听中</value>
+  </data>
+  <data name="StatusAdminRequired" xml:space="preserve">
+    <value>需要管理员权限</value>
+  </data>
+  <data name="StatusError" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="StatusDetected" xml:space="preserve">
+    <value>已检测</value>
+  </data>
+  <data name="StatusTryAgain" xml:space="preserve">
+    <value>重试</value>
+  </data>
+  <data name="ProtocolDefault" xml:space="preserve">
+    <value>蓝牙经典 · A2DP</value>
+  </data>
+  <data name="ProtocolWaiting" xml:space="preserve">
+    <value>等待 A2DP 流事件</value>
+  </data>
+  <data name="ProtocolRetryHint" xml:space="preserve">
+    <value>停止播放或重新连接，然后重试</value>
+  </data>
+  <data name="DeviceChecking" xml:space="preserve">
+    <value>检查中…</value>
+  </data>
+  <data name="DeviceNone" xml:space="preserve">
+    <value>未找到默认输出设备</value>
+  </data>
+  <data name="CodecListening" xml:space="preserve">
+    <value>监听中…</value>
+  </data>
+  <data name="CodecNoEvent" xml:space="preserve">
+    <value>无事件</value>
+  </data>
+  <data name="DetectButtonInitial" xml:space="preserve">
+    <value>检测编解码器</value>
+  </data>
+  <data name="DetectButtonCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DetectButtonAgain" xml:space="preserve">
+    <value>重新检测</value>
+  </data>
+  <data name="DetectButtonRestart" xml:space="preserve">
+    <value>以管理员身份重启</value>
+  </data>
+  <data name="MessageBarTitle" xml:space="preserve">
+    <value>信息</value>
+  </data>
+  <data name="MessageAdminRequiredTitle" xml:space="preserve">
+    <value>需要管理员权限</value>
+  </data>
+  <data name="MessageAdminRequiredBody" xml:space="preserve">
+    <value>Windows 仅向提升权限的进程公开蓝牙编解码器跟踪。</value>
+  </data>
+  <data name="MessageDetectionCanceledTitle" xml:space="preserve">
+    <value>检测已取消</value>
+  </data>
+  <data name="MessageDetectionCanceledBody" xml:space="preserve">
+    <value>未更改任何蓝牙设置。</value>
+  </data>
+  <data name="MessageUnableTitle" xml:space="preserve">
+    <value>无法检查编解码器</value>
+  </data>
+  <data name="MessageCodecDetectedTitle" xml:space="preserve">
+    <value>编解码器已检测</value>
+  </data>
+  <data name="MessageCodecDetectedBody" xml:space="preserve">
+    <value>已从 Windows 蓝牙音频跟踪中捕获协商的编解码器。</value>
+  </data>
+  <data name="MessageNoEventTitle" xml:space="preserve">
+    <value>未观察到编解码器事件</value>
+  </data>
+  <data name="MessageNoEventDefaultBody" xml:space="preserve">
+    <value>Windows 在 30 秒窗口内未打开或关闭 A2DP 流。</value>
+  </data>
+  <data name="MessageNoEventBodyFormat" xml:space="preserve">
+    <value>{0} 使用耳机麦克风可能会使 Windows 切换到 HFP。</value>
+  </data>
+  <data name="MessageElevationCanceledTitle" xml:space="preserve">
+    <value>提升已取消</value>
+  </data>
+  <data name="MessageElevationCanceledBody" xml:space="preserve">
+    <value>应用仍在没有管理员权限的情况下运行。</value>
+  </data>
+  <data name="MessageRestartFailedTitle" xml:space="preserve">
+    <value>无法重启应用</value>
+  </data>
+  <data name="StatusNotBluetooth" xml:space="preserve">
+    <value>非蓝牙设备</value>
+  </data>
+  <data name="MessageNotBluetoothTitle" xml:space="preserve">
+    <value>非蓝牙音频设备</value>
+  </data>
+  <data name="MessageNotBluetoothBody" xml:space="preserve">
+    <value>当前默认输出不是蓝牙设备。请切换到蓝牙耳机后重试。</value>
+  </data>
+  <data name="StatusLeAudio" xml:space="preserve">
+    <value>LE Audio</value>
+  </data>
+  <data name="MessageLeAudioTitle" xml:space="preserve">
+    <value>不支持 LE Audio</value>
+  </data>
+  <data name="MessageLeAudioBody" xml:space="preserve">
+    <value>此设备使用 LE Audio 和 LC3 编解码器，无法通过 A2DP 跟踪检测。</value>
+  </data>
+</root>

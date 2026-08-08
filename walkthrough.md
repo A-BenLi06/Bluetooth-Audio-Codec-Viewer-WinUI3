@@ -155,3 +155,47 @@ to an unlocked temporary output directory with zero warnings and zero errors,
 and `git diff --check` completed without whitespace errors. The normal Debug
 executable was not replaced because the user's currently running instance holds
 it open. No UI automation was used.
+
+## 2026-08-08 13:32:06 +08:00
+
+Repaired the optional administrator restart after the project had been changed
+from unpackaged deployment to MSIX. The package previously declared only
+`runFullTrust`; packaged desktop apps also require the restricted
+`allowElevation` capability before Windows permits a runtime `runas` launch.
+
+The restart path now resolves and validates the current executable for both
+packaged and unpackaged launches, uses the executable directory as its working
+directory, and exits the original process only after ShellExecute returns a
+real child process. Canceling UAC remains non-destructive and is reported in the
+existing localized information bar.
+
+Generated `AppPackages`, `BundleArtifacts`, and certificate files are now
+ignored. Source assets, localization resources, the package manifest, and the
+solution file remain part of the project rather than being mistaken for build
+output.
+
+## 2026-08-08 17:56:17 +08:00
+
+Adjusted the repaired elevation flow for Microsoft Store distribution. Release
+builds now use `StoreUpload`, generate an unsigned `.msixupload` for Partner
+Center, and correctly build both x64 and ARM64 package slices. The architecture
+list now uses the MSIX toolchain's required pipe separator, and explicit
+runtime identifiers keep each recursive bundle build on the matching CPU
+architecture.
+
+Restored the detector's stable ETW lifetime and audio endpoint implementation.
+An intervening change had treated endpoint form-factor value 8 as Bluetooth
+(that value represents S/PDIF) and could disable detection for real Bluetooth
+headsets; it also moved ETW processing onto a manually disposed background
+session with cancellation races. Localization and the valid packaging work were
+preserved.
+
+Validation produced
+`BluetoothAudioCodec.WinUI_1.0.0.0_x64_ARM64_bundle.msixupload`. Both nested
+architecture packages were inspected in memory and contain `runFullTrust` and
+`allowElevation`. The Store package remains unsigned as required for Partner
+Center ingestion. Before a production submission, associate the project with
+its reserved Partner Center identity to replace `CN=PlaceholderPublisher`, and
+request approval for the restricted `allowElevation` capability with a detailed
+explanation that elevation is optional and is used only to read the Windows
+Bluetooth A2DP ETW trace.

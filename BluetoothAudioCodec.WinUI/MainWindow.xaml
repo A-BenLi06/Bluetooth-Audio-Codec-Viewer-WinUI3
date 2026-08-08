@@ -24,6 +24,7 @@
                     Glyph="&#xE702;"
                     IsHitTestVisible="False" />
                 <TextBlock
+                    x:Uid="AppTitle"
                     FontSize="13"
                     FontWeight="SemiBold"
                     IsHitTestVisible="False"
@@ -55,9 +56,11 @@
 
                     <StackPanel Spacing="5">
                         <TextBlock
+                            x:Uid="HeaderTitle"
                             Style="{ThemeResource TitleTextBlockStyle}"
                             Text="Active Bluetooth codec" />
                         <TextBlock
+                            x:Uid="HeaderSubtitle"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Text="Read the codec Windows negotiated with your headset."
                             TextWrapping="Wrap" />
@@ -143,6 +146,7 @@
                                 Symbol="Audio" />
                             <StackPanel Grid.Column="1" Spacing="2">
                                 <TextBlock
+                                    x:Uid="OutputLabel"
                                     FontSize="12"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Text="DEFAULT OUTPUT" />
@@ -163,6 +167,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
+                        x:Uid="DetectHint"
                         VerticalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Text="A short quiet tone helps Windows create a fresh stream."
@@ -192,12 +197,13 @@
 
                 <InfoBar
                     x:Name="MessageBar"
+                    x:Uid="MessageBar"
                     IsClosable="False"
                     IsOpen="False"
                     Severity="Informational"
                     Title="Information" />
 
-                <Expander Header="Technical details">
+                <Expander x:Uid="DetailsHeader" Header="Technical details">
                     <Grid Padding="0,12,0,4" ColumnSpacing="24">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -208,6 +214,7 @@
 
                         <StackPanel Spacing="4">
                             <TextBlock
+                                x:Uid="StandardIdLabel"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Text="STANDARD ID" />
@@ -215,6 +222,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" Spacing="4">
                             <TextBlock
+                                x:Uid="VendorIdLabel"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Text="VENDOR ID" />
@@ -222,6 +230,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="2" Spacing="4">
                             <TextBlock
+                                x:Uid="CodecIdLabel"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Text="CODEC ID" />
@@ -229,6 +238,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="3" Spacing="4">
                             <TextBlock
+                                x:Uid="ObservedLabel"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Text="OBSERVED" />
@@ -247,6 +257,7 @@
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Glyph="&#xE946;" />
                     <TextBlock
+                        x:Uid="FooterNote"
                         Grid.Column="1"
                         FontSize="12"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"

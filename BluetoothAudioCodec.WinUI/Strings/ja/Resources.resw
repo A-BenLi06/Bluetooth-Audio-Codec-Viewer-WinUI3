@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle.Text" xml:space="preserve">
+    <value>Bluetooth オーディオコーデック</value>
+  </data>
+  <data name="HeaderTitle.Text" xml:space="preserve">
+    <value>現在の Bluetooth コーデック</value>
+  </data>
+  <data name="HeaderSubtitle.Text" xml:space="preserve">
+    <value>Windows がヘッドセットとネゴシエートしたコーデックを確認します。</value>
+  </data>
+  <data name="OutputLabel.Text" xml:space="preserve">
+    <value>デフォルト出力</value>
+  </data>
+  <data name="DetectHint.Text" xml:space="preserve">
+    <value>短い低音トーンにより、Windows が新しいストリームを作成しやすくなります。</value>
+  </data>
+  <data name="DetailsHeader.Header" xml:space="preserve">
+    <value>技術詳細</value>
+  </data>
+  <data name="StandardIdLabel.Text" xml:space="preserve">
+    <value>標準 ID</value>
+  </data>
+  <data name="VendorIdLabel.Text" xml:space="preserve">
+    <value>ベンダー ID</value>
+  </data>
+  <data name="CodecIdLabel.Text" xml:space="preserve">
+    <value>コーデック ID</value>
+  </data>
+  <data name="ObservedLabel.Text" xml:space="preserve">
+    <value>観測時刻</value>
+  </data>
+  <data name="FooterNote.Text" xml:space="preserve">
+    <value>A2DP イベントはストリームの開始または終了時に発生します。HFP 通話と LE Audio は異なるコーデックを使用します。</value>
+  </data>
+  <data name="StatusReady" xml:space="preserve">
+    <value>準備完了</value>
+  </data>
+  <data name="StatusListening" xml:space="preserve">
+    <value>リッスン中</value>
+  </data>
+  <data name="StatusAdminRequired" xml:space="preserve">
+    <value>管理者権限が必要</value>
+  </data>
+  <data name="StatusError" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+  <data name="StatusDetected" xml:space="preserve">
+    <value>検出済み</value>
+  </data>
+  <data name="StatusTryAgain" xml:space="preserve">
+    <value>再試行</value>
+  </data>
+  <data name="ProtocolDefault" xml:space="preserve">
+    <value>Bluetooth Classic · A2DP</value>
+  </data>
+  <data name="ProtocolWaiting" xml:space="preserve">
+    <value>A2DP ストリームイベントを待機中</value>
+  </data>
+  <data name="ProtocolRetryHint" xml:space="preserve">
+    <value>再生を停止するか再接続して、再試行してください</value>
+  </data>
+  <data name="DeviceChecking" xml:space="preserve">
+    <value>確認中…</value>
+  </data>
+  <data name="DeviceNone" xml:space="preserve">
+    <value>デフォルト出力が見つかりません</value>
+  </data>
+  <data name="CodecListening" xml:space="preserve">
+    <value>リッスン中…</value>
+  </data>
+  <data name="CodecNoEvent" xml:space="preserve">
+    <value>イベントなし</value>
+  </data>
+  <data name="DetectButtonInitial" xml:space="preserve">
+    <value>コーデックを検出</value>
+  </data>
+  <data name="DetectButtonCancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="DetectButtonAgain" xml:space="preserve">
+    <value>再度検出</value>
+  </data>
+  <data name="DetectButtonRestart" xml:space="preserve">
+    <value>管理者として再起動</value>
+  </data>
+  <data name="MessageBarTitle" xml:space="preserve">
+    <value>情報</value>
+  </data>
+  <data name="MessageAdminRequiredTitle" xml:space="preserve">
+    <value>管理者権限が必要です</value>
+  </data>
+  <data name="MessageAdminRequiredBody" xml:space="preserve">
+    <value>Windows は管理者権限プロセスにのみ Bluetooth コーデックトレースを公開します。</value>
+  </data>
+  <data name="MessageDetectionCanceledTitle" xml:space="preserve">
+    <value>検出がキャンセルされました</value>
+  </data>
+  <data name="MessageDetectionCanceledBody" xml:space="preserve">
+    <value>Bluetooth 設定は変更されませんでした。</value>
+  </data>
+  <data name="MessageUnableTitle" xml:space="preserve">
+    <value>コーデックを検査できません</value>
+  </data>
+  <data name="MessageCodecDetectedTitle" xml:space="preserve">
+    <value>コーデックが検出されました</value>
+  </data>
+  <data name="MessageCodecDetectedBody" xml:space="preserve">
+    <value>ネゴシエートされたコーデックが Windows Bluetooth オーディオトレースからキャプチャされました。</value>
+  </data>
+  <data name="MessageNoEventTitle" xml:space="preserve">
+    <value>コーデックイベントが観測されませんでした</value>
+  </data>
+  <data name="MessageNoEventDefaultBody" xml:space="preserve">
+    <value>30 秒のウィンドウ中に Windows は A2DP ストリームを開始も終了もしませんでした。</value>
+  </data>
+  <data name="MessageNoEventBodyFormat" xml:space="preserve">
+    <value>{0} ヘッドセットのマイク使用により、Windows が HFP に切り替わる場合があります。</value>
+  </data>
+  <data name="MessageElevationCanceledTitle" xml:space="preserve">
+    <value>昇格がキャンセルされました</value>
+  </data>
+  <data name="MessageElevationCanceledBody" xml:space="preserve">
+    <value>アプリは管理者権限なしで実行中です。</value>
+  </data>
+  <data name="MessageRestartFailedTitle" xml:space="preserve">
+    <value>アプリを再起動できませんでした</value>
+  </data>
+  <data name="StatusNotBluetooth" xml:space="preserve">
+    <value>BT デバイスではありません</value>
+  </data>
+  <data name="MessageNotBluetoothTitle" xml:space="preserve">
+    <value>Bluetooth オーディオデバイスではありません</value>
+  </data>
+  <data name="MessageNotBluetoothBody" xml:space="preserve">
+    <value>現在のデフォルト出力は Bluetooth デバイスではありません。Bluetooth ヘッドセットに切り替えて再試行してください。</value>
+  </data>
+  <data name="StatusLeAudio" xml:space="preserve">
+    <value>LE Audio</value>
+  </data>
+  <data name="MessageLeAudioTitle" xml:space="preserve">
+    <value>LE Audio はサポートされていません</value>
+  </data>
+  <data name="MessageLeAudioBody" xml:space="preserve">
+    <value>このデバイスは LC3 コーデックを伴う LE Audio を使用しており、A2DP トレースでは検出できません。</value>
+  </data>
+</root>
