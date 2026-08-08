@@ -54,7 +54,7 @@
     <value>SORTIE PAR DÉFAUT</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>Un court ton calme aide Windows à créer un nouveau flux.</value>
+    <value>Un bref son discret crée un nouveau flux ; Windows demandera l’autorisation administrateur pour la détection.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Détails techniques</value>

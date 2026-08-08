@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using BluetoothAudioCodec.WinUI.Services;
@@ -14,9 +12,8 @@ namespace BluetoothAudioCodec.WinUI;
 
 public sealed partial class MainWindow : Window
 {
-    private readonly BluetoothCodecDetector _detector = new();
+    private readonly ElevatedCodecBridge _codecBridge = new();
     private CancellationTokenSource? _detection;
-    private bool _isElevated;
     private bool _isLoaded;
 
     public MainWindow()
@@ -75,24 +72,10 @@ public sealed partial class MainWindow : Window
         }
 
         _isLoaded = true;
-        _isElevated = BluetoothCodecDetector.IsElevated;
 
         var endpoint = AudioEndpoint.TryGetDefaultRenderEndpoint();
         DeviceText.Text = endpoint?.FriendlyName ?? Localizer.GetString("DeviceNone");
         ProtocolText.Text = Localizer.GetString("ProtocolDefault");
-
-        if (!_isElevated)
-        {
-            StatusText.Text = Localizer.GetString("StatusAdminRequired");
-            StatusDot.Fill = GetThemeBrush("SystemFillColorCautionBrush");
-            DetectButtonText.Text = Localizer.GetString("DetectButtonRestart");
-            DetectIcon.Glyph = "\uE7EF";
-            ShowMessage(
-                InfoBarSeverity.Informational,
-                Localizer.GetString("MessageAdminRequiredTitle"),
-                Localizer.GetString("MessageAdminRequiredBody"));
-            return;
-        }
 
         SetReadyState();
     }
@@ -105,19 +88,13 @@ public sealed partial class MainWindow : Window
             return;
         }
 
-        if (!_isElevated)
-        {
-            RestartElevated();
-            return;
-        }
-
         using var cancellation = new CancellationTokenSource();
         _detection = cancellation;
         SetListeningState();
 
         try
         {
-            var result = await _detector.DetectAsync(
+            var result = await _codecBridge.DetectAsync(
                 TimeSpan.FromSeconds(30),
                 playTone: true,
                 cancellation.Token);
@@ -138,6 +115,14 @@ public sealed partial class MainWindow : Window
             {
                 ShowNoObservation(result.Warnings);
             }
+        }
+        catch (ElevationCanceledException)
+        {
+            SetReadyState();
+            ShowMessage(
+                InfoBarSeverity.Informational,
+                Localizer.GetString("MessageElevationCanceledTitle"),
+                Localizer.GetString("MessageElevationCanceledBody"));
         }
         catch (Exception exception)
         {
@@ -215,76 +200,6 @@ public sealed partial class MainWindow : Window
             InfoBarSeverity.Warning,
             Localizer.GetString("MessageNoEventTitle"),
             string.Format(CultureInfo.CurrentCulture, Localizer.GetString("MessageNoEventBodyFormat"), detail));
-    }
-
-    private void RestartElevated()
-    {
-        try
-        {
-            var processPath = GetCurrentExecutablePath();
-            var workingDirectory = Path.GetDirectoryName(processPath)
-                ?? AppContext.BaseDirectory;
-
-            using var elevatedProcess = Process.Start(new ProcessStartInfo
-            {
-                FileName = processPath,
-                UseShellExecute = true,
-                Verb = "runas",
-                WorkingDirectory = workingDirectory
-            });
-
-            if (elevatedProcess is null)
-            {
-                throw new InvalidOperationException(
-                    "Windows did not create the elevated application process.");
-            }
-
-            if (!elevatedProcess.WaitForInputIdle(milliseconds: 10_000) ||
-                elevatedProcess.HasExited)
-            {
-                var exitDescription = elevatedProcess.HasExited
-                    ? $" It exited with code 0x{elevatedProcess.ExitCode:X8}."
-                    : string.Empty;
-                throw new InvalidOperationException(
-                    "The elevated application did not finish starting." +
-                    exitDescription);
-            }
-
-            Application.Current.Exit();
-        }
-        catch (Win32Exception exception) when (exception.NativeErrorCode == 1223)
-        {
-            ShowMessage(
-                InfoBarSeverity.Informational,
-                Localizer.GetString("MessageElevationCanceledTitle"),
-                Localizer.GetString("MessageElevationCanceledBody"));
-        }
-        catch (Exception exception)
-        {
-            ShowMessage(
-                InfoBarSeverity.Error,
-                Localizer.GetString("MessageRestartFailedTitle"),
-                exception.Message);
-        }
-    }
-
-    private static string GetCurrentExecutablePath()
-    {
-        var processPath = Environment.ProcessPath;
-        if (!string.IsNullOrWhiteSpace(processPath) && File.Exists(processPath))
-        {
-            return processPath;
-        }
-
-        using var currentProcess = Process.GetCurrentProcess();
-        processPath = currentProcess.MainModule?.FileName;
-        if (!string.IsNullOrWhiteSpace(processPath) && File.Exists(processPath))
-        {
-            return processPath;
-        }
-
-        throw new InvalidOperationException(
-            "The application executable path is unavailable.");
     }
 
     private void ShowMessage(InfoBarSeverity severity, string title, string message)

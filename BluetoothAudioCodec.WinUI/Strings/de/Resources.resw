@@ -54,7 +54,7 @@
     <value>STANDARDAUSGABE</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>Ein kurzer, leiser Ton hilft Windows, einen neuen Stream zu erstellen.</value>
+    <value>Ein kurzer leiser Ton erzeugt einen neuen Stream; Windows fordert zur Erkennung Administratorrechte an.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Technische Details</value>
