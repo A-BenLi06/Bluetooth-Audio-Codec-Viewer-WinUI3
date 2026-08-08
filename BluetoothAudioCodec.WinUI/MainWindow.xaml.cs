@@ -14,6 +14,7 @@ public sealed partial class MainWindow : Window
 {
     private readonly ElevatedCodecBridge _codecBridge = new();
     private CancellationTokenSource? _detection;
+    private DetectionPresentation? _presentationBeforeDetection;
     private bool _isLoaded;
 
     public MainWindow()
@@ -90,6 +91,7 @@ public sealed partial class MainWindow : Window
 
         using var cancellation = new CancellationTokenSource();
         _detection = cancellation;
+        _presentationBeforeDetection = CaptureDetectionPresentation();
         SetListeningState();
 
         try
@@ -119,6 +121,7 @@ public sealed partial class MainWindow : Window
         catch (ElevationCanceledException)
         {
             SetReadyState();
+            RestoreDetectionPresentation();
             ShowMessage(
                 InfoBarSeverity.Informational,
                 Localizer.GetString("MessageElevationCanceledTitle"),
@@ -126,6 +129,7 @@ public sealed partial class MainWindow : Window
         }
         catch (Exception exception)
         {
+            RestoreDetectionPresentation();
             StatusText.Text = Localizer.GetString("StatusError");
             StatusDot.Fill = GetThemeBrush("SystemFillColorCriticalBrush");
             ShowMessage(
@@ -136,6 +140,7 @@ public sealed partial class MainWindow : Window
         finally
         {
             _detection = null;
+            _presentationBeforeDetection = null;
             DetectionProgress.IsActive = false;
             DetectionProgress.Visibility = Visibility.Collapsed;
             DetectIcon.Visibility = Visibility.Visible;
@@ -205,10 +210,39 @@ public sealed partial class MainWindow : Window
     private void ShowDetectionCanceled()
     {
         SetReadyState();
+        RestoreDetectionPresentation();
         ShowMessage(
             InfoBarSeverity.Informational,
             Localizer.GetString("MessageDetectionCanceledTitle"),
             Localizer.GetString("MessageDetectionCanceledBody"));
+    }
+
+    private DetectionPresentation CaptureDetectionPresentation()
+    {
+        return new DetectionPresentation(
+            CodecText.Text,
+            ProtocolText.Text,
+            DeviceText.Text,
+            StandardIdText.Text,
+            VendorIdText.Text,
+            VendorCodecIdText.Text,
+            ObservedAtText.Text);
+    }
+
+    private void RestoreDetectionPresentation()
+    {
+        if (_presentationBeforeDetection is not { } presentation)
+        {
+            return;
+        }
+
+        CodecText.Text = presentation.Codec;
+        ProtocolText.Text = presentation.Protocol;
+        DeviceText.Text = presentation.Device;
+        StandardIdText.Text = presentation.StandardId;
+        VendorIdText.Text = presentation.VendorId;
+        VendorCodecIdText.Text = presentation.VendorCodecId;
+        ObservedAtText.Text = presentation.ObservedAt;
     }
 
     private void ShowMessage(InfoBarSeverity severity, string title, string message)
@@ -223,6 +257,15 @@ public sealed partial class MainWindow : Window
     {
         return (Brush)Application.Current.Resources[resourceKey];
     }
+
+    private sealed record DetectionPresentation(
+        string Codec,
+        string Protocol,
+        string Device,
+        string StandardId,
+        string VendorId,
+        string VendorCodecId,
+        string ObservedAt);
 
     [DllImport("user32.dll")]
     private static extern uint GetDpiForWindow(IntPtr windowHandle);

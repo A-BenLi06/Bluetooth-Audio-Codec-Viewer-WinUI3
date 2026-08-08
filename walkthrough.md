@@ -283,3 +283,25 @@ errors, and both installers passed administrative extraction with exit code 0
 and exact SHA-256 payload matches. A non-elevated helper protocol test connected,
 returned an authenticated response, exited, and left zero codec ETW sessions.
 No Computer Use, UI automation, installation, or UAC prompt was used.
+
+## 2026-08-09 00:33:25 +08:00
+
+Fixed the remaining visual cancellation state. Detection cancellation had
+already returned the status badge and action button to Ready, but the main codec
+card was never restored, leaving `Listening...` and the waiting protocol text
+visible beside the successful cancellation message.
+
+The window now snapshots the complete detection presentation immediately before
+entering the listening state: codec, protocol, output device, standard ID,
+vendor ID, vendor codec ID, and observation time. Cancellation restores that
+snapshot before showing the localized cancellation message. UAC cancellation
+and detection errors use the same restoration path, so a first canceled attempt
+returns to the neutral card while a canceled retry preserves the last completed
+result without stale or mismatched technical details.
+
+The x64 Release project compiled with zero warnings and errors. The x64 and
+ARM64 single-file applications and MSI packages were rebuilt with zero warnings
+and errors; both installers passed administrative extraction with exit code 0
+and exact SHA-256 payload matches. No codec ETW sessions remained after
+validation. The user's open UI was left running, and no Computer Use, UI
+automation, installation, or UAC prompt was used.
