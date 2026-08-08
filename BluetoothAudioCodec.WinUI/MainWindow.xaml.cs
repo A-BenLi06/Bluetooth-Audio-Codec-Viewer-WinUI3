@@ -239,6 +239,17 @@ public sealed partial class MainWindow : Window
                     "Windows did not create the elevated application process.");
             }
 
+            if (!elevatedProcess.WaitForInputIdle(milliseconds: 10_000) ||
+                elevatedProcess.HasExited)
+            {
+                var exitDescription = elevatedProcess.HasExited
+                    ? $" It exited with code 0x{elevatedProcess.ExitCode:X8}."
+                    : string.Empty;
+                throw new InvalidOperationException(
+                    "The elevated application did not finish starting." +
+                    exitDescription);
+            }
+
             Application.Current.Exit();
         }
         catch (Win32Exception exception) when (exception.NativeErrorCode == 1223)
