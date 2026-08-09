@@ -30,6 +30,9 @@ Scalable Codec、LHDC 等已知編解碼器。遇到未知值時仍會顯示其�
 本工具只偵測 Bluetooth Classic A2DP 播放。免持通話（HFP）和 Bluetooth LE Audio
 使用不同的編解碼器路徑，不在偵測範圍內。
 
+可選的 Ko-fi 和愛發電連結會在預設瀏覽器中開啟。支持開發完全自願，不會解鎖應用
+程式功能或數位內容。
+
 ## 產品功能
 
 1. 偵測目前使用的 Bluetooth Classic A2DP 編解碼器

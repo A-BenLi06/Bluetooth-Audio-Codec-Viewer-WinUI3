@@ -29,6 +29,9 @@ Scalable Codec、LHDC 等已知编解码器。遇到未知值时仍会显示其�
 本工具仅检测 Bluetooth Classic A2DP 播放。免提通话（HFP）和 Bluetooth LE Audio
 使用不同的编解码器路径，不在检测范围内。
 
+可选的 Ko-fi 和爱发电链接会在默认浏览器中打开。支持开发完全自愿，不会解锁应用
+功能或数字内容。
+
 ## 产品功能
 
 1. 检测当前使用的 Bluetooth Classic A2DP 编解码器

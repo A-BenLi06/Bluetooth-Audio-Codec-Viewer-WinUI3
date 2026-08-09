@@ -157,6 +157,15 @@ dotnet run .\BluetoothAudioCodec.cs -- --watch --no-tone
 准备公开隐私政策时，请先替换
 [StoreAssets/PRIVACY_POLICY.md](StoreAssets/PRIVACY_POLICY.md) 中的支持联系方式占位符。
 
+## Support development
+
+如果 Bluetooth Audio Codec 对你有帮助，可以通过以下平台支持后续开发：
+
+- [Ko-fi](https://ko-fi.com/benli06)
+- [爱发电](https://afdian.com/a/benli06)
+
+支持完全自愿，不会解锁应用功能或内容。
+
 ## English overview
 
 Bluetooth Audio Codec is a focused WinUI 3 utility that reports the active

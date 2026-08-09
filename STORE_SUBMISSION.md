@@ -11,6 +11,7 @@ Official references:
 - [Upload MSI/EXE packages](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msi/upload-app-packages)
 - [Manual package validation](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msi/manual-package-validation)
 - [MSI/EXE screenshots and images](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msi/screenshots-and-images)
+- [Microsoft Store policy 10.8.2: voluntary donations](https://learn.microsoft.com/en-us/windows/apps/publish/store-policy-archive/store-policy-7-18#108-financial-transactions)
 
 ## Current readiness
 
@@ -147,6 +148,10 @@ downloaded hashes match before entering the URLs in Partner Center.
   locally and sends no data off-device.
 - Driver or NT service declaration: `No`.
 - Pen and ink: `No`.
+- Third-party commerce declaration: select the option indicating that the
+  product allows transactions without Microsoft Store commerce. The optional
+  Ko-fi and Afdian links open secure third-party sites in the default browser;
+  support unlocks no app feature or digital content.
 - Privacy policy: optional if Partner Center does not require it after the data
   declaration, but publishing the prepared policy is recommended.
 - Provide a working website/support contact. Business accounts must also provide
@@ -205,6 +210,7 @@ with each language even when the same image is reused.
 - Store logo and at least one 1366 x 768 screenshot are uploaded.
 - Description and applicable license terms are filled for each listing language.
 - Support contact works and privacy-policy placeholder has been replaced.
+- Third-party commerce declaration covers the optional Ko-fi and Afdian links.
 - Certification notes explain the user-initiated elevated ETW helper.
 
 Only after every item above is true should the submission be sent for

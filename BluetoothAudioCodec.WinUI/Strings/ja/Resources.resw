@@ -185,4 +185,10 @@
   <data name="MessageLeAudioBody" xml:space="preserve">
     <value>このデバイスは LC3 コーデックを伴う LE Audio を使用しており、A2DP トレースでは検出できません。</value>
   </data>
+  <data name="SupportTitle.Text" xml:space="preserve">
+    <value>開発を支援</value>
+  </data>
+  <data name="SupportDescription.Text" xml:space="preserve">
+    <value>支援は任意で、アプリの機能やコンテンツは解放されません。</value>
+  </data>
 </root>

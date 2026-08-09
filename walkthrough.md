@@ -428,3 +428,26 @@ confirmed that the ICO contains all ten requested sizes. The x64 single-file
 application and WiX MSI rebuilt successfully; Windows extracted the new 32-pixel
 icon from the executable, and the MSI Icon table contains `AppIcon.ico`. The
 local artifacts remain unsigned test builds. No Computer Use was used.
+
+## 2026-08-09 21:43:20 +08:00
+
+Added a compact Support development card at the bottom of the WinUI interface
+with user-initiated links to `https://ko-fi.com/benli06` and
+`https://afdian.com/a/benli06`. The links use the operating system's default web
+browser and do not add an embedded checkout or network client. Added localized
+title and disclosure text for all nine supported interface languages. The copy
+states that support is voluntary and does not unlock application features or
+digital content.
+
+Added the same support links and disclosure to the GitHub README. Updated the
+privacy policy, all three prepared Store listing languages, certification notes,
+and submission runbook to disclose the external payment providers and the
+required third-party commerce declaration. This follows Microsoft Store policy
+10.8.2 for voluntary donations through secure third-party services while making
+clear that the application handles no payment or financial information.
+
+All XAML and RESW files parsed successfully, every locale contains both new
+resource keys, and the x64 Release project built with zero warnings and errors.
+The Afdian endpoint returned HTTP 200; Ko-fi rejected automated validation with
+HTTP 403, so its canonical user-provided URL was retained. The unrelated
+untracked `app-website` directory remained untouched. No Computer Use was used.
