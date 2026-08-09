@@ -67,7 +67,7 @@ Scalable Codec、LHDC 等已知編解碼器。遇到未知值時仍會顯示其�
 
 ## 適用授權條款
 
-專有軟體授權。Copyright 2026 BenLi06。保留所有權利。
+MIT 授權條款。Copyright 2026 BenLi06。完整條款請參閱專案的 LICENSE 檔案。
 
 ## 版權和商標資訊
 

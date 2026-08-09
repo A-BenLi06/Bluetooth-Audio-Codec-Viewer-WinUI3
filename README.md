@@ -176,9 +176,8 @@ codec paths and are outside its scope.
 
 ## License and trademarks
 
-Copyright © 2026 BenLi06. All rights reserved. This repository does not grant a
-license to use, copy, modify, or redistribute the software unless a separate
-license explicitly says otherwise.
+Copyright © 2026 BenLi06. This project is available under the
+[MIT License](LICENSE).
 
 Bluetooth trademarks belong to Bluetooth SIG, Inc. Other product names and
 trademarks belong to their respective owners. This project is not affiliated

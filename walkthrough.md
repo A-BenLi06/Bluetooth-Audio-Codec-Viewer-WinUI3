@@ -364,3 +364,17 @@ unsigned local MSI workflow, trusted-certificate Store release command, optional
 .NET 10 file-based CLI, repository layout, and the link to the full Store
 submission runbook. No source behavior, package contents, or user-owned
 `app-website` files were changed, and no Computer Use was used.
+
+## 2026-08-09 13:36:10 +08:00
+
+Connected the local project to the GitHub repository at
+`A-BenLi06/Bluetooth-Audio-Codec-Viewer-WinUI3`. The remote already contained an
+independent initial commit with an MIT LICENSE and a placeholder README, so its
+history was fetched and merged without force-pushing or discarding either
+history. The complete local README was retained and the remote MIT LICENSE was
+added.
+
+Updated the README and all three prepared Store listing languages to identify
+the MIT License consistently instead of the earlier proprietary wording. The
+untracked user-owned `app-website` directory was left untouched. No Computer
+Use was used.

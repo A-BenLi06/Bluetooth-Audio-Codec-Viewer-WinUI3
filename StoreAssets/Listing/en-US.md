@@ -70,7 +70,8 @@ Leave blank for the first submission.
 
 ## Applicable license terms
 
-Proprietary license. Copyright 2026 BenLi06. All rights reserved.
+MIT License. Copyright 2026 BenLi06. See the project's LICENSE file for the
+complete terms.
 
 ## Copyright and trademark info
 
