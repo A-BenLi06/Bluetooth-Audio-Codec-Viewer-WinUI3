@@ -348,3 +348,19 @@ and working support contact. The unrelated untracked `app-website` source
 screenshots were read to prepare copied Store screenshots but were otherwise
 left untouched. No Computer Use, application installation, or UAC prompt was
 used.
+
+## 2026-08-09 01:34:00 +08:00
+
+Added a repository-level README for the completed WinUI application. It presents
+the product with the final icon and detected-codec screenshot, documents the
+supported codec families and the A2DP-only boundary, and explains why detection
+uses a short-lived elevated helper while the main interface remains at normal
+integrity. The README also records the local-only privacy model, current-user
+authenticated pipe design, supported architectures and languages, common event
+capture limitations, and the proprietary licensing status.
+
+Documented the exact Visual Studio solution entry, command-line build commands,
+unsigned local MSI workflow, trusted-certificate Store release command, optional
+.NET 10 file-based CLI, repository layout, and the link to the full Store
+submission runbook. No source behavior, package contents, or user-owned
+`app-website` files were changed, and no Computer Use was used.
