@@ -392,3 +392,19 @@ clarification. The final MSI Property table and generated release manifest both
 report `Manufacturer: BenLi06`. The Git remote remains
 `A-BenLi06/Bluetooth-Audio-Codec-Viewer-WinUI3`, and the untracked user-owned
 `app-website` directory was left untouched. No Computer Use was used.
+
+## 2026-08-09 15:43:21 +08:00
+
+Corrected GitHub attribution across the complete repository history. Earlier
+local commits used `BenLi06@users.noreply.github.com`, which GitHub associated
+with the unrelated account that owns that username, and the first source commit
+still used a local Codex identity. All fourteen affected commits were rewritten
+to use the repository owner's verified noreply address,
+`89132514+A-BenLi06@users.noreply.github.com`, for both author and committer,
+while retaining `BenLi06` as the public developer name.
+
+The remote repository's original GitHub-signed commit was excluded from the
+rewrite, so its hash and signature remain intact. Tree comparison confirmed
+that rewriting metadata changed no project files. Local Git configuration now
+uses the corrected noreply address for future commits. The user-owned untracked
+`app-website` directory remained untouched, and no Computer Use was used.
