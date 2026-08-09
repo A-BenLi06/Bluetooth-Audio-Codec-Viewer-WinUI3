@@ -115,7 +115,7 @@ Microsoft Store。
 .\build-store-installer.ps1 `
     -Architecture all `
     -Version 1.0.0 `
-    -Manufacturer "YOUR LEGAL PUBLISHER NAME" `
+    -Manufacturer "BenLi06" `
     -CertificateThumbprint YOUR_CERTIFICATE_THUMBPRINT `
     -RequireSigning
 ```

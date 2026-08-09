@@ -378,3 +378,17 @@ Updated the README and all three prepared Store listing languages to identify
 the MIT License consistently instead of the earlier proprietary wording. The
 untracked user-owned `app-website` directory was left untouched. No Computer
 Use was used.
+
+## 2026-08-09 15:24:57 +08:00
+
+Clarified the project's public identities: `BenLi06` remains the developer,
+publisher, MSI manufacturer, copyright holder, and Store listing name, while
+only the GitHub account and repository path use `A-BenLi06`. The README release
+example and Store submission runbook now use `BenLi06` directly and no longer
+treat the publisher name as an unresolved placeholder.
+
+Rebuilt the x64 self-contained application and WiX MSI successfully after the
+clarification. The final MSI Property table and generated release manifest both
+report `Manufacturer: BenLi06`. The Git remote remains
+`A-BenLi06/Bluetooth-Audio-Codec-Viewer-WinUI3`, and the untracked user-owned
+`app-website` directory was left untouched. No Computer Use was used.
