@@ -29,7 +29,6 @@ Completed in the repository:
 Release blockers that require publisher-owned information or credentials:
 
 - a trusted-CA code-signing certificate with its private key;
-- the legal publisher name that should appear in the MSI;
 - a reserved Partner Center product name;
 - public HTTPS package URLs that will never be overwritten;
 - a working support contact and, if used, public privacy-policy URL.
@@ -43,8 +42,7 @@ Before building, decide and keep these values stable:
 
 - Product name: `Bluetooth Audio Codec`
 - MSI version: three-part version such as `1.0.0`
-- Manufacturer: the publisher's legal name, matching the public publisher
-  identity and not a placeholder
+- Manufacturer: `BenLi06`, matching the intended public publisher identity
 - Architectures: `x64` and `arm64`
 - UpgradeCode: `DFA46F66-61B3-46D0-B4B0-0A326CDB46AA` (do not change)
 
@@ -60,7 +58,7 @@ store, then run:
 .\build-store-installer.ps1 `
     -Architecture all `
     -Version 1.0.0 `
-    -Manufacturer "YOUR LEGAL PUBLISHER NAME" `
+    -Manufacturer "BenLi06" `
     -CertificateThumbprint YOUR_CERTIFICATE_THUMBPRINT `
     -RequireSigning
 ```
@@ -196,8 +194,8 @@ with each language even when the same image is reused.
 ## 6. Final pre-submit check
 
 - Reserved Store name matches the MSI ProductName.
-- Legal publisher name is not `BenLi06` unless that is the verified publisher
-  identity intended for the release.
+- Legal publisher name is `BenLi06` and matches the verified Partner Center
+  publisher identity.
 - EXE and MSI signatures are valid and chain to a trusted public CA.
 - x64 and ARM64 URLs download the correct, immutable packages.
 - `/qn` install and uninstall pass on clean systems.
