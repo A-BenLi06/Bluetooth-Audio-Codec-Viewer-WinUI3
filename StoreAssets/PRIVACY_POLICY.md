@@ -36,5 +36,4 @@ not change Bluetooth or system settings.
 
 ## Contact
 
-Before publishing this policy, replace this paragraph with a working support
-email address or support URL controlled by the publisher.
+e-mail: ben_li06@outlook.com
