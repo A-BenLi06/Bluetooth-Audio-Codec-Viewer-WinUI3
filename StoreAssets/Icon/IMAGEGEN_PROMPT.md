@@ -1,19 +1,20 @@
 # App icon generation record
 
-Mode: built-in `image_gen` edit flow with the supplied 1024 x 1024 concept as
-the edit target and design reference. The generated chroma-key background was
-removed locally with the imagegen skill's `remove_chroma_key.py` helper.
+Mode: built-in `image_gen` edit flow using the previous production icon as the
+edit target. The generated flat magenta background was removed locally with the
+imagegen skill's `remove_chroma_key.py` helper. Windows and Store sizes were
+derived from the transparent 1254 x 1254 master with high-quality Lanczos
+resampling.
 
 ## Final prompt
 
 ```text
 Use case: logo-brand
-Asset type: production master icon for a modern Windows desktop application and Microsoft Store listing
-Input image: edit target and design reference. Preserve the recognizable composition and meaning of the user's design: a large central Bluetooth rune, symmetrical audio-wave bars on both sides, and a circular check badge overlapping the lower-right of the rune.
-Primary request: adapt this exact concept into a crisp, high-contrast app icon that remains recognizable at 16–32 px. Tighten the composition so the mark fills roughly 72–78% of the canvas, strengthen the silhouettes and edge contrast, and reduce the excessive empty gray space while retaining the luminous blue/cyan glass-like character.
-Scene/backdrop: place the finished dark navy rounded-square icon tile on a perfectly flat solid #ff00ff chroma-key background for later transparency removal. Outside the rounded-square tile, the background must be one uniform #ff00ff color with no gradient, texture, shadow, reflection, glow, or lighting variation.
-Style/medium: polished Windows 11 Fluent-inspired application icon; clean vector-like geometry with subtle dimensional glass and restrained bloom, not a photograph.
-Composition: centered, front-facing, perfectly square, no tilt or perspective. The Bluetooth symbol is dominant; waveform bars are balanced and symmetrical; the check badge is distinct but secondary and does not obscure the Bluetooth identity. Generous consistent padding inside the tile.
-Color palette: near-black/navy tile, saturated Azure blue and cyan highlights, small deep-blue accents. Do not use magenta anywhere in the icon tile.
-Constraints: preserve the three core symbols and their relative arrangement; crisp strong forms at thumbnail size; no letters, no words, no extra symbols, no watermark, no mockup frame, no drop shadow outside the rounded tile. Keep all glow contained inside the tile. Output one 1024x1024 icon master.
+Asset type: Windows desktop application icon, square 1:1 master
+Input image: edit target; preserve its recognizable concept and overall composition.
+Primary request: Redesign this Bluetooth Audio Codec icon into a restrained, genuinely flat modern app icon. Keep the central Bluetooth rune, symmetrical audio waveform bars on both sides, and the small verification check badge at the lower right. Remove every neon glow, bloom, lens effect, glass effect, bevel, embossing, glossy highlight, reflection, blur, texture, and 3D depth.
+Style/medium: crisp 2D vector-like geometry, minimal Fluent-inspired but not glossy, designed by a professional human brand designer. Use a dark navy solid rounded-square tile, one vivid Windows-blue solid color for the Bluetooth and waveform motif, and a simple cyan/blue check badge with strong contrast. Flat color fields only; no gradients. Consistent stroke weight, clean optical spacing, balanced proportions, fewer details, legible at 16–32 px.
+Composition: centered Bluetooth symbol, matching four-bar waveform groups left and right, check badge overlapping the lower-right area without crowding. Generous safe padding. Rounded-square silhouette must stay fully inside the canvas.
+Background-removal requirement: outside the rounded-square icon tile, use a perfectly flat solid #FF00FF chroma-key background. The outside background must be uniform with no shadows, gradients, texture, or antialias spill. Do not use magenta anywhere in the icon itself.
+Constraints: no text, no letters, no watermark; preserve Bluetooth + audio + verified meaning; no added objects; no glow of any kind; no cast shadow; no metallic or glass materials; no photorealism.
 ```

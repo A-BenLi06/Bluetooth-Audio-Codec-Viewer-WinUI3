@@ -408,3 +408,23 @@ rewrite, so its hash and signature remain intact. Tree comparison confirmed
 that rewriting metadata changed no project files. Local Git configuration now
 uses the corrected noreply address for future commits. The user-owned untracked
 `app-website` directory remained untouched, and no Computer Use was used.
+
+## 2026-08-09 16:12:48 +08:00
+
+Redesigned the application icon through the built-in imagegen edit workflow to
+remove the previous neon bloom, glass highlights, bevels, embossed edges, and
+three-dimensional check ring. The recognizable Bluetooth rune, symmetrical
+audio bars, and lower-right verification badge remain, but now use restrained
+flat geometry, consistent stroke weight, a dark navy tile, and solid blue/cyan
+color fields. The exact production prompt and chroma-key transparency workflow
+are recorded with the icon source.
+
+Replaced the transparent 1254-pixel master, 256-pixel application PNG,
+multi-resolution Windows ICO, 1080- and 300-pixel Store logos, and the 720 x
+1080 Store poster. The poster was rebuilt without glow on a solid navy field.
+Validated transparent corners and alpha coverage, previewed the design at 16,
+20, 24, 32, 48, 64, 128, and 256 pixels on light and dark backgrounds, and
+confirmed that the ICO contains all ten requested sizes. The x64 single-file
+application and WiX MSI rebuilt successfully; Windows extracted the new 32-pixel
+icon from the executable, and the MSI Icon table contains `AppIcon.ico`. The
+local artifacts remain unsigned test builds. No Computer Use was used.
