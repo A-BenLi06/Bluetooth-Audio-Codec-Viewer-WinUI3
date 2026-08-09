@@ -264,6 +264,44 @@
                         Text="The A2DP event is emitted when a stream opens or closes. HFP calls and LE Audio use different codecs."
                         TextWrapping="Wrap" />
                 </Grid>
+
+                <Border
+                    Padding="14,12"
+                    Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                    CornerRadius="8">
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel VerticalAlignment="Center" Spacing="2">
+                            <TextBlock
+                                x:Uid="SupportTitle"
+                                FontWeight="SemiBold"
+                                Text="Support development" />
+                            <TextBlock
+                                x:Uid="SupportDescription"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Text="Optional support does not unlock app features or content."
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <HyperlinkButton
+                                Content="Ko-fi ↗"
+                                NavigateUri="https://ko-fi.com/benli06" />
+                            <HyperlinkButton
+                                Content="爱发电 ↗"
+                                NavigateUri="https://afdian.com/a/benli06" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

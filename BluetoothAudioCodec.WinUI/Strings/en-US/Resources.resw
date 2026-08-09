@@ -185,4 +185,10 @@
   <data name="MessageLeAudioBody" xml:space="preserve">
     <value>This device uses LE Audio with the LC3 codec, which is not detectable through A2DP tracing.</value>
   </data>
+  <data name="SupportTitle.Text" xml:space="preserve">
+    <value>Support development</value>
+  </data>
+  <data name="SupportDescription.Text" xml:space="preserve">
+    <value>Optional support does not unlock app features or content.</value>
+  </data>
 </root>

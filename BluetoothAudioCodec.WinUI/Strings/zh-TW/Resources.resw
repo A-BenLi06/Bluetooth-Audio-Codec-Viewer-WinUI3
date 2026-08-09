@@ -185,4 +185,10 @@
   <data name="MessageLeAudioBody" xml:space="preserve">
     <value>此裝置使用 LE Audio 和 LC3 編解碼器，無法透過 A2DP 追蹤偵測。</value>
   </data>
+  <data name="SupportTitle.Text" xml:space="preserve">
+    <value>支持開發</value>
+  </data>
+  <data name="SupportDescription.Text" xml:space="preserve">
+    <value>自願支持，不會解鎖應用程式功能或內容。</value>
+  </data>
 </root>

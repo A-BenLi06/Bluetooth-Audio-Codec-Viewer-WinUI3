@@ -19,6 +19,9 @@ The application:
 - does not record or inspect audio content;
 - does not collect, store, or transmit personal or device information;
 - does not contain advertising, telemetry, a downloader, or bundled software;
+- includes optional Ko-fi and Afdian support links that open in the user's
+  default browser; support unlocks no app feature or digital content, and the
+  application never handles payment or financial information;
 - plays one quiet 600 ms tone to ask Windows to create a fresh A2DP stream.
 
 Suggested certification test:

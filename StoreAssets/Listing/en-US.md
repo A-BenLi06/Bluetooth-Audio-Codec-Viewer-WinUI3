@@ -33,6 +33,9 @@ helps Windows open a fresh A2DP stream.
 This utility inspects Bluetooth Classic A2DP playback. Hands-free calls (HFP)
 and Bluetooth LE Audio use different codec paths and are outside its scope.
 
+Optional Ko-fi and Afdian links open in your default browser. Supporting
+development is voluntary and does not unlock app features or digital content.
+
 ## Product features
 
 1. Detects the active Bluetooth Classic A2DP codec

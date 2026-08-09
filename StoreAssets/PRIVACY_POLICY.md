@@ -21,6 +21,12 @@ The application does not use analytics, advertising, tracking, cloud storage,
 or third-party data services. It does not transmit the detected codec or device
 name over the network.
 
+The application includes user-initiated links to Ko-fi and Afdian for supporting
+development. Opening either link launches the user's default web browser. The
+application does not send codec observations, device information, or other app
+data to those services. Once the browser opens a third-party site, that site's
+own privacy policy applies.
+
 ## Administrator access
 
 Windows administrator approval is requested only after the user starts codec

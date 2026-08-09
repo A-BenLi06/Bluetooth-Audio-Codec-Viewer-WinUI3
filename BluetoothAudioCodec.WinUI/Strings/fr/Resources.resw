@@ -185,4 +185,10 @@
   <data name="MessageLeAudioBody" xml:space="preserve">
     <value>Cet appareil utilise LE Audio avec le codec LC3, qui n'est pas détectable via le traçage A2DP.</value>
   </data>
+  <data name="SupportTitle.Text" xml:space="preserve">
+    <value>Soutenir le développement</value>
+  </data>
+  <data name="SupportDescription.Text" xml:space="preserve">
+    <value>Le soutien est facultatif et ne débloque aucune fonction ni aucun contenu.</value>
+  </data>
 </root>
