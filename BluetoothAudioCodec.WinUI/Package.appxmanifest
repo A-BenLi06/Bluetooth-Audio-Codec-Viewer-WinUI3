@@ -5,11 +5,9 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <!-- Replace Identity Name and Publisher with the exact Partner Center values
-       shown under Product management > Product identity before submission. -->
   <Identity
-    Name="BluetoothAudioCodec.WinUI"
-    Publisher="CN=PlaceholderPublisher"
+    Name="BenLi06.BluetoothAudioCodecViewer"
+    Publisher="CN=FC1FF585-22D6-4DFB-97E0-9D22B6842CC6"
     Version="1.0.0.0" />
 
   <Properties>
