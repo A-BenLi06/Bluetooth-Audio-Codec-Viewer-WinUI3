@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:05,000
+Bluetooth Audio Codec Viewer. See the codec Windows actually negotiated.
+
+2
+00:00:05,000 --> 00:00:11,000
+Connect your Bluetooth audio device, then select Detect codec.
+
+3
+00:00:11,000 --> 00:00:17,000
+Administrator approval appears only when detection starts.
+A short-lived helper reads one local Bluetooth A2DP trace.
+
+4
+00:00:17,000 --> 00:00:24,000
+See the codec name, output device, codec and vendor identifiers,
+and observation time.
+
+5
+00:00:24,000 --> 00:00:30,000
+No audio recording, telemetry, advertising, driver, service,
+or Bluetooth settings changes.
+
+6
+00:00:30,000 --> 00:00:35,000
+Bluetooth Audio Codec Viewer for Windows 10 and Windows 11.
+
