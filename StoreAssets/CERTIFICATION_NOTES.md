@@ -1,7 +1,7 @@
 # Certification notes
 
-Bluetooth Audio Codec is a traditional unpackaged Win32 desktop application
-distributed through an offline per-machine MSI.
+Bluetooth Audio Codec Viewer is a self-contained WinUI 3 desktop application
+distributed as an MSIX package for x64 and ARM64.
 
 The main WinUI 3 process always runs at standard user integrity. When the user
 explicitly selects **Detect codec**, the application starts the same signed EXE
@@ -26,12 +26,13 @@ The application:
 
 Suggested certification test:
 
-1. Install the MSI silently with the Store's default `/qn` switch. A UAC prompt
-   for the per-machine installation is expected and allowed.
-2. Launch **Bluetooth Audio Codec** from the Start menu.
+1. Install the MSIX from Microsoft Store. Installation and launch must not
+   display a UAC prompt.
+2. Launch **Bluetooth Audio Codec Viewer** from the Start menu.
 3. Connect a Bluetooth Classic A2DP headset and begin media playback.
 4. Select **Detect codec**, approve the user-initiated UAC prompt, and verify the
    codec result appears in the normal-permission UI.
 5. Start another detection and select **Cancel**; the UI returns to Ready and no
    elevated helper or ETW session remains.
-6. Uninstall the single **Bluetooth Audio Codec** entry from Installed apps.
+6. Uninstall **Bluetooth Audio Codec Viewer** from Installed apps and verify no
+   helper, ETW session, service, driver, task, or configuration remains.
