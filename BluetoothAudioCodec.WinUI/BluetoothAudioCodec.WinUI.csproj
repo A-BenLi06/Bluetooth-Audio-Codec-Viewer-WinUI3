@@ -30,7 +30,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
     <AppxBundle>Never</AppxBundle>
-    <PackageCertificateThumbprint>C6C176E7BBA266798CA9B8E8DC9175AA8C644BD9</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>FBEF837AB532DC9D5771EF541A729286D1E4FB33</PackageCertificateThumbprint>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
