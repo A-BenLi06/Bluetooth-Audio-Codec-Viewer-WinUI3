@@ -19,7 +19,12 @@ detected states.
 
 ## Application and installer icons
 
-- `Icon/AppIcon-master.png` is the transparent high-resolution master.
+- `Icon/AppIcon-master.png` preserves the original dark-tile artwork.
+- `Icon/AppIcon-transparent.png` is the transparent Windows 11 application
+  icon master used for executable, installer, and MSIX assets.
+- Run `Icon/build_msix_assets.py` with Pillow to regenerate the MSIX tile,
+  package logo, splash screen, and high-DPI/target-size shell icons from that
+  master. This prevents the WinUI template placeholder assets from returning.
 - `Icon/source-concept.png` preserves the original supplied design.
 - `Icon/IMAGEGEN_PROMPT.md` records the final built-in imagegen prompt and
   transparency workflow.
@@ -39,5 +44,8 @@ Copy-ready text is available for:
 - `Listing/zh-TW.md`
 
 `CERTIFICATION_NOTES.md` is written for the Partner Center certification-notes
-field. `PRIVACY_POLICY.md` can be published on the support website after its
-contact placeholder is replaced.
+field. `ALLOW_ELEVATION_RECONSIDERATION.md` contains the expanded justification,
+short field-limit fallback, Store disclosure, and test procedure prepared in
+response to the August 19, 2026 certification report for Product ID
+`9P8G2CQW77JT`. `PRIVACY_POLICY.md` can be published on the support website
+after its contact placeholder is replaced.

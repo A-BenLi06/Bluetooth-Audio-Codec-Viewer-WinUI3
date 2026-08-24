@@ -20,6 +20,15 @@ if ($null -eq $identity) {
     throw 'Package.appxmanifest does not contain a package Identity element.'
 }
 
+$parsedVersion = [Version]$Version
+if ($parsedVersion.Revision -ne 0) {
+    throw "Microsoft Store package versions must have a zero revision. Use a version such as 1.0.1.0 instead of $Version."
+}
+
+if ($identity.Version -ne $Version) {
+    throw "Package.appxmanifest specifies version $($identity.Version), but the requested build version is $Version. Update the manifest so they match."
+}
+
 if (-not $AllowPlaceholderIdentity -and
     ($identity.Name -eq 'BluetoothAudioCodec.WinUI' -or
      $identity.Publisher -eq 'CN=PlaceholderPublisher')) {
@@ -44,6 +53,7 @@ foreach ($requiredCapability in @('runFullTrust', 'allowElevation')) {
 
 dotnet build $project `
     --configuration Release `
+    --no-incremental `
     -p:Platform=x64 `
     -p:PackageVersion=$Version `
     -p:AppxPackageVersion=$Version `
@@ -96,8 +106,13 @@ try {
             $bundleStream,
             [System.IO.Compression.ZipArchiveMode]::Read)
         try {
+            # Scale-qualified visual assets can be emitted as neutral resource
+            # packages. Validate the two executable architecture packages here;
+            # resource packages do not contain the app runtime files below.
             $packageEntries = @($bundleArchive.Entries |
-                Where-Object { $_.FullName.EndsWith('.msix', [StringComparison]::OrdinalIgnoreCase) })
+                Where-Object {
+                    $_.FullName -match '_(x64|arm64)\.msix$'
+                })
 
             if ($packageEntries.Count -ne 2) {
                 throw 'The bundle must contain exactly two architecture packages.'
@@ -185,6 +200,14 @@ finally {
 
 if (@($validatedArchitectures.Architecture | Sort-Object -Unique) -join ',' -ne 'arm64,x64') {
     throw 'The upload package does not contain both x64 and ARM64 packages.'
+}
+
+$unexpectedVersions = @($validatedArchitectures |
+    Where-Object { $_.Version -ne $Version })
+if ($unexpectedVersions.Count -ne 0) {
+    $details = $unexpectedVersions |
+        ForEach-Object { "$($_.Architecture)=$($_.Version)" }
+    throw "The upload package contains a stale internal version ($($details -join ', ')); expected $Version for every architecture. Run dotnet clean for the affected platform and rebuild."
 }
 
 Write-Host ''

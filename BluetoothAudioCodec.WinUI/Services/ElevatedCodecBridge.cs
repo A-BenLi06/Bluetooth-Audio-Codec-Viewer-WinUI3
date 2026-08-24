@@ -305,9 +305,23 @@ internal sealed class ElevatedCodecBridge
             throw new ArgumentException("The helper switch is missing.");
         }
 
-        var pipeName = ReadValue(args, PipeSwitch);
-        var token = ReadValue(args, TokenSwitch);
-        var timeoutText = ReadValue(args, TimeoutSwitch);
+        // Keep the elevated entry point deliberately non-extensible. The UI
+        // always emits this exact argument schema; reject extra, reordered, or
+        // duplicate arguments before the helper connects to the pipe or starts
+        // an ETW session.
+        if ((args.Count != 7 && args.Count != 8) ||
+            !string.Equals(args[1], PipeSwitch, StringComparison.Ordinal) ||
+            !string.Equals(args[3], TokenSwitch, StringComparison.Ordinal) ||
+            !string.Equals(args[5], TimeoutSwitch, StringComparison.Ordinal) ||
+            (args.Count == 8 &&
+                !string.Equals(args[7], PlayToneSwitch, StringComparison.Ordinal)))
+        {
+            throw new ArgumentException("The elevated helper arguments are invalid.");
+        }
+
+        var pipeName = args[2];
+        var token = args[4];
+        var timeoutText = args[6];
 
         if (string.IsNullOrWhiteSpace(pipeName) ||
             pipeName.Length > 128 ||
@@ -336,23 +350,7 @@ internal sealed class ElevatedCodecBridge
             pipeName,
             token,
             TimeSpan.FromSeconds(timeoutSeconds),
-            args.Any(argument => string.Equals(
-                argument,
-                PlayToneSwitch,
-                StringComparison.Ordinal)));
-    }
-
-    private static string ReadValue(IReadOnlyList<string> args, string name)
-    {
-        for (var index = 1; index < args.Count - 1; index++)
-        {
-            if (string.Equals(args[index], name, StringComparison.Ordinal))
-            {
-                return args[index + 1];
-            }
-        }
-
-        throw new ArgumentException($"The {name} argument is missing.");
+            args.Count == 8);
     }
 
     private static bool TokensMatch(string expected, string candidate)
