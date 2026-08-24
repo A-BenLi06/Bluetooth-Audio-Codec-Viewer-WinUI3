@@ -106,12 +106,20 @@ $outputs = foreach ($targetArchitecture in $architectures) {
     $runtimeIdentifier = "win-$targetArchitecture"
     $publishDirectory = Join-Path $artifactRoot "publish\$runtimeIdentifier"
 
+    # The app project defaults to the packaged (MSIX) Store configuration.
+    # The offline MSI path must override it back to the unpackaged,
+    # self-contained single-file layout this script has always produced.
     dotnet publish $appProject `
         --configuration Release `
         --runtime $runtimeIdentifier `
         --self-contained true `
         -p:Platform=$targetArchitecture `
         -p:Version=$Version `
+        -p:WindowsPackageType=None `
+        -p:GenerateAppxPackageOnBuild=false `
+        -p:EnableMsixTooling=true `
+        -p:AppxBundle=Never `
+        -p:UapAppxPackageBuildMode= `
         -p:PublishSingleFile=true `
         -p:IncludeAllContentForSelfExtract=true `
         --output $publishDirectory | Out-Host
