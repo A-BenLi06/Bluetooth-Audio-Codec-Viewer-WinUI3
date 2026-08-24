@@ -12,6 +12,28 @@ Windows 10/11 · WinUI 3 · x64/ARM64
 
 ![Bluetooth Audio Codec 检测结果](StoreAssets/Screenshots/en-US/01-codec-detected.png)
 
+## 下载安装
+
+### Microsoft Store（推荐）
+
+<a href="https://get.microsoft.com/installer/download/9p8g2cqw77jt?referrer=appbadge" target="_self">
+  <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200" alt="从 Microsoft Store 下载 Bluetooth Audio Codec"/>
+</a>
+
+- 商店页面：<https://apps.microsoft.com/detail/9P8G2CQW77JT>
+- 支持自动更新，Windows 10（build 19041+）与 Windows 11 的 x64 / ARM64 设备均可安装；
+- 也可以用 winget 安装：
+
+```powershell
+winget install --source msstore --id 9P8G2CQW77JT
+```
+
+### 离线安装包（MSI）
+
+从 [GitHub Releases](https://github.com/A-BenLi06/Bluetooth-Audio-Codec-Viewer-WinUI3/releases)
+下载 x64 或 ARM64 的离线 MSI 安装包。自包含单文件发布，无下载器和捆绑组件，
+无需另装 .NET Runtime。
+
 ## 简介
 
 Bluetooth Audio Codec 是一款专注、现代的 Windows 桌面工具。它监听 Windows
@@ -169,7 +191,9 @@ dotnet run .\BluetoothAudioCodec.cs -- --watch --no-tone
 ## English overview
 
 Bluetooth Audio Codec is a focused WinUI 3 utility that reports the active
-Bluetooth Classic A2DP codec negotiated by Windows. It recognizes SBC, AAC,
+Bluetooth Classic A2DP codec negotiated by Windows. It is available on the
+[Microsoft Store](https://apps.microsoft.com/detail/9P8G2CQW77JT) and as
+offline MSI installers from GitHub Releases. It recognizes SBC, AAC,
 aptX variants, LDAC, LHDC, and selected vendor codecs, while retaining raw IDs
 for unknown values. Detection is local and does not record audio, change system
 settings, install a driver or service, or transmit device information.
