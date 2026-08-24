@@ -8,7 +8,7 @@
   <Identity
     Name="BenLi06.BluetoothAudioCodecViewer"
     Publisher="CN=FC1FF585-22D6-4DFB-97E0-9D22B6842CC6"
-    Version="1.0.0.0" />
+    Version="1.0.2.0" />
 
   <Properties>
     <DisplayName>Bluetooth Audio Codec Viewer</DisplayName>
