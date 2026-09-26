@@ -9,11 +9,21 @@ public static class Program
     [STAThread]
     public static int Main(string[] args)
     {
+        CrashDiagnostics.Initialize();
+
         if (ElevatedCodecBridge.IsHelperInvocation(args))
         {
-            return ElevatedCodecBridge.RunHelperAsync(args)
-                .GetAwaiter()
-                .GetResult();
+            try
+            {
+                return ElevatedCodecBridge.RunHelperAsync(args)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception exception)
+            {
+                CrashDiagnostics.TryWrite("helper-entry-point", exception);
+                return ElevatedCodecBridge.UnexpectedFailureExitCode;
+            }
         }
 
         WinRT.ComWrappersSupport.InitializeComWrappers();

@@ -107,6 +107,21 @@
   <data name="DeviceNone" xml:space="preserve">
     <value>デフォルト出力が見つかりません</value>
   </data>
+  <data name="BluetoothStatusChecking" xml:space="preserve">
+    <value>Bluetooth を確認中…</value>
+  </data>
+  <data name="BluetoothStatusConnectedFormat" xml:space="preserve">
+    <value>Bluetooth 接続済み · {0}</value>
+  </data>
+  <data name="BluetoothStatusDisconnected" xml:space="preserve">
+    <value>Bluetooth オーディオ未接続</value>
+  </data>
+  <data name="BluetoothStatusUnavailable" xml:space="preserve">
+    <value>Bluetooth の状態を取得できません</value>
+  </data>
+  <data name="BluetoothDeviceUnknown" xml:space="preserve">
+    <value>オーディオ デバイス</value>
+  </data>
   <data name="CodecListening" xml:space="preserve">
     <value>リッスン中…</value>
   </data>

@@ -16,6 +16,8 @@ internal sealed class ElevatedCodecBridge
     private const string TimeoutSwitch = "--timeout-seconds";
     private const string PlayToneSwitch = "--play-tone";
     private const int HelperConnectTimeoutMilliseconds = 15_000;
+    private const int MaximumResponseCharacters = 256 * 1024;
+    internal const int UnexpectedFailureExitCode = 10;
 
     private readonly BluetoothCodecDetector _detector = new();
 
@@ -30,6 +32,16 @@ internal sealed class ElevatedCodecBridge
         bool playTone,
         CancellationToken cancellationToken)
     {
+        if (timeout < TimeSpan.FromSeconds(1) ||
+            timeout > TimeSpan.FromSeconds(60))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(timeout),
+                "The detection timeout must be between 1 and 60 seconds.");
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (BluetoothCodecDetector.IsElevated)
         {
             return await _detector.DetectAsync(timeout, playTone, cancellationToken);
@@ -98,13 +110,17 @@ internal sealed class ElevatedCodecBridge
                 "The administrator helper closed without returning a result.");
         }
 
+        if (responseLine.Length > MaximumResponseCharacters)
+        {
+            throw new InvalidDataException(
+                "The administrator helper returned an oversized response.");
+        }
+
         var response = JsonSerializer.Deserialize<ElevatedCodecResponse>(responseLine)
             ?? throw new InvalidDataException(
                 "The administrator helper returned an empty response.");
 
-        if (!CryptographicOperations.FixedTimeEquals(
-                Convert.FromHexString(token),
-                Convert.FromHexString(response.Token)))
+        if (!TokensMatch(token, response.Token))
         {
             throw new InvalidDataException(
                 "The administrator helper response could not be authenticated.");
@@ -118,11 +134,24 @@ internal sealed class ElevatedCodecBridge
         return new CodecDetectionResult(
             response.Observation,
             AudioEndpoint.TryGetDefaultRenderEndpoint(),
-            response.Warnings,
+            response.Warnings ?? [],
             response.Canceled);
     }
 
     public static async Task<int> RunHelperAsync(IReadOnlyList<string> args)
+    {
+        try
+        {
+            return await RunHelperCoreAsync(args);
+        }
+        catch (Exception exception)
+        {
+            CrashDiagnostics.TryWrite("helper-run", exception);
+            return UnexpectedFailureExitCode;
+        }
+    }
+
+    private static async Task<int> RunHelperCoreAsync(IReadOnlyList<string> args)
     {
         ElevatedHelperArguments helperArguments;
         try
@@ -204,7 +233,15 @@ internal sealed class ElevatedCodecBridge
         }
         finally
         {
-            await detectionCancellation.CancelAsync();
+            try
+            {
+                await detectionCancellation.CancelAsync();
+            }
+            catch (Exception exception)
+            {
+                CrashDiagnostics.TryWrite("helper-cancel-detection", exception);
+            }
+
             try
             {
                 await cancellationMonitor;
@@ -265,7 +302,7 @@ internal sealed class ElevatedCodecBridge
         string expectedToken,
         CancellationTokenSource detectionCancellation)
     {
-        var commandLine = await reader.ReadLineAsync();
+        var commandLine = await reader.ReadLineAsync(detectionCancellation.Token);
         if (string.IsNullOrWhiteSpace(commandLine))
         {
             await detectionCancellation.CancelAsync();
@@ -353,8 +390,13 @@ internal sealed class ElevatedCodecBridge
             args.Count == 8);
     }
 
-    private static bool TokensMatch(string expected, string candidate)
+    private static bool TokensMatch(string expected, string? candidate)
     {
+        if (string.IsNullOrWhiteSpace(candidate))
+        {
+            return false;
+        }
+
         try
         {
             return CryptographicOperations.FixedTimeEquals(
@@ -395,9 +437,9 @@ internal sealed class ElevatedCodecBridge
     private sealed record ElevatedCodecCommand(string Token, string Action);
 
     private sealed record ElevatedCodecResponse(
-        string Token,
+        string? Token,
         CodecObservation? Observation,
-        string[] Warnings,
+        string[]? Warnings,
         bool Canceled,
         string? Error);
 }

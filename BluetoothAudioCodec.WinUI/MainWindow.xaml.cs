@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using BluetoothAudioCodec.WinUI.Services;
@@ -10,9 +11,14 @@ using Windows.Graphics;
 
 namespace BluetoothAudioCodec.WinUI;
 
+[SuppressMessage(
+    "Design",
+    "CA1001:Types that own disposable fields should be disposable",
+    Justification = "The WinUI Window lifetime is owned by the framework; Closed disposes the watcher.")]
 public sealed partial class MainWindow : Window
 {
     private readonly ElevatedCodecBridge _codecBridge = new();
+    private readonly BluetoothAudioDeviceWatcher _deviceWatcher = new();
     private CancellationTokenSource? _detection;
     private DetectionPresentation? _presentationBeforeDetection;
     private bool _isLoaded;
@@ -25,7 +31,8 @@ public sealed partial class MainWindow : Window
         SetTitleBar(TitleBarGrid);
         ConfigureWindow(GetWindowScale());
 
-        Closed += (_, _) => _detection?.Cancel();
+        _deviceWatcher.StatusChanged += OnBluetoothStatusChanged;
+        Closed += OnWindowClosed;
     }
 
     private void ConfigureWindow(double scale)
@@ -77,8 +84,66 @@ public sealed partial class MainWindow : Window
         var endpoint = AudioEndpoint.TryGetDefaultRenderEndpoint();
         DeviceText.Text = endpoint?.FriendlyName ?? Localizer.GetString("DeviceNone");
         ProtocolText.Text = Localizer.GetString("ProtocolDefault");
+        BluetoothStatusText.Text = Localizer.GetString("BluetoothStatusChecking");
 
         SetReadyState();
+        _deviceWatcher.Start();
+    }
+
+    private void OnWindowClosed(object sender, WindowEventArgs args)
+    {
+        _detection?.Cancel();
+        _deviceWatcher.StatusChanged -= OnBluetoothStatusChanged;
+        _deviceWatcher.Dispose();
+    }
+
+    private void OnBluetoothStatusChanged(
+        object? sender,
+        BluetoothAudioStatus status)
+    {
+        _ = DispatcherQueue.TryEnqueue(() => ApplyBluetoothStatus(status));
+    }
+
+    private void ApplyBluetoothStatus(BluetoothAudioStatus status)
+    {
+        var endpoint = AudioEndpoint.TryGetDefaultRenderEndpoint();
+        DeviceText.Text = endpoint?.FriendlyName ?? Localizer.GetString("DeviceNone");
+
+        switch (status.State)
+        {
+            case BluetoothAudioConnectionState.Connected:
+                var deviceNames = status.ConnectedDeviceNames.Count == 0
+                    ? Localizer.GetString("BluetoothDeviceUnknown")
+                    : string.Join(", ", status.ConnectedDeviceNames);
+                BluetoothStatusText.Text = string.Format(
+                    CultureInfo.CurrentCulture,
+                    Localizer.GetString("BluetoothStatusConnectedFormat"),
+                    deviceNames);
+                BluetoothStatusDot.Fill = GetThemeBrush(
+                    "SystemFillColorSuccessBrush");
+                break;
+
+            case BluetoothAudioConnectionState.Disconnected:
+                BluetoothStatusText.Text = Localizer.GetString(
+                    "BluetoothStatusDisconnected");
+                BluetoothStatusDot.Fill = GetThemeBrush(
+                    "TextFillColorSecondaryBrush");
+                break;
+
+            case BluetoothAudioConnectionState.Unavailable:
+                BluetoothStatusText.Text = Localizer.GetString(
+                    "BluetoothStatusUnavailable");
+                BluetoothStatusDot.Fill = GetThemeBrush(
+                    "SystemFillColorCautionBrush");
+                break;
+
+            default:
+                BluetoothStatusText.Text = Localizer.GetString(
+                    "BluetoothStatusChecking");
+                BluetoothStatusDot.Fill = GetThemeBrush(
+                    "TextFillColorSecondaryBrush");
+                break;
+        }
     }
 
     private async void OnDetectClicked(object sender, RoutedEventArgs e)
@@ -129,6 +194,7 @@ public sealed partial class MainWindow : Window
         }
         catch (Exception exception)
         {
+            CrashDiagnostics.TryWrite("detection", exception);
             RestoreDetectionPresentation();
             StatusText.Text = Localizer.GetString("StatusError");
             StatusDot.Fill = GetThemeBrush("SystemFillColorCriticalBrush");
@@ -180,7 +246,9 @@ public sealed partial class MainWindow : Window
         StandardIdText.Text = $"0x{observation.StandardCodecId:X2}";
         VendorIdText.Text = $"0x{observation.VendorId:X8}";
         VendorCodecIdText.Text = $"0x{observation.VendorCodecId:X4}";
-        ObservedAtText.Text = observation.ObservedAt.ToLocalTime().ToString("yyyy-MM-dd  HH:mm:ss");
+        ObservedAtText.Text = observation.ObservedAt.ToLocalTime().ToString(
+            "yyyy-MM-dd  HH:mm:ss",
+            CultureInfo.CurrentCulture);
         StatusText.Text = Localizer.GetString("StatusDetected");
         StatusDot.Fill = GetThemeBrush("SystemFillColorSuccessBrush");
 
@@ -267,6 +335,7 @@ public sealed partial class MainWindow : Window
         string VendorCodecId,
         string ObservedAt);
 
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [DllImport("user32.dll")]
     private static extern uint GetDpiForWindow(IntPtr windowHandle);
 }

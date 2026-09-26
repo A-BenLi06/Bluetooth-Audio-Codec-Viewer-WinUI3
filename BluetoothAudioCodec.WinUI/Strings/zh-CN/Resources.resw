@@ -107,6 +107,21 @@
   <data name="DeviceNone" xml:space="preserve">
     <value>未找到默认输出设备</value>
   </data>
+  <data name="BluetoothStatusChecking" xml:space="preserve">
+    <value>正在检查蓝牙…</value>
+  </data>
+  <data name="BluetoothStatusConnectedFormat" xml:space="preserve">
+    <value>蓝牙已连接 · {0}</value>
+  </data>
+  <data name="BluetoothStatusDisconnected" xml:space="preserve">
+    <value>蓝牙音频未连接</value>
+  </data>
+  <data name="BluetoothStatusUnavailable" xml:space="preserve">
+    <value>无法获取蓝牙状态</value>
+  </data>
+  <data name="BluetoothDeviceUnknown" xml:space="preserve">
+    <value>音频设备</value>
+  </data>
   <data name="CodecListening" xml:space="preserve">
     <value>监听中…</value>
   </data>

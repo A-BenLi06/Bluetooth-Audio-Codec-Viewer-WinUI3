@@ -2,7 +2,7 @@
 
 Use this material for the new submission following the certification report
 completed August 19, 2026. The package version containing the additional helper
-hardening is `1.0.2.0`.
+hardening is `1.0.3.0`.
 
 ## Partner Center justification (paste into the `allowElevation` field)
 

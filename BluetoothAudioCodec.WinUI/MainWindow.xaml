@@ -155,6 +155,25 @@
                                     FontWeight="SemiBold"
                                     Text="Checking…"
                                     TextTrimming="CharacterEllipsis" />
+                                <Grid ColumnSpacing="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Ellipse
+                                        x:Name="BluetoothStatusDot"
+                                        Width="6"
+                                        Height="6"
+                                        VerticalAlignment="Center"
+                                        Fill="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock
+                                        x:Name="BluetoothStatusText"
+                                        Grid.Column="1"
+                                        FontSize="12"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="Checking Bluetooth…"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Grid>

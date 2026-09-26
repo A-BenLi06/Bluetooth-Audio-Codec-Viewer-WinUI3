@@ -24,6 +24,15 @@ internal sealed class BluetoothCodecDetector
         bool playTone,
         CancellationToken cancellationToken)
     {
+        if (timeout <= TimeSpan.Zero || timeout > TimeSpan.FromMinutes(1))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(timeout),
+                "The detection timeout must be greater than zero and no longer than one minute.");
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+
         return Task.Run(
             () => Detect(timeout, playTone, cancellationToken),
             CancellationToken.None);
@@ -99,21 +108,38 @@ internal sealed class BluetoothCodecDetector
             matchAnyKeywords: 0);
 
         using var stopWorkerCancellation = new CancellationTokenSource();
-        using var cancellationRegistration = cancellationToken.Register(
-            session.Dispose);
+        var expectedStop = new ExpectedStopState();
+        using var cancellationRegistration = cancellationToken.Register(() =>
+        {
+            expectedStop.Request();
+            try
+            {
+                session.Dispose();
+            }
+            catch (ObjectDisposedException)
+            {
+                // A simultaneous timeout or event already stopped the session.
+            }
+            catch (Exception exception)
+            {
+                // Cancellation callbacks must not throw back into UI code.
+                CrashDiagnostics.TryWrite("detector-cancel", exception);
+            }
+        });
         var stopWorker = StartStopWorker(
             session,
             timeout,
             playTone,
+            expectedStop,
             stopWorkerCancellation.Token);
 
         try
         {
             session.Source.Process();
         }
-        catch (ObjectDisposedException) when (cancellationToken.IsCancellationRequested)
+        catch (ObjectDisposedException) when (expectedStop.IsRequested)
         {
-            // Cancellation can dispose the session just before Process starts.
+            // Cancellation or timeout can dispose the session while Process waits.
         }
         finally
         {
@@ -139,6 +165,7 @@ internal sealed class BluetoothCodecDetector
         TraceEventSession session,
         TimeSpan timeout,
         bool playTone,
+        ExpectedStopState expectedStop,
         CancellationToken cancellationToken)
     {
         return Task.Run(async () =>
@@ -160,8 +187,21 @@ internal sealed class BluetoothCodecDetector
             // StopProcessing only takes effect when the next real-time event
             // arrives. Disposing the session wakes Process immediately, even
             // when the Bluetooth provider is otherwise quiet.
+            expectedStop.Request();
             session.Dispose();
         }, CancellationToken.None);
+    }
+
+    private sealed class ExpectedStopState
+    {
+        private int _requested;
+
+        public bool IsRequested => Volatile.Read(ref _requested) != 0;
+
+        public void Request()
+        {
+            Interlocked.Exchange(ref _requested, 1);
+        }
     }
 
     private static ulong ReadUnsignedPayload(
@@ -330,6 +370,7 @@ internal static class DiagnosticTone
         return stream.ToArray();
     }
 
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [DllImport("winmm.dll", EntryPoint = "PlaySoundW")]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool PlaySound(IntPtr sound, IntPtr module, uint flags);
@@ -401,6 +442,7 @@ internal sealed record AudioEndpoint(string FriendlyName)
         }
     }
 
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [DllImport("ole32.dll")]
     private static extern int PropVariantClear(ref PropVariant value);
 

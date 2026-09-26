@@ -98,11 +98,15 @@ user-initiated helper:
 <Capabilities>
   <rescap:Capability Name="runFullTrust" />
   <rescap:Capability Name="allowElevation" />
+  <DeviceCapability Name="bluetooth" />
 </Capabilities>
 ```
 
-No packaged-service, LocalSystem-service, driver, broad file-system, Bluetooth
-device, microphone, or background-execution capability is requested.
+The non-restricted `bluetooth` device capability is used only by the
+standard-integrity UI to observe paired Bluetooth audio connection state and
+display names while the window is open. It does not pair, connect, disconnect,
+or reconfigure devices. No packaged-service, LocalSystem-service, driver, broad
+file-system, microphone, or background-execution capability is requested.
 
 ### Suggested certification test
 
@@ -164,4 +168,3 @@ Treat Microsoft's response as follows:
   eligibility. Reply with the requested evidence; do not assume approval.
 - **Not approved/no viable approval path:** retain the signed MSI/EXE Store
   submission route and do not declare `allowElevation` in an MSIX submission.
-

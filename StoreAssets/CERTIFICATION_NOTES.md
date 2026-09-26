@@ -36,13 +36,20 @@ Product ID `9P8G2CQW77JT`, the publisher confirms all of the following:
 6. The Store description and Additional system requirements clearly disclose
    that Windows displays the standard UAC prompt and administrator approval is
    required each time the user starts codec detection.
+7. At standard user integrity, the UI uses the `bluetooth` device capability
+   only to observe the connection state and display name of paired Bluetooth
+   audio devices while the window is open. It does not pair, connect,
+   disconnect, or reconfigure devices.
 
 The application:
 
 - does not install a driver or Windows service;
 - does not modify Bluetooth, audio, registry, or system settings;
 - does not record or inspect audio content;
-- does not collect, store, or transmit personal or device information;
+- does not retain or transmit personal or device information; Bluetooth
+  connection state and display names are used transiently while the UI is open;
+- keeps only a size-limited local technical exception log for troubleshooting
+  and never uploads it automatically;
 - does not contain advertising, telemetry, a downloader, or bundled software;
 - includes optional Ko-fi and Afdian support links that open in the user's
   default browser; support unlocks no app feature or digital content, and the

@@ -107,6 +107,21 @@
   <data name="DeviceNone" xml:space="preserve">
     <value>Nenhuma saída padrão encontrada</value>
   </data>
+  <data name="BluetoothStatusChecking" xml:space="preserve">
+    <value>Verificando Bluetooth…</value>
+  </data>
+  <data name="BluetoothStatusConnectedFormat" xml:space="preserve">
+    <value>Bluetooth conectado · {0}</value>
+  </data>
+  <data name="BluetoothStatusDisconnected" xml:space="preserve">
+    <value>Áudio Bluetooth desconectado</value>
+  </data>
+  <data name="BluetoothStatusUnavailable" xml:space="preserve">
+    <value>Status do Bluetooth indisponível</value>
+  </data>
+  <data name="BluetoothDeviceUnknown" xml:space="preserve">
+    <value>Dispositivo de áudio</value>
+  </data>
   <data name="CodecListening" xml:space="preserve">
     <value>Ouvindo…</value>
   </data>

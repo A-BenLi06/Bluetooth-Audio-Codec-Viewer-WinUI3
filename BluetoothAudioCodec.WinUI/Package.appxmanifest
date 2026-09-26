@@ -8,7 +8,7 @@
   <Identity
     Name="BenLi06.BluetoothAudioCodecViewer"
     Publisher="CN=FC1FF585-22D6-4DFB-97E0-9D22B6842CC6"
-    Version="1.0.2.0" />
+    Version="1.0.3.0" />
 
   <Properties>
     <DisplayName>Bluetooth Audio Codec Viewer</DisplayName>
@@ -55,5 +55,6 @@
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
     <rescap:Capability Name="allowElevation" />
+    <DeviceCapability Name="bluetooth" />
   </Capabilities>
 </Package>

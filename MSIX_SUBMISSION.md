@@ -26,8 +26,11 @@ The build script rejects the checked-in placeholders for a production build.
 ```
 
 The script creates an unsigned `.msixupload` containing x64 and ARM64 package
-slices. Upload the `.msixupload` file to Partner Center; Microsoft signs Store
-packages during ingestion.
+slices plus a non-empty `.appxsym` symbols package. The build machine must have
+the Windows SDK Debugging Tools (`mspdbcmf.exe`) installed; the script rejects
+an upload that cannot be symbolicated in Partner Center. Upload the
+`.msixupload` file to Partner Center; Microsoft signs Store packages during
+ingestion.
 
 For a packaging-only test before entering the real identity:
 
@@ -44,11 +47,15 @@ The package declares:
 ```xml
 <rescap:Capability Name="runFullTrust" />
 <rescap:Capability Name="allowElevation" />
+<DeviceCapability Name="bluetooth" />
 ```
 
 `allowElevation` is restricted. After the package is uploaded, Partner Center
 will require the detailed justification under **Submission options > Restricted
-capabilities**. Approval is decided during certification.
+capabilities**. Approval is decided during certification. The `bluetooth`
+device capability is used by the standard-integrity UI only to watch the
+connection state and display name of paired Bluetooth audio devices; it does
+not pair, connect, disconnect, or reconfigure devices.
 
 ## Local validation
 

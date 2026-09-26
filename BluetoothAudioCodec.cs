@@ -1,6 +1,6 @@
 #:property TargetFramework=net10.0
 #:property PublishAot=false
-#:package Microsoft.Diagnostics.Tracing.TraceEvent@3.2.4
+#:package Microsoft.Diagnostics.Tracing.TraceEvent@3.2.6
 
 using System.Diagnostics;
 using System.Globalization;
@@ -126,21 +126,40 @@ internal static class BluetoothAudioCodecApp
                 matchAnyKeywords: 0);
 
             using var stopWorker = new CancellationTokenSource();
+            var expectedStop = 0;
+
+            void RequestStop()
+            {
+                Interlocked.Exchange(ref expectedStop, 1);
+                try
+                {
+                    session.Dispose();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Another stop path already disposed the ETW session.
+                }
+            }
+
             var timeoutWorker = StartTimeoutWorker(
-                session,
                 options,
+                RequestStop,
                 stopWorker.Token);
 
             ConsoleCancelEventHandler cancelHandler = (_, eventArgs) =>
             {
                 eventArgs.Cancel = true;
-                session.Source.StopProcessing();
+                RequestStop();
             };
 
             Console.CancelKeyPress += cancelHandler;
             try
             {
                 session.Source.Process();
+            }
+            catch (ObjectDisposedException) when (Volatile.Read(ref expectedStop) != 0)
+            {
+                // Timeout and Ctrl+C intentionally dispose a quiet ETW session.
             }
             finally
             {
@@ -194,8 +213,8 @@ internal static class BluetoothAudioCodecApp
     }
 
     private static Task StartTimeoutWorker(
-        TraceEventSession session,
         Options options,
+        Action requestStop,
         CancellationToken cancellationToken)
     {
         return Task.Run(async () =>
@@ -214,8 +233,8 @@ internal static class BluetoothAudioCodecApp
                 await Task.Delay(remaining, cancellationToken);
             }
 
-            session.Source.StopProcessing();
-        }, cancellationToken);
+            requestStop();
+        }, CancellationToken.None);
     }
 
     private static ulong ReadUnsignedPayload(
@@ -550,6 +569,7 @@ internal static class DiagnosticTone
         return stream.ToArray();
     }
 
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [DllImport("winmm.dll", EntryPoint = "PlaySoundW")]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool PlaySound(
@@ -624,6 +644,7 @@ internal sealed record AudioEndpoint(string FriendlyName)
         }
     }
 
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [DllImport("ole32.dll")]
     private static extern int PropVariantClear(ref PropVariant value);
 

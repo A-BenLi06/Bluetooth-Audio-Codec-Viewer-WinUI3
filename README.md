@@ -45,6 +45,7 @@ Bluetooth Audio Codec 是一款专注、现代的 Windows 桌面工具。它监�
 
 ## 功能
 
+- App 打开期间自动监听蓝牙音频设备的连接与断开，并刷新设备名和默认输出；
 - 检测当前 Bluetooth Classic A2DP 编解码器；
 - 识别 SBC、AAC、aptX Classic、aptX HD、aptX Low Latency、FastStream、
   LDAC、Samsung Scalable Codec、LHDC 等已知格式；
@@ -99,6 +100,8 @@ Windows 将蓝牙 codec trace 限制给提升权限的进程，因此检测时�
 - Visual Studio（安装 .NET 桌面开发和 Windows 应用开发相关组件）；
 - .NET 10 SDK；
 - Windows 10 SDK 10.0.26100 或更高版本；
+- 生成 Partner Center 上传包时，还需安装 Windows SDK 的 Debugging Tools
+  （脚本会检查 `mspdbcmf.exe` 生成的 `.appxsym`）；
 - 构建安装包时需要 WiX Toolset SDK 6（项目会通过 NuGet 还原 6.0.2）。
 
 ### Visual Studio 入口
@@ -171,7 +174,10 @@ dotnet run .\BluetoothAudioCodec.cs -- --watch --no-tone
 ## 隐私与安全
 
 - 所有检测和解析均在设备本地进行；
+- 仅在 App 打开期间读取已配对蓝牙音频设备的连接状态和显示名称；
 - 不收集遥测，不发送网络请求，不录制或保存音频；
+- 发生异常时会在本机应用数据目录写入有大小上限的技术诊断日志；日志不会自动上传，
+  超过 1 MB 后只保留当前文件和上一份文件；
 - 不修改蓝牙、音频或系统设置；
 - 不安装驱动、Windows 服务或常驻管理员进程；
 - 仅在用户主动开始检测时启动提升权限的 helper。
