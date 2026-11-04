@@ -47,14 +47,8 @@
   <data name="HeaderTitle.Text" xml:space="preserve">
     <value>当前蓝牙编解码器</value>
   </data>
-  <data name="HeaderSubtitle.Text" xml:space="preserve">
-    <value>查看 Windows 与你的耳机协商的编解码器。</value>
-  </data>
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>默认输出</value>
-  </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>一段短促的低音会建立新的音频流；检测时 Windows 将请求管理员许可。</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技术详情</value>
@@ -72,7 +66,7 @@
     <value>观察时间</value>
   </data>
   <data name="FooterNote.Text" xml:space="preserve">
-    <value>A2DP 事件在音频流打开或关闭时发出。HFP 通话和 LE Audio 使用不同的编解码器。</value>
+    <value>结果必须来自该设备的编码事件。HFP 通话和 LE Audio 使用其他路径；串流汇总显示最近观察到的编码。</value>
   </data>
   <data name="StatusReady" xml:space="preserve">
     <value>就绪</value>
@@ -93,13 +87,13 @@
     <value>重试</value>
   </data>
   <data name="ProtocolDefault" xml:space="preserve">
-    <value>蓝牙经典 · A2DP</value>
+    <value>经典蓝牙 · A2DP</value>
   </data>
   <data name="ProtocolWaiting" xml:space="preserve">
     <value>等待 A2DP 流事件</value>
   </data>
   <data name="ProtocolRetryHint" xml:space="preserve">
-    <value>停止播放或重新连接，然后重试</value>
+    <value>停止播放时重试，或导出诊断日志</value>
   </data>
   <data name="DeviceChecking" xml:space="preserve">
     <value>检查中…</value>
@@ -168,13 +162,13 @@
     <value>未观察到编解码器事件</value>
   </data>
   <data name="MessageNoEventDefaultBody" xml:space="preserve">
-    <value>Windows 在 30 秒窗口内未打开或关闭 A2DP 流。</value>
+    <value>未收到可用的编码事件。请重新检测并停止所有播放，或在监听期间重新连接耳机后播放一段短音频。</value>
   </data>
   <data name="MessageNoEventBodyFormat" xml:space="preserve">
     <value>{0} 使用耳机麦克风可能会使 Windows 切换到 HFP。</value>
   </data>
   <data name="MessageElevationCanceledTitle" xml:space="preserve">
-    <value>提升已取消</value>
+    <value>已取消管理员授权</value>
   </data>
   <data name="MessageElevationCanceledBody" xml:space="preserve">
     <value>应用仍在没有管理员权限的情况下运行。</value>
@@ -198,12 +192,168 @@
     <value>不支持 LE Audio</value>
   </data>
   <data name="MessageLeAudioBody" xml:space="preserve">
-    <value>此设备使用 LE Audio 和 LC3 编解码器，无法通过 A2DP 跟踪检测。</value>
+    <value>此输出使用蓝牙 LE 路径，A2DP 编码检测不支持该端点。</value>
   </data>
   <data name="SupportTitle.Text" xml:space="preserve">
     <value>支持开发</value>
   </data>
   <data name="SupportDescription.Text" xml:space="preserve">
     <value>自愿支持，不会解锁应用功能或内容。</value>
+  </data>
+  <data name="CodecPreparing" xml:space="preserve">
+    <value>准备中…</value>
+  </data>
+  <data name="StatusPreparing" xml:space="preserve">
+    <value>准备中</value>
+  </data>
+  <data name="ProtocolLastObserved" xml:space="preserve">
+    <value>最近观察到 · A2DP</value>
+  </data>
+  <data name="MessageListeningBody" xml:space="preserve">
+    <value>正在监听编码事件。程序会尝试暂时暂停所有正在播放的系统媒体会话，并在结束时恢复；其他音频可能需要手动处理。</value>
+  </data>
+  <data name="ReasonToneFailed" xml:space="preserve">
+    <value>无法在所选输出完成测试音播放。请重新检测，并手动播放再停止音频。</value>
+  </data>
+  <data name="ReasonMetadata" xml:space="preserve">
+    <value>已收到 Windows 事件，但无法解析其编码元数据。请导出诊断日志并随故障报告发送。</value>
+  </data>
+  <data name="ReasonHandsFree" xml:space="preserve">
+    <value>当前为免提输出或耳机麦克风正被使用。请关闭语音应用或改用电脑麦克风，然后重试。</value>
+  </data>
+  <data name="ReasonTargetUnresolved" xml:space="preserve">
+    <value>无法将默认输出关联到具体蓝牙设备。请重新选择耳机；若持续发生，请导出日志。</value>
+  </data>
+  <data name="ReasonOutputChanged" xml:space="preserve">
+    <value>默认输出已变化或耳机已断开。请选择目标耳机后重试。</value>
+  </data>
+  <data name="ReasonExportLog" xml:space="preserve">
+    <value>请使用“报告问题”检查检测记录，并按需附加近期运行日志。</value>
+  </data>
+  <data name="ReasonStreamOpen" xml:space="preserve">
+    <value>蓝牙串流已开始，但尚无可确认编码的事件。请重新检测并暂停所有播放，让串流结束。</value>
+  </data>
+  <data name="ReasonNoProvider" xml:space="preserve">
+    <value>本次采集未收到 A2DP 跟踪事件。请检查输出和麦克风占用，再重试或导出日志。</value>
+  </data>
+  <data name="ReasonNoMatching" xml:space="preserve">
+    <value>已收到蓝牙事件，但没有确认所选耳机的编码。请在停止播放时重试，或导出日志。</value>
+  </data>
+  <data name="ReportProblemButton.Content" xml:space="preserve">
+    <value>报告问题…</value>
+  </data>
+  <data name="ProblemReportHint.Text" xml:space="preserve">
+    <value>生成问题报告，可附加近期运行日志；检查并保存 ZIP 后再提交。应用不会自动上传。</value>
+  </data>
+  <data name="ReportFolderButton.Content" xml:space="preserve">
+    <value>显示文件</value>
+  </data>
+  <data name="ReportCopyButton.Content" xml:space="preserve">
+    <value>复制摘要</value>
+  </data>
+  <data name="ReportGitHubButton.Content" xml:space="preserve">
+    <value>打开 GitHub…</value>
+  </data>
+  <data name="ReportWaitForDetection" xml:space="preserve">
+    <value>请等待检测结束，或先取消检测，再准备报告。</value>
+  </data>
+  <data name="ReportChooseTitle" xml:space="preserve">
+    <value>生成问题报告</value>
+  </data>
+  <data name="ReportPreviewButton" xml:space="preserve">
+    <value>预览报告</value>
+  </data>
+  <data name="ReportCancelButton" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ReportPreviewNotice" xml:space="preserve">
+    <value>保存前请检查各个文件。检测数据保留原有快照及可读取的产品属性；勾选的 runtime-log.txt 补充近期历史和导出时状态，请人工检查。不附加原始 ETL、dump 或音频。ZIP 只保存在本地。</value>
+  </data>
+  <data name="ReportPreviewTitle" xml:space="preserve">
+    <value>检查报告内容</value>
+  </data>
+  <data name="ReportSaveButton" xml:space="preserve">
+    <value>保存 ZIP…</value>
+  </data>
+  <data name="ReportSaved" xml:space="preserve">
+    <value>报告已保存到本地：{0}。准备好后可打开 GitHub 提交。</value>
+  </data>
+  <data name="ReportSummaryCopied" xml:space="preserve">
+    <value>报告摘要已复制，分享前请检查内容。</value>
+  </data>
+  <data name="ReportPublicNotice" xml:space="preserve">
+    <value>GitHub 问题及附件是公开的。选择文件时就会立即上传，早于提交问题。请先检查保存的标准 ZIP，不要附上原始 ETL 或 dump。提交需要 GitHub 账号。</value>
+  </data>
+  <data name="ReportPublicAcknowledge" xml:space="preserve">
+    <value>我已检查报告，并了解提交内容将公开。</value>
+  </data>
+  <data name="ReportGitHubTitle" xml:space="preserve">
+    <value>向 GitHub 提交问题</value>
+  </data>
+  <data name="ReportOpenGitHubButton" xml:space="preserve">
+    <value>打开 GitHub</value>
+  </data>
+  <data name="ReportBrowserOpened" xml:space="preserve">
+    <value>已打开 GitHub。请登录、附上检查过的 ZIP 并提交问题，保留问题链接。打开网页不代表已提交报告。</value>
+  </data>
+  <data name="ReportBrowserFailed" xml:space="preserve">
+    <value>未能打开 GitHub，ZIP 仍保存在本地。可访问项目的 GitHub Issues 页面提交。</value>
+  </data>
+  <data name="HelpHeader.Header" xml:space="preserve">
+    <value>帮助与反馈</value>
+  </data>
+  <data name="ReportApplicationContext" xml:space="preserve">
+    <value>应用／启动问题——不选择检测记录</value>
+  </data>
+  <data name="ReportIncludeRuntimeLog" xml:space="preserve">
+    <value>附加近期运行日志</value>
+  </data>
+  <data name="ReportRuntimeLogNotice" xml:space="preserve">
+    <value>可选日志可能跨越多次检测，并包含当前读取的状态。常见标识会被过滤，分享前请检查文本。应用／启动问题无需先运行检测，也可以保存报告。</value>
+  </data>
+  <data name="DetectionRemaining" xml:space="preserve">
+    <value>检测中 · 剩余 {0} 秒</value>
+  </data>
+  <data name="DetectionFinishing" xml:space="preserve">
+    <value>正在收尾…</value>
+  </data>
+  <data name="DetectionDeadlineBody" xml:space="preserve">
+    <value>检测未在时限内结束，已请求取消，后台可能仍在清理。请暂停后台音频；如仍无法结束，请关闭并重新打开应用，再通过“报告问题”导出记录。</value>
+  </data>
+  <data name="PlaybackScanning" xml:space="preserve">
+    <value>枚举系统媒体会话…</value>
+  </data>
+  <data name="PlaybackPausing" xml:space="preserve">
+    <value>正在暂停播放…</value>
+  </data>
+  <data name="PlaybackRestoring" xml:space="preserve">
+    <value>正在恢复播放…</value>
+  </data>
+  <data name="PlaybackManualTitle" xml:space="preserve">
+    <value>可能仍有音频流在运行</value>
+  </data>
+  <data name="PlaybackManualBody" xml:space="preserve">
+    <value>已尝试暂停系统媒体会话，但部分音频流可能仍在运行。请在检测继续时停止耳机上的其他音频，包括网页、游戏或远程会话的声音。</value>
+  </data>
+  <data name="PlaybackRestoreWarning" xml:space="preserve">
+    <value>请检查播放恢复情况</value>
+  </data>
+  <data name="PlaybackRestoreFailed" xml:space="preserve">
+    <value>部分播放未恢复，可能是会话或媒体已改变，或播放器拒绝请求。需要时请手动恢复。</value>
+  </data>
+  <data name="PlaybackCleanupPending" xml:space="preserve">
+    <value>媒体控制请求仍在等待完成。完成后会尝试自动恢复，请先检查播放器状态再手动恢复。</value>
+  </data>
+  <data name="PlaybackClosing" xml:space="preserve">
+    <value>正在取消检测并等待播放恢复，随后关闭窗口。</value>
+  </data>
+  <data name="PlaybackManualSources" xml:space="preserve">
+    <value>Windows 报告的音频进程：{0}</value>
+  </data>
+  <data name="PlaybackUnknownSource" xml:space="preserve">
+    <value>未知音频进程</value>
+  </data>
+  <data name="ReportZipFileType" xml:space="preserve">
+    <value>标准问题报告 (*.zip)</value>
   </data>
 </root>

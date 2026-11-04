@@ -2,8 +2,15 @@
 **/obj/
 **/AppPackages/
 **/BundleArtifacts/
+**/Generated Files/
 artifacts/
 .vs/
 *.user
 *.suo
 *.pfx
+
+analysis-output/
+
+**/__pycache__/
+
+*.py[cod]

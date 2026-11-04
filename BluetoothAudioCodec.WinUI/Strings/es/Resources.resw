@@ -47,14 +47,8 @@
   <data name="HeaderTitle.Text" xml:space="preserve">
     <value>Códec Bluetooth activo</value>
   </data>
-  <data name="HeaderSubtitle.Text" xml:space="preserve">
-    <value>Lea el códec que Windows negoció con sus auriculares.</value>
-  </data>
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>SALIDA PREDETERMINADA</value>
-  </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>Un breve tono suave crea un flujo nuevo; Windows solicitará permiso de administrador para la detección.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Detalles técnicos</value>
@@ -72,7 +66,7 @@
     <value>OBSERVADO</value>
   </data>
   <data name="FooterNote.Text" xml:space="preserve">
-    <value>El evento A2DP se emite cuando se abre o cierra una transmisión. Las llamadas HFP y LE Audio usan códecs diferentes.</value>
+    <value>Se necesita un evento de códec de este dispositivo. HFP y LE Audio usan otras rutas. El resumen del flujo muestra el último códec observado.</value>
   </data>
   <data name="StatusReady" xml:space="preserve">
     <value>Listo</value>
@@ -99,7 +93,7 @@
     <value>Esperando un evento de transmisión A2DP</value>
   </data>
   <data name="ProtocolRetryHint" xml:space="preserve">
-    <value>Detenga la reproducción o reconecte, luego reintente</value>
+    <value>Reintenta al detener la reproducción o exporta el registro</value>
   </data>
   <data name="DeviceChecking" xml:space="preserve">
     <value>Comprobando…</value>
@@ -168,7 +162,7 @@
     <value>No se observó ningún evento de códec</value>
   </data>
   <data name="MessageNoEventDefaultBody" xml:space="preserve">
-    <value>Windows no abrió ni cerró una transmisión A2DP durante la ventana de 30 segundos.</value>
+    <value>No se recibió un evento de códec utilizable. Reintenta deteniendo toda reproducción, o reconecta los auriculares durante la escucha y reproduce un sonido corto.</value>
   </data>
   <data name="MessageNoEventBodyFormat" xml:space="preserve">
     <value>{0} El uso del micrófono del auricular puede cambiar Windows a HFP.</value>
@@ -198,12 +192,87 @@
     <value>LE Audio no es compatible</value>
   </data>
   <data name="MessageLeAudioBody" xml:space="preserve">
-    <value>Este dispositivo usa LE Audio con códec LC3, que no se puede detectar mediante el rastreo A2DP.</value>
+    <value>Esta salida usa Bluetooth LE. La detección de códec A2DP no admite este punto de conexión.</value>
   </data>
   <data name="SupportTitle.Text" xml:space="preserve">
     <value>Apoyar el desarrollo</value>
   </data>
   <data name="SupportDescription.Text" xml:space="preserve">
     <value>El apoyo es opcional y no desbloquea funciones ni contenido.</value>
+  </data>
+  <data name="CodecPreparing" xml:space="preserve">
+    <value>Preparando…</value>
+  </data>
+  <data name="StatusPreparing" xml:space="preserve">
+    <value>Preparando</value>
+  </data>
+  <data name="ProtocolLastObserved" xml:space="preserve">
+    <value>Última observación · A2DP</value>
+  </data>
+  <data name="MessageListeningBody" xml:space="preserve">
+    <value>Escuchando eventos de códec. Se intentará pausar temporalmente todas las sesiones multimedia en reproducción y reanudarlas al terminar. Otras fuentes pueden requerir atención manual.</value>
+  </data>
+  <data name="ReasonToneFailed" xml:space="preserve">
+    <value>El sonido de prueba no pudo terminar en la salida elegida. Inicia otra detección y reproduce y detén audio manualmente.</value>
+  </data>
+  <data name="ReasonMetadata" xml:space="preserve">
+    <value>Llegaron eventos de Windows, pero no se pudieron leer sus metadatos de códec. Exporta el registro para el informe del problema.</value>
+  </data>
+  <data name="ReasonHandsFree" xml:space="preserve">
+    <value>Está activa la salida de manos libres o el micrófono de los auriculares. Cierra las aplicaciones de voz o usa el micrófono del PC y vuelve a intentarlo.</value>
+  </data>
+  <data name="ReasonTargetUnresolved" xml:space="preserve">
+    <value>No se pudo asociar la salida predeterminada a un dispositivo Bluetooth físico. Selecciona los auriculares de nuevo y exporta el registro si persiste.</value>
+  </data>
+  <data name="ReasonOutputChanged" xml:space="preserve">
+    <value>La salida predeterminada cambió o los auriculares se desconectaron. Selecciona el dispositivo deseado y vuelve a intentarlo.</value>
+  </data>
+  <data name="ReasonExportLog" xml:space="preserve">
+    <value>Los detalles técnicos están en el registro de diagnóstico exportable.</value>
+  </data>
+  <data name="ReasonStreamOpen" xml:space="preserve">
+    <value>Comenzó un flujo Bluetooth sin un evento que confirmara el códec. Inicia otra detección y detén todas las reproducciones para finalizarlo.</value>
+  </data>
+  <data name="ReasonNoProvider" xml:space="preserve">
+    <value>No llegaron eventos A2DP. Comprueba la salida y el uso del micrófono, vuelve a intentarlo o exporta el registro.</value>
+  </data>
+  <data name="ReasonNoMatching" xml:space="preserve">
+    <value>Llegaron eventos Bluetooth, pero ninguno confirmó el códec de estos auriculares. Reintenta al detener la reproducción o exporta el registro.</value>
+  </data>
+  <data name="HelpHeader.Header" xml:space="preserve">
+    <value>Ayuda y comentarios</value>
+  </data>
+  <data name="PlaybackScanning" xml:space="preserve">
+    <value>Enumerando sesiones multimedia del sistema…</value>
+  </data>
+  <data name="PlaybackPausing" xml:space="preserve">
+    <value>Pausing playback…</value>
+  </data>
+  <data name="PlaybackRestoring" xml:space="preserve">
+    <value>Restoring playback…</value>
+  </data>
+  <data name="PlaybackManualTitle" xml:space="preserve">
+    <value>Puede que el audio siga activo</value>
+  </data>
+  <data name="PlaybackManualBody" xml:space="preserve">
+    <value>Algunos flujos de audio pueden seguir activos tras solicitar la pausa. Mientras continúa la detección, detenga el audio restante en estos auriculares, incluidas otras páginas, juegos o sesiones remotas.</value>
+  </data>
+  <data name="PlaybackRestoreWarning" xml:space="preserve">
+    <value>Check playback recovery</value>
+  </data>
+  <data name="PlaybackRestoreFailed" xml:space="preserve">
+    <value>No se reanudaron algunas sesiones porque cambiaron la sesión o el contenido, o el reproductor rechazó la solicitud. Reanúdelas manualmente si es necesario.</value>
+  </data>
+  <data name="PlaybackCleanupPending" xml:space="preserve">
+    <value>A media control request is still pending. Automatic recovery will be attempted when it completes. Check your player before resuming manually.</value>
+  </data>
+  <data name="PlaybackClosing" xml:space="preserve">
+    <value>Canceling detection and waiting for playback recovery before closing.</value>
+  </data>
+  <data name="PlaybackManualSources" xml:space="preserve">
+    <value>Procesos de audio indicados por Windows: {0}</value>
+  </data>
+  <data name="PlaybackUnknownSource" xml:space="preserve">
+    <value>Unknown audio process</value>
   </data>
 </root>

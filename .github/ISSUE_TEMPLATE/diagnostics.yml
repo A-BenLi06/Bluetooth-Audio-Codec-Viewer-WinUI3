@@ -1,0 +1,97 @@
+name: Problem report / 问题报告
+description: Report a detection or application/startup problem with an optional reviewed diagnostic ZIP.
+title: '[Report] '
+body:
+- type: markdown
+  attributes:
+    value: '**This is a public issue / 这是公开问题页。**
+
+      Choose only the standard `bac-report-...zip` created by the app and review it first.
+
+      Selecting a file uploads it immediately, before you submit this issue. Public attachments can be
+      accessed without signing in.
+
+      选择附件时就会立即上传，公开附件无需登录即可访问。请先检查内容。
+
+      Do not attach raw ETL, dumps, registry exports, account details or screenshots containing personal
+      information.
+
+      请勿附原始 ETL、dump、注册表导出或带个人信息的截图。没有报告也可以先提交文字。
+
+      '
+- type: checkboxes
+  id: privacy_ack
+  attributes:
+    label: Public sharing acknowledgement / 公开范围
+    options:
+    - label: I understand this issue and any attached standard report are public; I will review files
+        before selecting them. 我了解公开范围，会在选择附件前检查文件。
+      required: true
+- type: input
+  id: report_id
+  attributes:
+    label: Report ID
+    description: Copy from the report, or leave empty if export failed. 导出失败可留空。
+    placeholder: 00000000-0000-4000-8000-000000000001
+  validations:
+    required: false
+- type: input
+  id: build_id
+  attributes:
+    label: Build ID / App version
+    description: Copy from the app's report preview or About page. 从报告预览或关于页复制。
+  validations:
+    required: false
+- type: dropdown
+  id: category
+  attributes:
+    label: Problem category
+    options:
+    - Detection / codec result
+    - Device / default output
+    - Crash / app closed
+    - Hang / unresponsive
+    - Installation / update
+    - Report export / sharing
+    - Unsure
+  validations:
+    required: true
+- type: textarea
+  id: summary
+  attributes:
+    label: What happened / 现象与预期
+    description: Describe the result and what you expected. Do not paste raw device identifiers. 请勿粘贴原始设备标识。
+  validations:
+    required: true
+- type: textarea
+  id: steps
+  attributes:
+    label: Steps to reproduce / 复现步骤
+    description: Include default sound output, whether playback/microphone was in use, and any device
+      switch. 说明当时的默认输出及播放、麦克风、切换设备操作。
+  validations:
+    required: false
+- type: input
+  id: headset_model
+  attributes:
+    label: Headset model / 耳机型号
+    description: Optional product brand/model you can confirm. Windows metadata in the ZIP may be missing or generic; correct it here. Do not use a personal nickname. 可选；填写你确认的品牌和型号，补充或更正 ZIP 中缺失或通用的 Windows 属性，不填个人昵称。
+    placeholder: HD815
+  validations:
+    required: false
+- type: textarea
+  id: attachment
+  attributes:
+    label: Standard report / 标准诊断包
+    description: Optional reviewed bac-report ZIP, up to 5 MiB by project policy. No raw ETL/dump. 可选；仅标准包，选择即上传。
+      Drag the standard ZIP here, or paste a reviewed summary. 可拖入标准 ZIP 或粘贴检查过的摘要。
+  validations:
+    required: false
+- type: checkboxes
+  id: fixture_permission
+  attributes:
+    label: Optional test sample permission / 可选测试样例授权
+    options:
+    - label: You may contact me in this issue about reusing a minimized, sanitized test sample. This is
+        not permission to publish my original attachment. 可在本问题内向我确认最小化测试样例的复用；此勾选不代表允许再发布原始附件。
+      required: false

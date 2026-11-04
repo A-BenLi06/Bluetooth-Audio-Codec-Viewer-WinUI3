@@ -1,0 +1,70 @@
+name: Native build
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        default: '0.0.0'
+      distribution:
+        type: string
+        default: unknown
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Release / ${{ matrix.platform }}
+    runs-on: windows-2025
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [x64, ARM64]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          dotnet-version: '8.0.x'
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        if: matrix.platform == 'x64'
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: diagnostics/requirements.txt
+      - name: Install diagnostic validator dependencies
+        if: matrix.platform == 'x64'
+        run: |
+          python -m pip install -r diagnostics/requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Installing diagnostic dependencies failed.' }
+      - name: Build, test and package
+        env:
+          BUILD_PLATFORM: ${{ matrix.platform }}
+          BUILD_VERSION: ${{ inputs.version }}
+          BUILD_DISTRIBUTION: ${{ inputs.distribution }}
+        run: ./scripts/ci/build.ps1 -Platform $env:BUILD_PLATFORM -Version $env:BUILD_VERSION -Distribution $env:BUILD_DISTRIBUTION
+      - name: Upload packages
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: packages-${{ matrix.platform }}
+          path: artifacts/ci/packages/*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Retain build logs, symbols and test results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: diagnostics-${{ matrix.platform }}
+          path: |
+            artifacts/ci/logs/
+            artifacts/ci/native/build/**/*.pdb
+            BluetoothAudioCodec.Cli/bin/**/Release/*.pdb
+            artifacts/diagnostics-integration/generated-reports/
+          if-no-files-found: warn
+          retention-days: 14

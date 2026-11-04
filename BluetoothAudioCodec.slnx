@@ -1,0 +1,5 @@
+<Solution>
+  <Configurations><Platform Name="x64" /><Platform Name="ARM64" /></Configurations>
+  <Folder Name="/UI/"><Project Path="BluetoothAudioCodec.WinUI/BluetoothAudioCodec.WinUI.vcxproj" /></Folder>
+  <Folder Name="/CLI/"><Project Path="BluetoothAudioCodec.Cli/BluetoothAudioCodec.Cli.vcxproj" /></Folder>
+</Solution>

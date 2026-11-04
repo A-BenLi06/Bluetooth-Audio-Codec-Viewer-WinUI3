@@ -10,19 +10,14 @@
     <Window.SystemBackdrop>
         <MicaBackdrop Kind="BaseAlt" />
     </Window.SystemBackdrop>
-
     <Grid x:Name="RootGrid" Background="Transparent" Loaded="OnRootLoaded">
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <Grid x:Name="TitleBarGrid" Padding="18,0" Background="Transparent">
             <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-                <FontIcon
-                    FontSize="16"
-                    Glyph="&#xE702;"
-                    IsHitTestVisible="False" />
+                <FontIcon FontSize="16" Glyph="&#xE702;" IsHitTestVisible="False" />
                 <TextBlock
                     x:Uid="AppTitle"
                     FontSize="13"
@@ -31,7 +26,6 @@
                     Text="Bluetooth Audio Codec" />
             </StackPanel>
         </Grid>
-
         <ScrollViewer
             Grid.Row="1"
             HorizontalContentAlignment="Stretch"
@@ -39,288 +33,275 @@
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollMode="Auto"
             VerticalScrollBarVisibility="Auto">
-            <Grid
-                x:Name="ScrollContentHost"
-                Padding="32,26,32,32"
-                HorizontalAlignment="Stretch">
-                <StackPanel
-                    MaxWidth="780"
-                    HorizontalAlignment="Stretch"
-                    Spacing="16">
-
-                <Grid Margin="0,0,0,4" ColumnSpacing="20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Spacing="5">
-                        <TextBlock
-                            x:Uid="HeaderTitle"
-                            Style="{ThemeResource TitleTextBlockStyle}"
-                            Text="Active Bluetooth codec" />
-                        <TextBlock
-                            x:Uid="HeaderSubtitle"
-                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                            Text="Read the codec Windows negotiated with your headset."
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-
-                    <Border
-                        x:Name="StatusBadge"
-                        Grid.Column="1"
-                        Padding="10,5"
-                        VerticalAlignment="Top"
-                        Background="{ThemeResource SubtleFillColorSecondaryBrush}"
-                        CornerRadius="14">
-                        <StackPanel Orientation="Horizontal" Spacing="7">
-                            <Ellipse
-                                x:Name="StatusDot"
-                                Width="7"
-                                Height="7"
-                                VerticalAlignment="Center"
-                                Fill="{ThemeResource TextFillColorSecondaryBrush}" />
-                            <TextBlock
-                                x:Name="StatusText"
-                                FontSize="12"
-                                FontWeight="SemiBold"
-                                Text="Ready" />
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-                <Border Style="{StaticResource CardBorderStyle}">
-                    <Grid RowSpacing="20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="1" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Grid ColumnSpacing="22">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="78" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Border
-                                Width="72"
-                                Height="72"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Background="{ThemeResource AccentFillColorSecondaryBrush}"
-                                CornerRadius="36">
-                                <FontIcon
-                                    FontSize="28"
-                                    Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
-                                    Glyph="&#xE702;" />
-                            </Border>
-
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
-                                <TextBlock
-                                    x:Name="CodecText"
-                                    FontSize="40"
-                                    FontWeight="SemiBold"
-                                    MaxLines="1"
-                                    Text="—"
-                                    TextTrimming="CharacterEllipsis" />
-                                <TextBlock
-                                    x:Name="ProtocolText"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Text="Bluetooth Classic · A2DP" />
-                            </StackPanel>
-                        </Grid>
-
-                        <Border
-                            Grid.Row="1"
-                            Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
-
-                        <Grid Grid.Row="2" ColumnSpacing="12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <SymbolIcon
-                                VerticalAlignment="Center"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Symbol="Audio" />
-                            <StackPanel Grid.Column="1" Spacing="2">
-                                <TextBlock
-                                    x:Uid="OutputLabel"
-                                    FontSize="12"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Text="DEFAULT OUTPUT" />
-                                <TextBlock
-                                    x:Name="DeviceText"
-                                    FontWeight="SemiBold"
-                                    Text="Checking…"
-                                    TextTrimming="CharacterEllipsis" />
-                                <Grid ColumnSpacing="6">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Ellipse
-                                        x:Name="BluetoothStatusDot"
-                                        Width="6"
-                                        Height="6"
-                                        VerticalAlignment="Center"
-                                        Fill="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <TextBlock
-                                        x:Name="BluetoothStatusText"
-                                        Grid.Column="1"
-                                        FontSize="12"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Text="Checking Bluetooth…"
-                                        TextTrimming="CharacterEllipsis" />
-                                </Grid>
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
-                </Border>
-
-                <Grid ColumnSpacing="20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock
-                        x:Uid="DetectHint"
-                        VerticalAlignment="Center"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Text="A short quiet tone helps Windows create a fresh stream."
-                        TextWrapping="Wrap" />
-
-                    <Button
-                        x:Name="DetectButton"
-                        Grid.Column="1"
-                        MinWidth="150"
-                        Click="OnDetectClicked"
-                        Style="{StaticResource AccentButtonStyle}">
-                        <StackPanel Orientation="Horizontal" Spacing="9">
-                            <ProgressRing
-                                x:Name="DetectionProgress"
-                                Width="16"
-                                Height="16"
-                                IsActive="False"
-                                Visibility="Collapsed" />
-                            <FontIcon
-                                x:Name="DetectIcon"
-                                FontSize="14"
-                                Glyph="&#xE721;" />
-                            <TextBlock x:Name="DetectButtonText" Text="Detect codec" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
-
-                <InfoBar
-                    x:Name="MessageBar"
-                    x:Uid="MessageBar"
-                    IsClosable="False"
-                    IsOpen="False"
-                    Severity="Informational"
-                    Title="Information" />
-
-                <Expander x:Uid="DetailsHeader" Header="Technical details">
-                    <Grid Padding="0,12,0,4" ColumnSpacing="24">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="1.4*" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Spacing="4">
-                            <TextBlock
-                                x:Uid="StandardIdLabel"
-                                FontSize="12"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Text="STANDARD ID" />
-                            <TextBlock x:Name="StandardIdText" FontFamily="Cascadia Mono" Text="—" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Spacing="4">
-                            <TextBlock
-                                x:Uid="VendorIdLabel"
-                                FontSize="12"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Text="VENDOR ID" />
-                            <TextBlock x:Name="VendorIdText" FontFamily="Cascadia Mono" Text="—" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="2" Spacing="4">
-                            <TextBlock
-                                x:Uid="CodecIdLabel"
-                                FontSize="12"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Text="CODEC ID" />
-                            <TextBlock x:Name="VendorCodecIdText" FontFamily="Cascadia Mono" Text="—" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="3" Spacing="4">
-                            <TextBlock
-                                x:Uid="ObservedLabel"
-                                FontSize="12"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Text="OBSERVED" />
-                            <TextBlock x:Name="ObservedAtText" Text="—" />
-                        </StackPanel>
-                    </Grid>
-                </Expander>
-
-                <Grid ColumnSpacing="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <FontIcon
-                        FontSize="14"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Glyph="&#xE946;" />
-                    <TextBlock
-                        x:Uid="FooterNote"
-                        Grid.Column="1"
-                        FontSize="12"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Text="The A2DP event is emitted when a stream opens or closes. HFP calls and LE Audio use different codecs."
-                        TextWrapping="Wrap" />
-                </Grid>
-
-                <Border
-                    Padding="14,12"
-                    Background="{ThemeResource SubtleFillColorSecondaryBrush}"
-                    CornerRadius="8">
-                    <Grid ColumnSpacing="16">
+            <Grid x:Name="ScrollContentHost" Padding="32,24,32,24" HorizontalAlignment="Stretch">
+                <StackPanel MaxWidth="780" HorizontalAlignment="Stretch" Spacing="12">
+                    <Grid Margin="0,0,0,4" ColumnSpacing="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-
-                        <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock
+                            x:Uid="HeaderTitle"
+                            Style="{ThemeResource TitleTextBlockStyle}"
+                            Text="Active Bluetooth codec"
+                            TextWrapping="Wrap" />
+                        <Border
+                            x:Name="StatusBadge"
+                            Grid.Column="1"
+                            Padding="10,5"
+                            VerticalAlignment="Center"
+                            Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                            CornerRadius="14">
+                            <StackPanel Orientation="Horizontal" Spacing="7">
+                                <Ellipse
+                                    x:Name="StatusDot"
+                                    Width="7"
+                                    Height="7"
+                                    VerticalAlignment="Center"
+                                    Fill="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <TextBlock
+                                    x:Name="StatusText"
+                                    FontSize="12"
+                                    FontWeight="SemiBold"
+                                    Text="Ready" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                    <Border Style="{StaticResource CardBorderStyle}">
+                        <Grid RowSpacing="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="1" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid ColumnSpacing="22">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="78" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Width="72"
+                                    Height="72"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{ThemeResource AccentFillColorSecondaryBrush}"
+                                    CornerRadius="36">
+                                    <FontIcon
+                                        FontSize="28"
+                                        Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
+                                        Glyph="&#xE702;" />
+                                </Border>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
+                                    <TextBlock
+                                        x:Name="CodecText"
+                                        FontSize="40"
+                                        FontWeight="SemiBold"
+                                        MaxLines="1"
+                                        Text="—"
+                                        ToolTipService.ToolTip="{Binding Text, ElementName=CodecText}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        x:Name="ProtocolText"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="Bluetooth Classic · A2DP"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                            <Border
+                                Grid.Row="1"
+                                Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+                            <Grid Grid.Row="2" ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <SymbolIcon
+                                    VerticalAlignment="Center"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Symbol="Audio" />
+                                <StackPanel Grid.Column="1" Spacing="2">
+                                    <TextBlock
+                                        x:Uid="OutputLabel"
+                                        FontSize="12"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="DEFAULT OUTPUT" />
+                                    <TextBlock
+                                        x:Name="DeviceText"
+                                        FontWeight="SemiBold"
+                                        Text="Checking…"
+                                        ToolTipService.ToolTip="{Binding Text, ElementName=DeviceText}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <Grid ColumnSpacing="6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Ellipse
+                                            x:Name="BluetoothStatusDot"
+                                            Width="6"
+                                            Height="6"
+                                            VerticalAlignment="Center"
+                                            Fill="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock
+                                            x:Name="BluetoothStatusText"
+                                            Grid.Column="1"
+                                            FontSize="12"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Text="Checking Bluetooth…"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                </StackPanel>
+                                <Button
+                                    x:Name="DetectButton"
+                                    Grid.Column="2"
+                                    MinWidth="150"
+                                    MinHeight="40"
+                                    VerticalAlignment="Center"
+                                    Click="OnDetectClicked"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    AutomationProperties.Name="{Binding Text, ElementName=DetectButtonText}">
+                                    <StackPanel Orientation="Horizontal" Spacing="9">
+                                        <ProgressRing
+                                            x:Name="DetectionProgress"
+                                            Width="16"
+                                            Height="16"
+                                            IsActive="False"
+                                            Visibility="Collapsed" />
+                                        <FontIcon x:Name="DetectIcon" FontSize="14" Glyph="&#xE721;" />
+                                        <TextBlock x:Name="DetectButtonText" Text="Detect codec" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <InfoBar
+                        x:Name="MessageBar"
+                        x:Uid="MessageBar"
+                        IsClosable="False"
+                        IsOpen="False"
+                        Severity="Informational"
+                        Title="Information" />
+                    <Expander
+                        x:Uid="DetailsHeader"
+                        Header="Technical details"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch">
+                        <StackPanel Spacing="16">
+                            <Grid Padding="0,4" ColumnSpacing="24" RowSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    x:Uid="StandardIdLabel"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Standard ID" />
+                                <TextBlock
+                                    x:Name="StandardIdText"
+                                    Grid.Column="1"
+                                    FontFamily="Cascadia Mono"
+                                    IsTextSelectionEnabled="True"
+                                    Text="—" />
+                                <TextBlock
+                                    x:Uid="VendorIdLabel"
+                                    Grid.Row="1"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Vendor ID" />
+                                <TextBlock
+                                    x:Name="VendorIdText"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontFamily="Cascadia Mono"
+                                    IsTextSelectionEnabled="True"
+                                    Text="—" />
+                                <TextBlock
+                                    x:Uid="CodecIdLabel"
+                                    Grid.Row="2"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Codec ID" />
+                                <TextBlock
+                                    x:Name="VendorCodecIdText"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    FontFamily="Cascadia Mono"
+                                    IsTextSelectionEnabled="True"
+                                    Text="—" />
+                                <TextBlock
+                                    x:Uid="ObservedLabel"
+                                    Grid.Row="3"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Observed" />
+                                <TextBlock
+                                    x:Name="ObservedAtText"
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    IsTextSelectionEnabled="True"
+                                    TextWrapping="Wrap"
+                                    Text="—" />
+                            </Grid>
                             <TextBlock
-                                x:Uid="SupportTitle"
-                                FontWeight="SemiBold"
-                                Text="Support development" />
-                            <TextBlock
-                                x:Uid="SupportDescription"
+                                x:Uid="FooterNote"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Text="Optional support does not unlock app features or content."
+                                Text="Some drivers report the codec only when a stream ends. Other playback can keep it open. HFP calls and LE Audio use different paths."
                                 TextWrapping="Wrap" />
                         </StackPanel>
-
-                        <StackPanel
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal"
-                            Spacing="4">
-                            <HyperlinkButton
-                                Content="Ko-fi ↗"
-                                NavigateUri="https://ko-fi.com/benli06" />
-                            <HyperlinkButton
-                                Content="爱发电 ↗"
-                                NavigateUri="https://afdian.com/a/benli06" />
+                    </Expander>
+                    <Expander
+                        x:Uid="HelpHeader"
+                        Header="Help &amp; feedback"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch">
+                        <StackPanel Spacing="12">
+                            <Button
+                                x:Name="ReportProblemButton"
+                                x:Uid="ReportProblemButton"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                MinHeight="40"
+                                Content="Report a problem…"
+                                Click="OnReportClicked" />
+                            <StackPanel
+                                x:Name="ReportActions"
+                                Orientation="Horizontal"
+                                Spacing="6"
+                                Visibility="Collapsed">
+                                <Button
+                                    x:Uid="ReportFolderButton"
+                                    Content="Show file"
+                                    Click="OnReportFolderClicked" />
+                                <Button
+                                    x:Uid="ReportCopyButton"
+                                    Content="Copy summary"
+                                    Click="OnCopySummaryClicked" />
+                                <Button
+                                    x:Uid="ReportGitHubButton"
+                                    Content="Open GitHub…"
+                                    Click="OnGitHubClicked" />
+                            </StackPanel>
+                            <TextBlock
+                                x:Name="DiagnosticsStatus"
+                                FontSize="12"
+                                TextWrapping="Wrap"
+                                IsTextSelectionEnabled="True" />
                         </StackPanel>
-                    </Grid>
-                </Border>
+                    </Expander>
+                    <StackPanel
+                        x:Name="SupportLinks"
+                        Margin="0,4,0,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <HyperlinkButton Content="Ko-fi ↗" NavigateUri="https://ko-fi.com/benli06" />
+                        <HyperlinkButton Content="爱发电 ↗" NavigateUri="https://afdian.com/a/benli06" />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

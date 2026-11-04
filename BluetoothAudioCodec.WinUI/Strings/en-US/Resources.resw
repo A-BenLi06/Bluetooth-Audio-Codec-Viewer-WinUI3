@@ -47,14 +47,8 @@
   <data name="HeaderTitle.Text" xml:space="preserve">
     <value>Active Bluetooth codec</value>
   </data>
-  <data name="HeaderSubtitle.Text" xml:space="preserve">
-    <value>Read the codec Windows negotiated with your headset.</value>
-  </data>
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>DEFAULT OUTPUT</value>
-  </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>A short quiet tone creates a fresh stream; Windows will request administrator approval for detection.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Technical details</value>
@@ -72,7 +66,7 @@
     <value>OBSERVED</value>
   </data>
   <data name="FooterNote.Text" xml:space="preserve">
-    <value>The A2DP event is emitted when a stream opens or closes. HFP calls and LE Audio use different codecs.</value>
+    <value>Results require a codec event for this device. HFP calls and LE Audio use other paths. A stream summary shows the last observed codec.</value>
   </data>
   <data name="StatusReady" xml:space="preserve">
     <value>Ready</value>
@@ -99,7 +93,7 @@
     <value>Waiting for an A2DP stream event</value>
   </data>
   <data name="ProtocolRetryHint" xml:space="preserve">
-    <value>Stop playback or reconnect, then try again</value>
+    <value>Retry while stopping playback, or export the diagnostic log</value>
   </data>
   <data name="DeviceChecking" xml:space="preserve">
     <value>Checking…</value>
@@ -168,7 +162,7 @@
     <value>No codec event observed</value>
   </data>
   <data name="MessageNoEventDefaultBody" xml:space="preserve">
-    <value>Windows did not open or close an A2DP stream during the 30-second window.</value>
+    <value>No usable codec event was received. Retry while stopping all playback, or reconnect the headset during listening and play a short sound.</value>
   </data>
   <data name="MessageNoEventBodyFormat" xml:space="preserve">
     <value>{0} Headset microphone use may switch Windows to HFP instead.</value>
@@ -198,12 +192,168 @@
     <value>LE Audio is not supported</value>
   </data>
   <data name="MessageLeAudioBody" xml:space="preserve">
-    <value>This device uses LE Audio with the LC3 codec, which is not detectable through A2DP tracing.</value>
+    <value>This output uses a Bluetooth LE path. A2DP codec detection does not support this endpoint.</value>
   </data>
   <data name="SupportTitle.Text" xml:space="preserve">
     <value>Support development</value>
   </data>
   <data name="SupportDescription.Text" xml:space="preserve">
     <value>Optional support does not unlock app features or content.</value>
+  </data>
+  <data name="CodecPreparing" xml:space="preserve">
+    <value>Preparing…</value>
+  </data>
+  <data name="StatusPreparing" xml:space="preserve">
+    <value>Preparing</value>
+  </data>
+  <data name="ProtocolLastObserved" xml:space="preserve">
+    <value>Last observed · A2DP</value>
+  </data>
+  <data name="MessageListeningBody" xml:space="preserve">
+    <value>Listening for codec events. All playing system-media sessions are temporarily paused when supported and later restored. Other audio may need manual attention.</value>
+  </data>
+  <data name="ReasonToneFailed" xml:space="preserve">
+    <value>The test sound could not finish on the selected output. Start another detection and play then stop audio yourself.</value>
+  </data>
+  <data name="ReasonMetadata" xml:space="preserve">
+    <value>Windows delivered events whose codec metadata could not be decoded. Export the diagnostic log with your bug report.</value>
+  </data>
+  <data name="ReasonHandsFree" xml:space="preserve">
+    <value>The output is hands-free or the headset microphone is in use. Close voice apps or use the PC microphone, then try again.</value>
+  </data>
+  <data name="ReasonTargetUnresolved" xml:space="preserve">
+    <value>The default output could not be associated with a physical Bluetooth device. Select the headset again and export the log if this continues.</value>
+  </data>
+  <data name="ReasonOutputChanged" xml:space="preserve">
+    <value>The default output changed or the headset disconnected. Select the intended headset and try again.</value>
+  </data>
+  <data name="ReasonExportLog" xml:space="preserve">
+    <value>Use Report a problem to review the detection and optionally include recent runtime logs.</value>
+  </data>
+  <data name="ReasonStreamOpen" xml:space="preserve">
+    <value>A Bluetooth stream started without a confirmed codec event. Start another detection and pause all playback so the stream can finish.</value>
+  </data>
+  <data name="ReasonNoProvider" xml:space="preserve">
+    <value>Windows delivered no A2DP trace records during this capture. Check the output and microphone use, then retry or export the log.</value>
+  </data>
+  <data name="ReasonNoMatching" xml:space="preserve">
+    <value>Bluetooth events arrived, but none confirmed the codec of the selected headset. Retry while stopping playback, or export the log.</value>
+  </data>
+  <data name="ReportProblemButton.Content" xml:space="preserve">
+    <value>Report a problem…</value>
+  </data>
+  <data name="ProblemReportHint.Text" xml:space="preserve">
+    <value>Prepare one problem report, optionally include recent runtime logs, review and save the ZIP. Nothing uploads automatically.</value>
+  </data>
+  <data name="ReportFolderButton.Content" xml:space="preserve">
+    <value>Show file</value>
+  </data>
+  <data name="ReportCopyButton.Content" xml:space="preserve">
+    <value>Copy summary</value>
+  </data>
+  <data name="ReportGitHubButton.Content" xml:space="preserve">
+    <value>Open GitHub…</value>
+  </data>
+  <data name="ReportWaitForDetection" xml:space="preserve">
+    <value>Wait for detection to finish, or cancel it before preparing a report.</value>
+  </data>
+  <data name="ReportChooseTitle" xml:space="preserve">
+    <value>Prepare a problem report</value>
+  </data>
+  <data name="ReportPreviewButton" xml:space="preserve">
+    <value>Preview report</value>
+  </data>
+  <data name="ReportCancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ReportPreviewNotice" xml:space="preserve">
+    <value>Review each file before saving. Detection data keeps its original snapshots and available product properties. If selected, runtime-log.txt adds recent history and export-time state; review it manually. No raw ETL, dump or audio is attached. Saving keeps the ZIP local.</value>
+  </data>
+  <data name="ReportPreviewTitle" xml:space="preserve">
+    <value>Review your report</value>
+  </data>
+  <data name="ReportSaveButton" xml:space="preserve">
+    <value>Save ZIP…</value>
+  </data>
+  <data name="ReportSaved" xml:space="preserve">
+    <value>Report saved locally: {0}. Open GitHub when you are ready to submit it.</value>
+  </data>
+  <data name="ReportSummaryCopied" xml:space="preserve">
+    <value>Report summary copied. Review it before sharing.</value>
+  </data>
+  <data name="ReportPublicNotice" xml:space="preserve">
+    <value>GitHub issues and their attachments are public. Selecting a file uploads it immediately, before submitting the issue. Review the saved standard ZIP first. Do not attach raw ETL or dumps. A GitHub account is needed to submit.</value>
+  </data>
+  <data name="ReportPublicAcknowledge" xml:space="preserve">
+    <value>I reviewed the report and understand it will be public.</value>
+  </data>
+  <data name="ReportGitHubTitle" xml:space="preserve">
+    <value>Submit on GitHub</value>
+  </data>
+  <data name="ReportOpenGitHubButton" xml:space="preserve">
+    <value>Open GitHub</value>
+  </data>
+  <data name="ReportBrowserOpened" xml:space="preserve">
+    <value>GitHub opened. Sign in, attach the reviewed ZIP and submit the issue. Keep the issue URL. Opening this page does not submit your report.</value>
+  </data>
+  <data name="ReportBrowserFailed" xml:space="preserve">
+    <value>The browser could not open GitHub. Your ZIP is still saved. Visit the project’s GitHub Issues page to submit it.</value>
+  </data>
+  <data name="HelpHeader.Header" xml:space="preserve">
+    <value>Help &amp; feedback</value>
+  </data>
+  <data name="ReportApplicationContext" xml:space="preserve">
+    <value>Application / startup issue — no detection selected</value>
+  </data>
+  <data name="ReportIncludeRuntimeLog" xml:space="preserve">
+    <value>Include recent runtime logs</value>
+  </data>
+  <data name="ReportRuntimeLogNotice" xml:space="preserve">
+    <value>Optional logs may cover several detections and include state read now. Common identifiers are filtered; review the text before sharing. Application/startup reports can be saved without a detection.</value>
+  </data>
+  <data name="DetectionRemaining" xml:space="preserve">
+    <value>Detecting · {0} s</value>
+  </data>
+  <data name="DetectionFinishing" xml:space="preserve">
+    <value>Finishing…</value>
+  </data>
+  <data name="DetectionDeadlineBody" xml:space="preserve">
+    <value>Detection did not finish within the time limit. Cancellation was requested and cleanup may still be pending. Pause background playback. If this does not finish, close and reopen the app, then use Report a problem.</value>
+  </data>
+  <data name="PlaybackScanning" xml:space="preserve">
+    <value>Enumerating system media sessions…</value>
+  </data>
+  <data name="PlaybackPausing" xml:space="preserve">
+    <value>Pausing playback…</value>
+  </data>
+  <data name="PlaybackRestoring" xml:space="preserve">
+    <value>Restoring playback…</value>
+  </data>
+  <data name="PlaybackManualTitle" xml:space="preserve">
+    <value>Audio may still be active</value>
+  </data>
+  <data name="PlaybackManualBody" xml:space="preserve">
+    <value>Some audio may remain active after the pause requests. Stop remaining audio on this headset, including other pages, games or remote sessions, while detection continues.</value>
+  </data>
+  <data name="PlaybackRestoreWarning" xml:space="preserve">
+    <value>Check playback recovery</value>
+  </data>
+  <data name="PlaybackRestoreFailed" xml:space="preserve">
+    <value>Some playback was not restored because the session or media changed, or the player rejected the request. Resume it manually if needed.</value>
+  </data>
+  <data name="PlaybackCleanupPending" xml:space="preserve">
+    <value>A media control request is still pending. Automatic recovery will be attempted when it completes. Check your player before resuming manually.</value>
+  </data>
+  <data name="PlaybackClosing" xml:space="preserve">
+    <value>Canceling detection and waiting for playback recovery before closing.</value>
+  </data>
+  <data name="PlaybackManualSources" xml:space="preserve">
+    <value>Audio processes reported by Windows: {0}</value>
+  </data>
+  <data name="PlaybackUnknownSource" xml:space="preserve">
+    <value>Unknown audio process</value>
+  </data>
+  <data name="ReportZipFileType" xml:space="preserve">
+    <value>Standard problem report (*.zip)</value>
   </data>
 </root>

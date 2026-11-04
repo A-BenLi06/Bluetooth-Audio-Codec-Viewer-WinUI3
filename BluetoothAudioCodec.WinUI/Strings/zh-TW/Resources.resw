@@ -47,14 +47,8 @@
   <data name="HeaderTitle.Text" xml:space="preserve">
     <value>目前藍牙編解碼器</value>
   </data>
-  <data name="HeaderSubtitle.Text" xml:space="preserve">
-    <value>檢視 Windows 與您的耳機協商的編解碼器。</value>
-  </data>
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>預設輸出</value>
-  </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>一段短促的低音會建立新的音訊串流；偵測時 Windows 將要求系統管理員核准。</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技術詳情</value>
@@ -72,7 +66,7 @@
     <value>觀察時間</value>
   </data>
   <data name="FooterNote.Text" xml:space="preserve">
-    <value>A2DP 事件在音訊串流開啟或關閉時發出。HFP 通話和 LE Audio 使用不同的編解碼器。</value>
+    <value>結果必須來自該裝置的編碼事件。HFP 通話與 LE Audio 使用其他路徑；串流摘要顯示最近觀察到的編碼。</value>
   </data>
   <data name="StatusReady" xml:space="preserve">
     <value>就緒</value>
@@ -93,13 +87,13 @@
     <value>重試</value>
   </data>
   <data name="ProtocolDefault" xml:space="preserve">
-    <value>藍牙傳統 · A2DP</value>
+    <value>傳統藍牙 · A2DP</value>
   </data>
   <data name="ProtocolWaiting" xml:space="preserve">
     <value>等待 A2DP 串流事件</value>
   </data>
   <data name="ProtocolRetryHint" xml:space="preserve">
-    <value>停止播放或重新連接，然後重試</value>
+    <value>停止播放時重試，或匯出診斷記錄</value>
   </data>
   <data name="DeviceChecking" xml:space="preserve">
     <value>檢查中…</value>
@@ -168,13 +162,13 @@
     <value>未觀察到編解碼器事件</value>
   </data>
   <data name="MessageNoEventDefaultBody" xml:space="preserve">
-    <value>Windows 在 30 秒視窗內未開啟或關閉 A2DP 串流。</value>
+    <value>未收到可用的編碼事件。請重新偵測並停止所有播放，或在監聽期間重新連接耳機後播放一段短音訊。</value>
   </data>
   <data name="MessageNoEventBodyFormat" xml:space="preserve">
     <value>{0} 使用耳機麥克風可能會使 Windows 切換到 HFP。</value>
   </data>
   <data name="MessageElevationCanceledTitle" xml:space="preserve">
-    <value>提升已取消</value>
+    <value>已取消系統管理員授權</value>
   </data>
   <data name="MessageElevationCanceledBody" xml:space="preserve">
     <value>應用程式仍在沒有系統管理員權限的情況下執行。</value>
@@ -198,12 +192,168 @@
     <value>不支援 LE Audio</value>
   </data>
   <data name="MessageLeAudioBody" xml:space="preserve">
-    <value>此裝置使用 LE Audio 和 LC3 編解碼器，無法透過 A2DP 追蹤偵測。</value>
+    <value>此輸出使用藍牙 LE 路徑，A2DP 編碼偵測不支援此端點。</value>
   </data>
   <data name="SupportTitle.Text" xml:space="preserve">
     <value>支持開發</value>
   </data>
   <data name="SupportDescription.Text" xml:space="preserve">
     <value>自願支持，不會解鎖應用程式功能或內容。</value>
+  </data>
+  <data name="CodecPreparing" xml:space="preserve">
+    <value>準備中…</value>
+  </data>
+  <data name="StatusPreparing" xml:space="preserve">
+    <value>準備中</value>
+  </data>
+  <data name="ProtocolLastObserved" xml:space="preserve">
+    <value>最近觀察到 · A2DP</value>
+  </data>
+  <data name="MessageListeningBody" xml:space="preserve">
+    <value>正在監聽編碼事件。程式會嘗試暫時暫停所有正在播放的系統媒體工作階段，並在結束時恢復；其他音訊可能需要手動處理。</value>
+  </data>
+  <data name="ReasonToneFailed" xml:space="preserve">
+    <value>無法在所選輸出完成測試音播放。請重新偵測，並手動播放再停止音訊。</value>
+  </data>
+  <data name="ReasonMetadata" xml:space="preserve">
+    <value>已收到 Windows 事件，但無法解析編碼中繼資料。請匯出診斷記錄並隨問題報告傳送。</value>
+  </data>
+  <data name="ReasonHandsFree" xml:space="preserve">
+    <value>目前為免持輸出或耳機麥克風正被使用。請關閉語音應用程式或改用電腦麥克風後重試。</value>
+  </data>
+  <data name="ReasonTargetUnresolved" xml:space="preserve">
+    <value>無法將預設輸出關聯到實體藍牙裝置。請重新選擇耳機；若持續發生，請匯出記錄。</value>
+  </data>
+  <data name="ReasonOutputChanged" xml:space="preserve">
+    <value>預設輸出已變更或耳機已中斷連線。請選擇目標耳機後重試。</value>
+  </data>
+  <data name="ReasonExportLog" xml:space="preserve">
+    <value>請使用「回報問題」檢查偵測記錄，並視需要附加近期執行記錄。</value>
+  </data>
+  <data name="ReasonStreamOpen" xml:space="preserve">
+    <value>藍牙串流已開始，但尚無可確認編碼的事件。請重新偵測並暫停所有播放，讓串流結束。</value>
+  </data>
+  <data name="ReasonNoProvider" xml:space="preserve">
+    <value>本次擷取未收到 A2DP 追蹤事件。請檢查輸出與麥克風使用情況，再重試或匯出記錄。</value>
+  </data>
+  <data name="ReasonNoMatching" xml:space="preserve">
+    <value>已收到藍牙事件，但未確認所選耳機的編碼。請在停止播放時重試，或匯出記錄。</value>
+  </data>
+  <data name="ReportProblemButton.Content" xml:space="preserve">
+    <value>回報問題…</value>
+  </data>
+  <data name="ProblemReportHint.Text" xml:space="preserve">
+    <value>產生問題報告，可附加近期執行記錄；檢查並儲存 ZIP 後再提交。應用程式不會自動上傳。</value>
+  </data>
+  <data name="ReportFolderButton.Content" xml:space="preserve">
+    <value>顯示檔案</value>
+  </data>
+  <data name="ReportCopyButton.Content" xml:space="preserve">
+    <value>複製摘要</value>
+  </data>
+  <data name="ReportGitHubButton.Content" xml:space="preserve">
+    <value>開啟 GitHub…</value>
+  </data>
+  <data name="ReportWaitForDetection" xml:space="preserve">
+    <value>請等待偵測結束，或先取消偵測，再準備報告。</value>
+  </data>
+  <data name="ReportChooseTitle" xml:space="preserve">
+    <value>產生問題報告</value>
+  </data>
+  <data name="ReportPreviewButton" xml:space="preserve">
+    <value>預覽報告</value>
+  </data>
+  <data name="ReportCancelButton" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ReportPreviewNotice" xml:space="preserve">
+    <value>儲存前請檢查各個檔案。偵測資料保留原有快照及可讀取的產品屬性；勾選的 runtime-log.txt 補充近期歷史與匯出時狀態，請人工檢查。不附加原始 ETL、dump 或音訊。ZIP 只儲存在本機。</value>
+  </data>
+  <data name="ReportPreviewTitle" xml:space="preserve">
+    <value>檢查報告內容</value>
+  </data>
+  <data name="ReportSaveButton" xml:space="preserve">
+    <value>儲存 ZIP…</value>
+  </data>
+  <data name="ReportSaved" xml:space="preserve">
+    <value>報告已儲存至本機：{0}。準備好後可開啟 GitHub 提交。</value>
+  </data>
+  <data name="ReportSummaryCopied" xml:space="preserve">
+    <value>已複製報告摘要，分享前請檢查內容。</value>
+  </data>
+  <data name="ReportPublicNotice" xml:space="preserve">
+    <value>GitHub 問題與附件是公開的。選擇檔案時就會立即上傳，早於提交問題。請先檢查儲存的標準 ZIP，不要附上原始 ETL 或 dump。提交需要 GitHub 帳號。</value>
+  </data>
+  <data name="ReportPublicAcknowledge" xml:space="preserve">
+    <value>我已檢查報告，並了解提交內容將公開。</value>
+  </data>
+  <data name="ReportGitHubTitle" xml:space="preserve">
+    <value>向 GitHub 提交問題</value>
+  </data>
+  <data name="ReportOpenGitHubButton" xml:space="preserve">
+    <value>開啟 GitHub</value>
+  </data>
+  <data name="ReportBrowserOpened" xml:space="preserve">
+    <value>已開啟 GitHub。請登入、附上檢查過的 ZIP 並提交問題，保留問題連結。開啟網頁不代表已提交報告。</value>
+  </data>
+  <data name="ReportBrowserFailed" xml:space="preserve">
+    <value>無法開啟 GitHub，ZIP 仍儲存在本機。可前往專案的 GitHub Issues 頁面提交。</value>
+  </data>
+  <data name="HelpHeader.Header" xml:space="preserve">
+    <value>說明與回饋</value>
+  </data>
+  <data name="ReportApplicationContext" xml:space="preserve">
+    <value>應用程式／啟動問題——不選擇偵測記錄</value>
+  </data>
+  <data name="ReportIncludeRuntimeLog" xml:space="preserve">
+    <value>附加近期執行記錄</value>
+  </data>
+  <data name="ReportRuntimeLogNotice" xml:space="preserve">
+    <value>選用記錄可能涵蓋多次偵測，並包含目前讀取的狀態。常見識別資訊會被過濾，分享前請檢查文字。應用程式／啟動問題無需先執行偵測，也可以儲存報告。</value>
+  </data>
+  <data name="DetectionRemaining" xml:space="preserve">
+    <value>偵測中 · 剩餘 {0} 秒</value>
+  </data>
+  <data name="DetectionFinishing" xml:space="preserve">
+    <value>正在收尾…</value>
+  </data>
+  <data name="DetectionDeadlineBody" xml:space="preserve">
+    <value>偵測未在時限內結束，已要求取消，背景可能仍在清理。請暫停背景音訊；若仍無法結束，請關閉並重新開啟應用程式，再透過「回報問題」匯出記錄。</value>
+  </data>
+  <data name="PlaybackScanning" xml:space="preserve">
+    <value>列舉系統媒體工作階段…</value>
+  </data>
+  <data name="PlaybackPausing" xml:space="preserve">
+    <value>正在暫停播放…</value>
+  </data>
+  <data name="PlaybackRestoring" xml:space="preserve">
+    <value>正在恢復播放…</value>
+  </data>
+  <data name="PlaybackManualTitle" xml:space="preserve">
+    <value>可能仍有音訊串流在執行</value>
+  </data>
+  <data name="PlaybackManualBody" xml:space="preserve">
+    <value>已嘗試暫停系統媒體工作階段，但部分音訊串流可能仍在執行。請在偵測繼續時停止耳機上的其他音訊，包括網頁、遊戲或遠端工作階段的聲音。</value>
+  </data>
+  <data name="PlaybackRestoreWarning" xml:space="preserve">
+    <value>請檢查播放恢復情況</value>
+  </data>
+  <data name="PlaybackRestoreFailed" xml:space="preserve">
+    <value>部分播放未恢復，可能是工作階段或媒體已改變，或播放器拒絕要求。需要時請手動恢復。</value>
+  </data>
+  <data name="PlaybackCleanupPending" xml:space="preserve">
+    <value>媒體控制要求仍在等待完成。完成後會嘗試自動恢復，請先檢查播放器狀態再手動恢復。</value>
+  </data>
+  <data name="PlaybackClosing" xml:space="preserve">
+    <value>正在取消偵測並等待播放恢復，隨後關閉視窗。</value>
+  </data>
+  <data name="PlaybackManualSources" xml:space="preserve">
+    <value>Windows 回報的音訊處理程序：{0}</value>
+  </data>
+  <data name="PlaybackUnknownSource" xml:space="preserve">
+    <value>未知音訊處理程序</value>
+  </data>
+  <data name="ReportZipFileType" xml:space="preserve">
+    <value>標準問題報告 (*.zip)</value>
   </data>
 </root>
