@@ -120,7 +120,7 @@ msbuild .\BluetoothAudioCodec.WinUI\BluetoothAudioCodec.WinUI.vcxproj `
 .\build-cli.ps1
 ```
 
-签名发布和 Store 提交流程见 [docs/STORE_SUBMISSION.md](docs/STORE_SUBMISSION.md)。架构和依赖规则见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
+签名发布和 Store 提交流程见 [docs/STORE_SUBMISSION.md](docs/STORE_SUBMISSION.md)。架构和依赖规则见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。GitHub Actions 构建、测试和发布草稿流程见 [docs/CI_CD.md](docs/CI_CD.md)。
 
 ## 项目结构
 
