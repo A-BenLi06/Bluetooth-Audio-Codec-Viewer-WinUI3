@@ -47,14 +47,11 @@
   <data name="HeaderTitle.Text" xml:space="preserve">
     <value>現在の Bluetooth コーデック</value>
   </data>
-  <data name="HeaderSubtitle.Text" xml:space="preserve">
-    <value>Windows がヘッドセットとネゴシエートしたコーデックを確認します。</value>
-  </data>
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>デフォルト出力</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>短い小さな音で新しいストリームを作成します。検出時に管理者の承認が求められます。</value>
+    <value>管理者の確認後、他の出力先を含む再生中のすべてのシステムメディアセッションの一時停止を試み、小さなテスト音を鳴らした後、今回停止したセッションを再開します。その他の音声は手動で停止する必要があります。</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技術詳細</value>
@@ -72,7 +69,7 @@
     <value>観測時刻</value>
   </data>
   <data name="FooterNote.Text" xml:space="preserve">
-    <value>A2DP イベントはストリームの開始または終了時に発生します。HFP 通話と LE Audio は異なるコーデックを使用します。</value>
+    <value>対象デバイスのコーデックイベントが必要です。HFP と LE Audio は別経路です。ストリームの集計結果は最後に確認したコーデックです。</value>
   </data>
   <data name="StatusReady" xml:space="preserve">
     <value>準備完了</value>
@@ -99,7 +96,7 @@
     <value>A2DP ストリームイベントを待機中</value>
   </data>
   <data name="ProtocolRetryHint" xml:space="preserve">
-    <value>再生を停止するか再接続して、再試行してください</value>
+    <value>再生停止時に再試行するか、診断ログを保存してください</value>
   </data>
   <data name="DeviceChecking" xml:space="preserve">
     <value>確認中…</value>
@@ -168,7 +165,7 @@
     <value>コーデックイベントが観測されませんでした</value>
   </data>
   <data name="MessageNoEventDefaultBody" xml:space="preserve">
-    <value>30 秒のウィンドウ中に Windows は A2DP ストリームを開始も終了もしませんでした。</value>
+    <value>利用できるコーデックイベントがありません。再検出中にすべての再生を停止するか、再接続して短い音声を再生してください。</value>
   </data>
   <data name="MessageNoEventBodyFormat" xml:space="preserve">
     <value>{0} ヘッドセットのマイク使用により、Windows が HFP に切り替わる場合があります。</value>
@@ -198,12 +195,168 @@
     <value>LE Audio はサポートされていません</value>
   </data>
   <data name="MessageLeAudioBody" xml:space="preserve">
-    <value>このデバイスは LC3 コーデックを伴う LE Audio を使用しており、A2DP トレースでは検出できません。</value>
+    <value>この出力は Bluetooth LE 経路を使います。A2DP コーデック検出には対応していません。</value>
   </data>
   <data name="SupportTitle.Text" xml:space="preserve">
     <value>開発を支援</value>
   </data>
   <data name="SupportDescription.Text" xml:space="preserve">
     <value>支援は任意で、アプリの機能やコンテンツは解放されません。</value>
+  </data>
+  <data name="CodecPreparing" xml:space="preserve">
+    <value>準備中…</value>
+  </data>
+  <data name="StatusPreparing" xml:space="preserve">
+    <value>準備中</value>
+  </data>
+  <data name="ProtocolLastObserved" xml:space="preserve">
+    <value>最後に確認 · A2DP</value>
+  </data>
+  <data name="MessageListeningBody" xml:space="preserve">
+    <value>コーデックイベントを待機しています。対応する再生中のシステムメディアセッションをすべて一時停止し、終了時に再開します。その他の音声は手動操作が必要な場合があります。</value>
+  </data>
+  <data name="ReasonToneFailed" xml:space="preserve">
+    <value>選択した出力でテスト音を完了できませんでした。再検出中に手動で音声を再生して停止してください。</value>
+  </data>
+  <data name="ReasonMetadata" xml:space="preserve">
+    <value>Windows イベントは届きましたが、コーデック情報を解析できませんでした。診断ログを問題報告に添付してください。</value>
+  </data>
+  <data name="ReasonHandsFree" xml:space="preserve">
+    <value>ハンズフリー出力かヘッドセットのマイクが使用中です。通話アプリを閉じるか、PC のマイクに切り替えてください。</value>
+  </data>
+  <data name="ReasonTargetUnresolved" xml:space="preserve">
+    <value>既定の出力を実際の Bluetooth デバイスに対応付けられません。ヘッドセットを選び直し、改善しない場合はログを保存してください。</value>
+  </data>
+  <data name="ReasonOutputChanged" xml:space="preserve">
+    <value>既定の出力が変わったか、ヘッドセットが切断されました。対象を選んで再試行してください。</value>
+  </data>
+  <data name="ReasonExportLog" xml:space="preserve">
+    <value>「問題を報告」から検出記録を確認し、必要に応じて最近の実行ログを添付してください。</value>
+  </data>
+  <data name="ReasonStreamOpen" xml:space="preserve">
+    <value>ストリームは開始されましたがコーデックを確認できません。再検出中にすべての再生を停止してください。</value>
+  </data>
+  <data name="ReasonNoProvider" xml:space="preserve">
+    <value>今回の監視では A2DP 追跡イベントが届きませんでした。出力とマイクの使用状況を確認し、再試行するかログを保存してください。</value>
+  </data>
+  <data name="ReasonNoMatching" xml:space="preserve">
+    <value>Bluetooth イベントは届きましたが、選択したヘッドセットのコーデックを確認できませんでした。再生停止時に再試行するかログを保存してください。</value>
+  </data>
+  <data name="HelpHeader.Header" xml:space="preserve">
+    <value>ヘルプとフィードバック</value>
+  </data>
+  <data name="PlaybackScanning" xml:space="preserve">
+    <value>システムメディアセッションを列挙中…</value>
+  </data>
+  <data name="PlaybackPausing" xml:space="preserve">
+    <value>再生を一時停止中…</value>
+  </data>
+  <data name="PlaybackRestoring" xml:space="preserve">
+    <value>再生を再開中…</value>
+  </data>
+  <data name="PlaybackManualTitle" xml:space="preserve">
+    <value>音声ストリームがまだ動作している可能性があります</value>
+  </data>
+  <data name="PlaybackManualBody" xml:space="preserve">
+    <value>一時停止を要求しても音声ストリームが動作し続ける場合があります。検出中は、他のページ、ゲーム、リモートセッションなど、このヘッドセットへの残りの音声を停止してください。</value>
+  </data>
+  <data name="PlaybackRestoreWarning" xml:space="preserve">
+    <value>再生が再開されたか確認してください</value>
+  </data>
+  <data name="PlaybackRestoreFailed" xml:space="preserve">
+    <value>セッションやメディアの変更、またはプレーヤーによる要求の拒否により、一部の再生を再開できませんでした。必要に応じて手動で再開してください。</value>
+  </data>
+  <data name="PlaybackCleanupPending" xml:space="preserve">
+    <value>メディア制御の要求がまだ完了していません。完了後に自動で再生の再開を試みます。手動で再開する前にプレーヤーの状態を確認してください。</value>
+  </data>
+  <data name="PlaybackClosing" xml:space="preserve">
+    <value>検出をキャンセルし、再生の再開を待ってからウィンドウを閉じます。</value>
+  </data>
+  <data name="PlaybackManualSources" xml:space="preserve">
+    <value>Windows が報告した音声プロセス: {0}</value>
+  </data>
+  <data name="PlaybackUnknownSource" xml:space="preserve">
+    <value>不明な音声プロセス</value>
+  </data>
+  <data name="ReportProblemButton.Content" xml:space="preserve">
+    <value>問題を報告…</value>
+  </data>
+  <data name="ProblemReportHint.Text" xml:space="preserve">
+    <value>問題レポートを作成し、必要に応じて最近の実行ログを添付できます。内容を確認して ZIP を保存してから送信してください。自動アップロードは行いません。</value>
+  </data>
+  <data name="ReportFolderButton.Content" xml:space="preserve">
+    <value>ファイルを表示</value>
+  </data>
+  <data name="ReportCopyButton.Content" xml:space="preserve">
+    <value>概要をコピー</value>
+  </data>
+  <data name="ReportGitHubButton.Content" xml:space="preserve">
+    <value>GitHub を開く…</value>
+  </data>
+  <data name="ReportWaitForDetection" xml:space="preserve">
+    <value>検出が終了するまで待つか、検出をキャンセルしてからレポートを作成してください。</value>
+  </data>
+  <data name="ReportChooseTitle" xml:space="preserve">
+    <value>問題レポートを作成</value>
+  </data>
+  <data name="ReportPreviewButton" xml:space="preserve">
+    <value>レポートをプレビュー</value>
+  </data>
+  <data name="ReportCancelButton" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="ReportPreviewNotice" xml:space="preserve">
+    <value>保存前に各ファイルを確認してください。検出データには元のスナップショットと取得できた製品情報が含まれます。選択した場合、runtime-log.txt に最近の履歴とエクスポート時の状態が追加されます。内容を手動で確認してください。生の ETL、ダンプ、音声は添付されません。ZIP はローカルに保存されます。</value>
+  </data>
+  <data name="ReportPreviewTitle" xml:space="preserve">
+    <value>レポートの内容を確認</value>
+  </data>
+  <data name="ReportSaveButton" xml:space="preserve">
+    <value>ZIP を保存…</value>
+  </data>
+  <data name="ReportSaved" xml:space="preserve">
+    <value>レポートをローカルに保存しました：{0}。準備ができたら GitHub を開いて送信してください。</value>
+  </data>
+  <data name="ReportSummaryCopied" xml:space="preserve">
+    <value>レポートの概要をコピーしました。共有前に内容を確認してください。</value>
+  </data>
+  <data name="ReportPublicNotice" xml:space="preserve">
+    <value>GitHub の Issue と添付ファイルは公開されます。ファイルは Issue の送信前でも、選択した時点でアップロードされます。保存した標準 ZIP の内容を先に確認してください。生の ETL やダンプは添付しないでください。送信には GitHub アカウントが必要です。</value>
+  </data>
+  <data name="ReportPublicAcknowledge" xml:space="preserve">
+    <value>レポートを確認し、内容が公開されることを理解しました。</value>
+  </data>
+  <data name="ReportGitHubTitle" xml:space="preserve">
+    <value>GitHub で問題を報告</value>
+  </data>
+  <data name="ReportOpenGitHubButton" xml:space="preserve">
+    <value>GitHub を開く</value>
+  </data>
+  <data name="ReportBrowserOpened" xml:space="preserve">
+    <value>GitHub を開きました。ログインして確認済みの ZIP を添付し、Issue を送信してください。Issue の URL を控えておいてください。ページを開くだけではレポートは送信されません。</value>
+  </data>
+  <data name="ReportBrowserFailed" xml:space="preserve">
+    <value>ブラウザーで GitHub を開けませんでした。ZIP は保存されています。プロジェクトの GitHub Issues ページから送信してください。</value>
+  </data>
+  <data name="ReportApplicationContext" xml:space="preserve">
+    <value>アプリ／起動時の問題 — 検出記録を選択しない</value>
+  </data>
+  <data name="ReportIncludeRuntimeLog" xml:space="preserve">
+    <value>最近の実行ログを添付する</value>
+  </data>
+  <data name="ReportRuntimeLogNotice" xml:space="preserve">
+    <value>任意で添付するログには、複数回の検出記録や現在取得した状態が含まれる場合があります。一般的な識別情報は除去されますが、共有前に内容を確認してください。アプリや起動時の問題は、検出を実行していなくてもレポートを保存できます。</value>
+  </data>
+  <data name="DetectionRemaining" xml:space="preserve">
+    <value>検出中 · 残り {0} 秒</value>
+  </data>
+  <data name="DetectionFinishing" xml:space="preserve">
+    <value>終了処理中…</value>
+  </data>
+  <data name="DetectionDeadlineBody" xml:space="preserve">
+    <value>制限時間内に検出が完了しませんでした。キャンセルを要求しましたが、後処理が続いている場合があります。バックグラウンドの再生を一時停止してください。終了しない場合はアプリを閉じて開き直し、「問題を報告」から記録を保存してください。</value>
+  </data>
+  <data name="ReportZipFileType" xml:space="preserve">
+    <value>標準問題レポート (*.zip)</value>
   </data>
 </root>

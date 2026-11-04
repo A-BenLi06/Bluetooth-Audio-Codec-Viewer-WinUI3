@@ -2,8 +2,9 @@
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap7="http://schemas.microsoft.com/appx/manifest/uap/windows10/7"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  IgnorableNamespaces="uap uap7 rescap">
 
   <Identity
     Name="BenLi06.BluetoothAudioCodecViewer"
@@ -53,6 +54,7 @@
   </Applications>
 
   <Capabilities>
+    <uap7:Capability Name="globalMediaControl" />
     <rescap:Capability Name="runFullTrust" />
     <rescap:Capability Name="allowElevation" />
     <DeviceCapability Name="bluetooth" />

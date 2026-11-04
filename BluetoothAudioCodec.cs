@@ -17,8 +17,9 @@ internal static class BluetoothAudioCodecApp
 {
     private static readonly Guid BthA2dpSessionProvider =
         new("8776ad1e-5022-4451-a566-f47e708b9075");
+    private static readonly Guid BthA2dpTraceProvider =
+        new("ddb6da39-08a7-4579-8d0c-68011146e205");
 
-    private const string BthA2dpEventProvider = "Microsoft.Windows.Bluetooth.BthA2dp";
     private const string BthA2dpStreamingEvent = "A2dpStreaming";
 
     public static int Run(string[] args)
@@ -70,58 +71,60 @@ internal static class BluetoothAudioCodecApp
 
             session.StopOnDispose = true;
 
-            session.Source.Dynamic.AddCallbackForProviderEvent(
-                BthA2dpEventProvider,
-                BthA2dpStreamingEvent,
-                traceEvent =>
+            session.Source.Dynamic.All += traceEvent =>
+            {
+                if ((traceEvent.ProviderGuid != BthA2dpSessionProvider &&
+                     traceEvent.ProviderGuid != BthA2dpTraceProvider) ||
+                    traceEvent.EventName != BthA2dpStreamingEvent)
+                    return;
+                try
                 {
-                    try
+                    var standardCodecId = checked((byte)ReadUnsignedPayload(
+                        traceEvent,
+                        "A2dpStandardCodecId"));
+                    var vendorId = ReadUnsignedPayload(
+                        traceEvent,
+                        "A2dpVendorId");
+                    var vendorCodecId = ReadUnsignedPayload(
+                        traceEvent,
+                        "A2dpVendorCodecId");
+
+                    var observation = new CodecObservation(
+                        Protocol: "Bluetooth Classic A2DP",
+                        Codec: CodecCatalog.Resolve(
+                            standardCodecId,
+                            vendorId,
+                            vendorCodecId),
+                        StandardCodecId: standardCodecId,
+                        VendorId: vendorId,
+                        VendorCodecId: vendorCodecId,
+                        ObservedAt: traceEvent.TimeStamp.ToUniversalTime(),
+                        DefaultOutput: defaultEndpoint?.FriendlyName);
+
+                    observations.Add(observation);
+
+                    if (!options.Json)
                     {
-                        var standardCodecId = checked((byte)ReadUnsignedPayload(
-                            traceEvent,
-                            "A2dpStandardCodecId",
-                            fallbackIndex: 3));
-                        var vendorId = ReadUnsignedPayload(
-                            traceEvent,
-                            "A2dpVendorId",
-                            fallbackIndex: 4);
-                        var vendorCodecId = ReadUnsignedPayload(
-                            traceEvent,
-                            "A2dpVendorCodecId",
-                            fallbackIndex: 5);
-
-                        var observation = new CodecObservation(
-                            Protocol: "Bluetooth Classic A2DP",
-                            Codec: CodecCatalog.Resolve(
-                                standardCodecId,
-                                vendorId,
-                                vendorCodecId),
-                            StandardCodecId: standardCodecId,
-                            VendorId: vendorId,
-                            VendorCodecId: vendorCodecId,
-                            ObservedAt: traceEvent.TimeStamp.ToUniversalTime(),
-                            DefaultOutput: defaultEndpoint?.FriendlyName);
-
-                        observations.Add(observation);
-
-                        if (!options.Json)
-                        {
-                            PrintObservation(observation);
-                        }
-
-                        if (!options.Watch)
-                        {
-                            session.Source.StopProcessing();
-                        }
+                        PrintObservation(observation);
                     }
-                    catch (Exception exception)
+
+                    if (!options.Watch)
                     {
-                        parseErrors.Add(exception.Message);
+                        session.Source.StopProcessing();
                     }
-                });
+                }
+                catch (Exception exception)
+                {
+                    parseErrors.Add(exception.Message);
+                }
+            };
 
             session.EnableProvider(
                 BthA2dpSessionProvider,
+                TraceEventLevel.Verbose,
+                matchAnyKeywords: 0);
+            session.EnableProvider(
+                BthA2dpTraceProvider,
                 TraceEventLevel.Verbose,
                 matchAnyKeywords: 0);
 
@@ -239,8 +242,7 @@ internal static class BluetoothAudioCodecApp
 
     private static ulong ReadUnsignedPayload(
         TraceEvent traceEvent,
-        string fieldName,
-        int fallbackIndex)
+        string fieldName)
     {
         var payloadNames = traceEvent.PayloadNames;
         var index = Array.FindIndex(
@@ -248,11 +250,6 @@ internal static class BluetoothAudioCodecApp
             name => string.Equals(name, fieldName, StringComparison.OrdinalIgnoreCase));
 
         if (index < 0)
-        {
-            index = fallbackIndex;
-        }
-
-        if (index >= payloadNames.Length)
         {
             throw new InvalidDataException(
                 $"The {BthA2dpStreamingEvent} event does not contain {fieldName}. " +

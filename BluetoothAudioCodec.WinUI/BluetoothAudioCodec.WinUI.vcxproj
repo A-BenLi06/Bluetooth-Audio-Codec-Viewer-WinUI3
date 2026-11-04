@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64"><Configuration>Debug</Configuration><Platform>ARM64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64"><Configuration>Release</Configuration><Platform>ARM64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{12E0915A-9FE5-4282-8653-D90EF4103712}</ProjectGuid>
+    <RootNamespace>BluetoothAudioCodec.WinUI</RootNamespace>
+    <ProjectName>BluetoothAudioCodec.WinUI</ProjectName>
+    <TargetName>BluetoothAudioCodec.WinUI</TargetName>
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
+    <MinimalCoreWin>true</MinimalCoreWin>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <AppContainerApplication>false</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
+    <UseWinUI>true</UseWinUI>
+    <RuntimeIdentifiers>win10-x64;win10-arm64</RuntimeIdentifiers>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <!-- F5 uses an unpackaged, app-local runtime in Debug. Release keeps the
+         Store defaults; publishing scripts may override either property. -->
+    <WindowsPackageType Condition="'$(WindowsPackageType)' == '' and '$(Configuration)' == 'Debug'">None</WindowsPackageType>
+    <WindowsPackageType Condition="'$(WindowsPackageType)' == ''">MSIX</WindowsPackageType>
+    <WindowsAppSDKSelfContained Condition="'$(WindowsAppSDKSelfContained)' == '' and '$(Configuration)' == 'Debug'">true</WindowsAppSDKSelfContained>
+    <WindowsAppSDKSelfContained Condition="'$(WindowsAppSDKSelfContained)' == ''">false</WindowsAppSDKSelfContained>
+    <WindowsAppSdkDeploymentManagerInitialize>false</WindowsAppSdkDeploymentManagerInitialize>
+    <AppxPackage Condition="'$(WindowsPackageType)' != 'None'">true</AppxPackage>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+    <GenerateAppxPackageOnBuild Condition="'$(WindowsPackageType)' != 'None'">true</GenerateAppxPackageOnBuild>
+    <AppxBundle>Never</AppxBundle>
+    <!-- Keep all nine small translation dictionaries in each architecture slice.
+         Language splitting otherwise lets SDK language filtering omit them. -->
+    <AppxBundleAutoResourcePackageQualifiers>Scale</AppxBundleAutoResourcePackageQualifiers>
+    <NativePackageManifest Condition="'$(NativePackageManifest)' == ''">Package.appxmanifest</NativePackageManifest>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <NuGetTargetMoniker>native,Version=v0.0</NuGetTargetMoniker>
+    <NuGetTargetPlatformIdentifier>Windows</NuGetTargetPlatformIdentifier>
+    <NuGetTargetPlatformVersion>$(WindowsTargetPlatformVersion)</NuGetTargetPlatformVersion>
+    <UseCrtSDKReferenceStaticWarning>false</UseCrtSDKReferenceStaticWarning>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '17.0'">v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <DesktopCompatible>true</DesktopCompatible>
+    <UseDebugLibraries Condition="'$(Configuration)' == 'Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)' != 'Debug'">false</UseDebugLibraries>
+    <WholeProgramOptimization Condition="'$(Configuration)' == 'Release'">true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <!-- Separate native intermediates from the former C# build and each deployment profile. -->
+    <NativeProfile Condition="'$(WindowsAppSDKSelfContained)' == 'true'">offline</NativeProfile>
+    <NativeProfile Condition="'$(NativeProfile)' == ''">store</NativeProfile>
+    <IntDir>obj\native\$(NativeProfile)\$(Platform)\$(Configuration)\</IntDir>
+    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
+    <OutDir Condition="'$(NativeOutputDir)' == ''">bin\native\$(NativeProfile)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(NativeOutputDir)' != ''">$(NativeOutputDir)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+    <DiagnosticPackaging Condition="'$(DiagnosticPackaging)' == ''">portable</DiagnosticPackaging>
+    <DiagnosticDistribution Condition="'$(DiagnosticDistribution)' == '' and '$(Configuration)' == 'Debug'">development</DiagnosticDistribution>
+    <DiagnosticDistribution Condition="'$(DiagnosticDistribution)' == ''">unknown</DiagnosticDistribution>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/bigobj /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;DISABLE_XAML_GENERATED_MAIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Release'">MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebug</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AppContainer>false</AppContainer>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>windowsapp.lib;advapi32.lib;tdh.lib;bcrypt.lib;shell32.lib;ole32.lib;propsys.lib;bthprops.lib;cfgmgr32.lib;version.lib;ksuser.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EnableCOMDATFolding Condition="'$(Configuration)' == 'Release'">true</EnableCOMDATFolding>
+      <OptimizeReferences Condition="'$(Configuration)' == 'Release'">true</OptimizeReferences>
+      <EnableCOMDATFolding Condition="'$(Configuration)' == 'Debug'">false</EnableCOMDATFolding>
+      <OptimizeReferences Condition="'$(Configuration)' == 'Debug'">false</OptimizeReferences>
+    </Link>
+    <Manifest><AdditionalManifestFiles>app.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles></Manifest>
+    <ResourceCompile><AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="3.0.260818.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="2.2.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Version="2.2.0" Condition="'$(WindowsAppSDKSelfContained)' != 'true'" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="App.xaml.h"><DependentUpon>App.xaml</DependentUpon></ClInclude>
+    <ClInclude Include="MainWindow.xaml.h"><DependentUpon>MainWindow.xaml</DependentUpon></ClInclude>
+    <ClInclude Include="Services\NativeServices.h" />
+    <ClInclude Include="Services\PlaybackControl.h" />
+    <ClInclude Include="Services\PlaybackPolicy.h" />
+    <ClInclude Include="Services\DiagnosticsReport.h" />
+    <ClInclude Include="Services\BluetoothDeviceProfiles.h" />
+    <ClInclude Include="Services\CodecCapturePolicy.h" />
+    <ClInclude Include="Services\BluetoothContainerIdentity.h" />
+    <ClInclude Include="Services\BluetoothAudioDeviceWatcher.h" />
+    <ClInclude Include="Services\BluetoothConnectionState.h" />
+    <ClInclude Include="Services\BluetoothConnectionQuery.h" />
+    <ClCompile Include="pch.cpp"><PrecompiledHeader>Create</PrecompiledHeader></ClCompile>
+    <ClCompile Include="App.xaml.cpp" />
+    <ClCompile Include="MainWindow.xaml.cpp" />
+    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Services\NativeServices.cpp" />
+    <ClCompile Include="Services\AudioDiagnostics.cpp" />
+    <ClCompile Include="Services\PlaybackControl.cpp" />
+    <ClCompile Include="Services\Diagnostics.cpp" />
+    <ClCompile Include="Services\DiagnosticsReport.cpp" />
+    <ClCompile Include="Services\BluetoothDeviceProfiles.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClCompile Include="Services\BluetoothAudioDeviceWatcher.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <Midl Include="MainWindow.idl" />
+    <ApplicationDefinition Include="App.xaml" />
+    <Page Include="MainWindow.xaml" />
+    <AppxManifest Include="$(NativePackageManifest)" Condition="'$(WindowsPackageType)' != 'None'" />
+    <PRIResource Include="Strings\**\*.resw" />
+    <Image Include="Assets\*.png" />
+    <ResourceCompile Include="Application.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug' and '$(WindowsPackageType)' == 'None'">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$([System.IO.Path]::GetDirectoryName('$(TargetPath)'))</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerDebuggerType>NativeOnly</LocalDebuggerDebuggerType>
+  </PropertyGroup>
+  <Target Name="GenerateNativeVersion" BeforeTargets="ResourceCompile">
+    <PropertyGroup>
+      <NativeVersion Condition="'$(AppxPackageVersion)' != ''">$(AppxPackageVersion)</NativeVersion>
+      <NativeVersion Condition="'$(NativeVersion)' == '' and '$(Version)' != ''">$(Version)</NativeVersion>
+    </PropertyGroup>
+    <XmlPeek XmlInputPath="$(NativePackageManifest)" Query="/*[local-name()='Package']/*[local-name()='Identity']/@Version" Condition="'$(NativeVersion)' == ''">
+      <Output TaskParameter="Result" PropertyName="NativeVersion" />
+    </XmlPeek>
+    <PropertyGroup>
+      <NativeMajor>$([System.Version]::Parse('$(NativeVersion)').Major)</NativeMajor>
+      <NativeMinor>$([System.Version]::Parse('$(NativeVersion)').Minor)</NativeMinor>
+      <NativeBuild>$([System.Math]::Max(0, $([System.Version]::Parse('$(NativeVersion)').Build)))</NativeBuild>
+      <NativeRevision>$([System.Math]::Max(0, $([System.Version]::Parse('$(NativeVersion)').Revision)))</NativeRevision>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(IntDir)NativeVersion.h" Overwrite="true" WriteOnlyWhenDifferent="true"
+      Lines="#define NATIVE_FILE_VERSION $(NativeMajor),$(NativeMinor),$(NativeBuild),$(NativeRevision);#define NATIVE_VERSION_STRING &quot;$(NativeMajor).$(NativeMinor).$(NativeBuild).$(NativeRevision)&quot;" />
+    <ItemGroup><FileWrites Include="$(IntDir)NativeVersion.h" /></ItemGroup>
+  </Target>
+  <Target Name="GenerateDiagnosticBuildIdentity" BeforeTargets="ClCompile">
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\write-diagnostic-build.ps1&quot; -OutputPath &quot;$(ProjectDir)$(IntDir)DiagnosticBuild.h&quot; -Architecture &quot;$(Platform)&quot; -Configuration &quot;$(Configuration)&quot; -Packaging &quot;$(DiagnosticPackaging)&quot; -Distribution &quot;$(DiagnosticDistribution)&quot;" />
+    <ItemGroup><FileWrites Include="$(IntDir)DiagnosticBuild.h" /></ItemGroup>
+  </Target>
+</Project>

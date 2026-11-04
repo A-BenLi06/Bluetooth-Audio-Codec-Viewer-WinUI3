@@ -1,7 +1,9 @@
 # Certification notes
 
-Bluetooth Audio Codec Viewer is a self-contained WinUI 3 desktop application
-distributed as an MSIX package for x64 and ARM64.
+Bluetooth Audio Codec Viewer is a WinUI 3 desktop application distributed as an
+MSIX package for x64 and ARM64. It uses native C++/WinRT, requires no .NET, and depends on the shared
+Microsoft Windows App Runtime 2.2 or later, resolved by the Store at installation.
+It does not need deployment of the Windows App Runtime Main/Singleton packages.
 
 The main WinUI 3 process always runs at standard user integrity. When the user
 explicitly selects **Detect codec**, the application starts the same signed EXE
@@ -11,6 +13,18 @@ restricted to elevated processes. The helper returns the result to the normal
 UI through a random current-user-only named pipe authenticated by a random
 256-bit token, then exits. Canceling detection stops and disposes the ETW
 session.
+
+The package declares `uap7:Capability Name="globalMediaControl"` to pause and
+restore all supported currently playing system-media sessions during a
+user-initiated Detect, including players on other outputs. Commands run in the
+ordinary process after ETW readiness. Initially paused sessions are never started;
+recovery covers only owned pauses and checks the original session, paused status
+and subsequent playback/media changes. Routing and application identity are not
+control gates. The helper accepts only authenticated begin-probe and cancel for
+the current attempt, and cannot control other applications. No process/app IDs,
+paths, titles, URLs or media fingerprints enter the structured report. Target
+Core Audio activity is inspected only for local process-name hints. Transient
+keyed metadata comparisons guard recovery; timeline refreshes alone do not block it.
 
 In direct response to the certification report completed August 19, 2026, for
 Product ID `9P8G2CQW77JT`, the publisher confirms all of the following:
@@ -24,9 +38,11 @@ Product ID `9P8G2CQW77JT`, the publisher confirms all of the following:
 3. The helper cannot execute arbitrary commands, PowerShell, scripts, or
    user-supplied executables. Its command line accepts only an exact fixed
    schema containing a pipe name, a 256-bit authentication token, a timeout of
-   1–60 seconds, and an optional fixed play-tone flag. Unknown, extra,
+   1–60 seconds, an optional validated detection UUID, and an optional fixed play-tone flag. Unknown, extra,
    reordered, or duplicate arguments are rejected before ETW starts. After the
-   pipe is authenticated, the only accepted control message is `cancel`.
+   pipe is authenticated, only `begin-probe` and `cancel` are accepted, with the
+   token and current attempt UUID checked on each message. Duplicate probe
+   commands are rejected.
 4. No persistent elevated process remains after detection. The helper serves a
    single request, disposes the ETW session on success, timeout, cancellation,
    or error, closes the pipe, and exits. No service, scheduled task, startup
@@ -46,10 +62,14 @@ The application:
 - does not install a driver or Windows service;
 - does not modify Bluetooth, audio, registry, or system settings;
 - does not record or inspect audio content;
-- does not retain or transmit personal or device information; Bluetooth
-  connection state and display names are used transiently while the UI is open;
-- keeps only a size-limited local technical exception log for troubleshooting
-  and never uploads it automatically;
+- uses connection state and display names for the UI and retains bounded local
+  diagnostics with tagged device relationships, technical versions and errors;
+- offers one problem-report ZIP preview/export, with optional filtered recent
+  runtime logs and an application/startup context that requires no detection;
+  it never uploads report files automatically;
+- opens a public GitHub issue page only when the user chooses it and acknowledges
+  the public attachment notice; the browser URL includes report/build IDs and
+  a stable reason, and the user attaches files and submits the issue in the browser;
 - does not contain advertising, telemetry, a downloader, or bundled software;
 - includes optional Ko-fi and Afdian support links that open in the user's
   default browser; support unlocks no app feature or digital content, and the
@@ -66,6 +86,11 @@ Suggested certification test:
    codec result appears in the normal-permission UI.
 5. In Task Manager, verify the elevated helper exits immediately after the
    result is returned and only the standard-integrity UI remains.
+6. Select **Report a problem**, choose a detection and inspect each file before
+   saving the standard ZIP. Export must not show UAC or upload anything.
+7. Select **Open GitHub** and verify the public/immediate-attachment-upload
+   notice appears first. Canceling must not open a browser. Opening the browser
+   must not be presented as a submitted/received report.
 6. Start another detection and select **Cancel**; the UI returns to Ready and no
    elevated helper or ETW session remains.
 7. Decline the UAC prompt; the main UI remains open at standard integrity and

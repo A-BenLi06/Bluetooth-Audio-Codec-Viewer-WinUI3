@@ -17,7 +17,7 @@ Official references:
 
 Completed in the repository:
 
-- x64 and ARM64 self-contained single-file applications;
+- x64 and ARM64 native C++/WinRT applications with app-local WinUI runtime files;
 - offline WiX MSI with embedded payload, major upgrades, Start menu shortcut,
   and a single Add or Remove Programs entry;
 - Store-compatible silent install using the MSI default `/qn` switch;
@@ -38,6 +38,13 @@ The currently installed `CN=BluetoothAudioCodec` certificate is self-signed and
 is for local development only. It must not be used for the Store release.
 
 ## 1. Choose the release identity
+
+For diagnostic provenance, pass `-Distribution microsoft-store` to Store MSI
+builds and `-Distribution github-release` to GitHub Release MSI builds. The
+default is `unknown`; packaging as MSI does not prove the install source.
+Retain the exact build's EXE/PDB and build ID. The app's optional GitHub report
+flow and Store Health are separate evidence channels; update the published
+support link and privacy policy to match the shipped version.
 
 Before building, decide and keep these values stable:
 
@@ -64,15 +71,15 @@ store, then run:
     -RequireSigning
 ```
 
-The script signs and timestamps the self-contained EXE before it is embedded,
+The script signs and timestamps the native EXE before the complete app-local runtime directory is embedded,
 builds the MSI, signs and timestamps the MSI, and fails if either final
 signature is invalid.
 
 Expected outputs:
 
-- `artifacts\installer\x64\BluetoothAudioCodec-1.0.0-x64.msi`
-- `artifacts\installer\arm64\BluetoothAudioCodec-1.0.0-arm64.msi`
-- `artifacts\installer\BluetoothAudioCodec-1.0.0-release.json` with SHA-256
+- `artifacts\native\installer\x64\BluetoothAudioCodec-1.0.0-x64.msi`
+- `artifacts\native\installer\arm64\BluetoothAudioCodec-1.0.0-arm64.msi`
+- `artifacts\native\installer\BluetoothAudioCodec-1.0.0-release.json` with SHA-256
   hashes, signing state, and silent-install commands
 
 Unsigned packages created without `-RequireSigning` are local-test artifacts

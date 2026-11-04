@@ -1,0 +1,1598 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:bac:public-report:1.0",
+  "title": "BAC public diagnostic file definitions",
+  "$comment": "Accepts bac-report/1.0 and 1.1. Version 1.1 adds explicit attempt/session scope and an optional filtered runtime-log attachment. Cross-file constraints are enforced by validate_bundle.py.",
+  "$defs": {
+    "product_field": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "source": {
+          "enum": [
+            "none",
+            "windows-device-container",
+            "windows-pnp"
+          ]
+        },
+        "status": {
+          "enum": [
+            "reported",
+            "unavailable",
+            "redacted"
+          ]
+        },
+        "user_confirmed": {
+          "const": false
+        }
+      },
+      "required": [
+        "value",
+        "source",
+        "status",
+        "user_confirmed"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "reported"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "source": {
+                "enum": [
+                  "windows-device-container",
+                  "windows-pnp"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "device_profiles": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "const": "connected-classic-audio-and-default-output"
+        },
+        "status": {
+          "enum": [
+            "collected",
+            "partial"
+          ]
+        },
+        "connected_classic_audio_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "omitted_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "default_device_tag": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^device-[1-9][0-9]{0,3}$"
+        },
+        "devices": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "properties": {
+              "device_tag": {
+                "type": "string",
+                "pattern": "^device-[1-9][0-9]{0,3}$"
+              },
+              "container_tag": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^container-[1-9][0-9]{0,3}$"
+              },
+              "connection_observation": {
+                "enum": [
+                  "connected",
+                  "disconnected",
+                  "unknown"
+                ]
+              },
+              "default_output_match": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "metadata_status": {
+                "enum": [
+                  "collected",
+                  "unavailable",
+                  "ambiguous",
+                  "timeout",
+                  "failed"
+                ]
+              },
+              "model": {
+                "$ref": "#/$defs/product_field"
+              },
+              "manufacturer": {
+                "$ref": "#/$defs/product_field"
+              }
+            },
+            "required": [
+              "device_tag",
+              "container_tag",
+              "connection_observation",
+              "default_output_match",
+              "metadata_status",
+              "model",
+              "manufacturer"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "scope",
+        "status",
+        "connected_classic_audio_count",
+        "omitted_count",
+        "default_device_tag",
+        "devices"
+      ],
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "enum": [
+            "hresult",
+            "win32",
+            "configret",
+            "ntstatus",
+            "exit-code",
+            "app"
+          ]
+        },
+        "api": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^0x[0-9A-F]{8}$"
+        },
+        "stage": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "reason": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        }
+      },
+      "required": [
+        "domain",
+        "api",
+        "code",
+        "stage",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "endpoint_tag": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "role": {
+          "enum": [
+            "multimedia",
+            "console",
+            "communications"
+          ]
+        },
+        "transport": {
+          "enum": [
+            "unknown",
+            "other",
+            "bluetooth-classic",
+            "bluetooth-le",
+            "hands-free"
+          ]
+        },
+        "identity_resolved": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "identity_source": {
+          "enum": [
+            "remote-devnode",
+            "pnp-container",
+            "none",
+            "unknown"
+          ]
+        },
+        "connection_observation": {
+          "enum": [
+            "connected",
+            "disconnected",
+            "unknown"
+          ]
+        },
+        "microphone_active": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "connection_scope": {
+          "enum": [
+            "target",
+            "audio-video-device-set"
+          ]
+        },
+        "connected_audio_device_count": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint_tag",
+        "role",
+        "transport",
+        "identity_resolved",
+        "identity_source",
+        "connection_observation",
+        "microphone_active"
+      ],
+      "additionalProperties": false
+    },
+    "manifest": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "report_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "format": {
+          "const": "bac-report"
+        },
+        "audience": {
+          "const": "public"
+        },
+        "created_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        },
+        "origin": {
+          "enum": [
+            "observed",
+            "synthetic"
+          ]
+        },
+        "fixture_reuse_allowed": {
+          "type": "boolean"
+        },
+        "redaction_policy": {
+          "enum": [
+            "public-fields-v1",
+            "public-fields-v1-with-filtered-runtime-log"
+          ]
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "enum": [
+                  "summary.txt",
+                  "environment.json",
+                  "attempts.json",
+                  "events.jsonl",
+                  "snapshots.json",
+                  "collection-status.json",
+                  "runtime-log.txt"
+                ]
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "path",
+              "bytes",
+              "sha256"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 6,
+          "maxItems": 7
+        },
+        "scope": {
+          "enum": [
+            "attempt",
+            "session"
+          ]
+        },
+        "runtime_log": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": [
+                "not_requested",
+                "included",
+                "failed"
+              ]
+            },
+            "scope": {
+              "const": "export-time-recent-history"
+            },
+            "captured_start_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+            },
+            "captured_end_utc": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+            },
+            "truncated": {
+              "type": "boolean"
+            },
+            "error": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/error"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "scope",
+            "captured_start_utc",
+            "captured_end_utc",
+            "truncated",
+            "error"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "report_id",
+        "format",
+        "audience",
+        "created_utc",
+        "origin",
+        "fixture_reuse_allowed",
+        "redaction_policy",
+        "files"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "schema_version": {
+                "const": "1.1"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "scope",
+              "runtime_log"
+            ]
+          },
+          "else": {
+            "properties": {
+              "redaction_policy": {
+                "const": "public-fields-v1"
+              },
+              "files": {
+                "maxItems": 6
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "scope"
+                  ]
+                },
+                {
+                  "required": [
+                    "runtime_log"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "report_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "app": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "build_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "git_commit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "dirty": {
+              "type": "boolean"
+            },
+            "architecture": {
+              "enum": [
+                "x64",
+                "arm64"
+              ]
+            },
+            "packaging": {
+              "enum": [
+                "msix",
+                "msi",
+                "portable",
+                "unknown"
+              ]
+            },
+            "distribution": {
+              "enum": [
+                "microsoft-store",
+                "github-release",
+                "development",
+                "unknown"
+              ]
+            },
+            "distribution_evidence": {
+              "enum": [
+                "release-metadata",
+                "user-reported",
+                "unknown"
+              ]
+            },
+            "exe_sha256": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "windows_app_runtime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "version",
+            "build_id",
+            "git_commit",
+            "dirty",
+            "architecture",
+            "packaging",
+            "distribution",
+            "distribution_evidence",
+            "exe_sha256",
+            "windows_app_runtime"
+          ],
+          "additionalProperties": false
+        },
+        "windows": {
+          "type": "object",
+          "properties": {
+            "build": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "ubr": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "build",
+            "ubr"
+          ],
+          "additionalProperties": false
+        },
+        "drivers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "node_tag": {
+                "type": "string",
+                "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+              },
+              "class": {
+                "enum": [
+                  "Bluetooth",
+                  "MEDIA",
+                  "AudioEndpoint",
+                  "System"
+                ]
+              },
+              "provider": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              }
+            },
+            "required": [
+              "node_tag",
+              "class",
+              "provider",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "schema_version",
+        "report_id",
+        "app",
+        "windows",
+        "drivers"
+      ],
+      "additionalProperties": false
+    },
+    "attempts": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "report_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attempt_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "run_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "started_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+              },
+              "finished_utc": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "outcome": {
+                "enum": [
+                  "success",
+                  "preflight_blocked",
+                  "user_canceled",
+                  "elevation_canceled",
+                  "timeout",
+                  "helper_failed",
+                  "internal_error",
+                  "interrupted_unknown"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "target": {
+                "$ref": "#/$defs/output"
+              },
+              "error": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/error"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "helper_exit_code": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "run_id",
+              "started_utc",
+              "finished_utc",
+              "outcome",
+              "reason",
+              "target",
+              "error",
+              "helper_exit_code"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "schema_version",
+        "report_id",
+        "attempts"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "schema_version": {
+                "const": "1.0"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "attempts": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "report_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "attempt_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        },
+        "elapsed_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "role": {
+          "enum": [
+            "ui",
+            "helper"
+          ]
+        },
+        "pid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "tid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "event": {
+          "enum": [
+            "attempt.started",
+            "preflight.completed",
+            "helper.started",
+            "helper.connected",
+            "etw.started",
+            "etw.stopped",
+            "codec.observed",
+            "attempt.finished",
+            "output.changed",
+            "snapshot.captured",
+            "collection.error",
+            "playback.control"
+          ]
+        },
+        "level": {
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "origin": {
+          "enum": [
+            "observed",
+            "synthetic"
+          ]
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "reason": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,63}$"
+            },
+            "outcome": {
+              "enum": [
+                "success",
+                "preflight_blocked",
+                "user_canceled",
+                "elevation_canceled",
+                "timeout",
+                "helper_failed",
+                "internal_error",
+                "interrupted_unknown"
+              ]
+            },
+            "error": {
+              "$ref": "#/$defs/error"
+            },
+            "output": {
+              "$ref": "#/$defs/output"
+            },
+            "snapshot_id": {
+              "type": "string",
+              "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+            },
+            "helper_pid": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "helper_exit_code": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "provider_guid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "status": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "codec_standard": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "codec_vendor": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "codec_id": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "control_action": {
+              "enum": [
+                "scan",
+                "match",
+                "pause",
+                "restore"
+              ]
+            },
+            "control_session": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 128
+            },
+            "control_error": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 4294967295
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "report_id",
+        "run_id",
+        "attempt_id",
+        "seq",
+        "utc",
+        "elapsed_ms",
+        "role",
+        "pid",
+        "tid",
+        "event",
+        "level",
+        "origin",
+        "data"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "event": {
+                "const": "playback.control"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "control_action": {
+                    "enum": [
+                      "scan",
+                      "match",
+                      "pause",
+                      "restore"
+                    ]
+                  },
+                  "control_session": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 128
+                  },
+                  "control_error": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 4294967295
+                  },
+                  "reason": {
+                    "enum": [
+                      "complete",
+                      "inventory-incomplete",
+                      "elevated-process",
+                      "request-timeout",
+                      "ambiguous-route",
+                      "pause-unavailable",
+                      "route-changed",
+                      "matched",
+                      "request-accepted",
+                      "request-rejected",
+                      "request-failed",
+                      "state-unconfirmed",
+                      "state-changed",
+                      "restored",
+                      "cleanup-pending",
+                      "no-controllable-session",
+                      "identity-unavailable",
+                      "package-family-matched",
+                      "all-system-media-sessions",
+                      "system-media-selected",
+                      "not-playing",
+                      "audio-streams-active",
+                      "audio-streams-idle",
+                      "audio-inventory-incomplete",
+                      "window-app-matched",
+                      "desktop-identity-changed",
+                      "not-owned",
+                      "output-changed",
+                      "session-missing",
+                      "not-paused",
+                      "media-or-playback-changed",
+                      "position-changed",
+                      "play-unavailable",
+                      "timeline-refreshed",
+                      "timeline-stale",
+                      "pause-range-changed",
+                      "media-range-changed",
+                      "media-position-changed",
+                      "media-title-changed",
+                      "media-artist-changed",
+                      "media-album-changed",
+                      "media-track-changed",
+                      "playback-playing-observed",
+                      "playback-stopped-observed",
+                      "playback-other-observed"
+                    ]
+                  }
+                },
+                "required": [
+                  "control_action",
+                  "control_session",
+                  "control_error",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "snapshots": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "report_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "snapshots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "snapshot_id": {
+                "type": "string",
+                "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+              },
+              "attempt_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "trigger": {
+                "enum": [
+                  "start",
+                  "failure",
+                  "output-change",
+                  "end"
+                ]
+              },
+              "captured_start_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+              },
+              "captured_end_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+              },
+              "output": {
+                "$ref": "#/$defs/output"
+              },
+              "device_profiles": {
+                "$ref": "#/$defs/device_profiles"
+              },
+              "nodes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "tag": {
+                      "type": "string",
+                      "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+                    },
+                    "kind": {
+                      "enum": [
+                        "endpoint",
+                        "a2dp-service",
+                        "remote-device",
+                        "audio-adapter"
+                      ]
+                    },
+                    "container_tag": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "api": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "status": {
+                      "enum": [
+                        "collected",
+                        "unavailable",
+                        "failed"
+                      ]
+                    },
+                    "error": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/error"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "tag",
+                    "kind",
+                    "container_tag",
+                    "api",
+                    "status",
+                    "error"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 0,
+                "maxItems": 32
+              },
+              "edges": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+                    },
+                    "to": {
+                      "type": "string",
+                      "pattern": "^(endpoint|device|service|container|adapter|snapshot)-[1-9][0-9]{0,3}$"
+                    },
+                    "relation": {
+                      "enum": [
+                        "pnp_parent",
+                        "audio_topology",
+                        "same_container"
+                      ]
+                    },
+                    "origin": {
+                      "enum": [
+                        "observed",
+                        "synthetic"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to",
+                    "relation",
+                    "origin"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 0,
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "snapshot_id",
+              "attempt_id",
+              "trigger",
+              "captured_start_utc",
+              "captured_end_utc",
+              "output",
+              "nodes",
+              "edges"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "schema_version",
+        "report_id",
+        "snapshots"
+      ],
+      "additionalProperties": false
+    },
+    "collection-status": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "report_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "completeness": {
+          "enum": [
+            "complete",
+            "partial"
+          ]
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "enum": [
+                  "events",
+                  "snapshots",
+                  "drivers",
+                  "etw"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "collected",
+                  "partial",
+                  "not_started",
+                  "not_requested",
+                  "unavailable",
+                  "failed"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              }
+            },
+            "required": [
+              "name",
+              "status",
+              "reason"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "loss": {
+          "type": "object",
+          "properties": {
+            "writer_dropped": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "ipc_dropped": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "events_omitted": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "snapshots_omitted": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "etw_events_lost": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "etw_log_buffers_lost": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "etw_realtime_buffers_lost": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "writer_dropped",
+            "ipc_dropped",
+            "events_omitted",
+            "snapshots_omitted",
+            "etw_events_lost",
+            "etw_log_buffers_lost",
+            "etw_realtime_buffers_lost"
+          ],
+          "additionalProperties": false
+        },
+        "capture": {
+          "type": "object",
+          "properties": {
+            "started": {
+              "type": "boolean"
+            },
+            "providers_enabled": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "events": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "metadata_failures": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "streaming_events": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "configuration_events": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "parse_failures": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rejected": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "stop_status": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "first_metadata_error": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "first_metadata_event_flags": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 4294967295
+            }
+          },
+          "required": [
+            "started",
+            "providers_enabled",
+            "events",
+            "metadata_failures",
+            "streaming_events",
+            "configuration_events",
+            "parse_failures",
+            "rejected",
+            "stop_status"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "report_id",
+        "completeness",
+        "components",
+        "loss"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/manifest"
+    },
+    {
+      "$ref": "#/$defs/environment"
+    },
+    {
+      "$ref": "#/$defs/attempts"
+    },
+    {
+      "$ref": "#/$defs/event"
+    },
+    {
+      "$ref": "#/$defs/snapshots"
+    },
+    {
+      "$ref": "#/$defs/collection-status"
+    }
+  ]
+}

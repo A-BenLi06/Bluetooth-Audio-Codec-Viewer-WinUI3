@@ -3,9 +3,5 @@
     <Platform Name="ARM64" />
     <Platform Name="x64" />
   </Configurations>
-  <Project Path="BluetoothAudioCodec.WinUI.csproj">
-    <Platform Solution="*|ARM64" Project="ARM64" />
-    <Platform Solution="*|x64" Project="x64" />
-    <Deploy Solution="Debug|*" />
-  </Project>
+  <Project Path="BluetoothAudioCodec.WinUI.vcxproj" Id="12e0915a-9fe5-4282-8653-d90ef4103712" />
 </Solution>

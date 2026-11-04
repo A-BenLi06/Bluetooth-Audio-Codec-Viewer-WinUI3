@@ -44,6 +44,9 @@
 
     <Feature Id="MainFeature" Title="Bluetooth Audio Codec" Level="1">
       <ComponentRef Id="MainExecutable" />
+      <Files Include="$(var.AppPublishDir)\**" Directory="INSTALLFOLDER">
+        <Exclude Files="$(var.AppPublishDir)\BluetoothAudioCodec.WinUI.exe" />
+      </Files>
     </Feature>
   </Package>
 </Wix>

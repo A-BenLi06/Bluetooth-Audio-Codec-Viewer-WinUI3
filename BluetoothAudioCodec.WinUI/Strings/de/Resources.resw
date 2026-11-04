@@ -47,14 +47,11 @@
   <data name="HeaderTitle.Text" xml:space="preserve">
     <value>Aktiver Bluetooth-Codec</value>
   </data>
-  <data name="HeaderSubtitle.Text" xml:space="preserve">
-    <value>Lesen Sie den Codec, den Windows mit Ihrem Headset ausgehandelt hat.</value>
-  </data>
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>STANDARDAUSGABE</value>
   </data>
   <data name="DetectHint.Text" xml:space="preserve">
-    <value>Ein kurzer leiser Ton erzeugt einen neuen Stream; Windows fordert zur Erkennung Administratorrechte an.</value>
+    <value>Nach der Administratorbestätigung versucht die App, alle laufenden Systemmedien-Sitzungen auch auf anderen Ausgaben zu pausieren, spielt einen leisen Testton und setzt die von ihr pausierten Sitzungen fort. Andere Audioquellen müssen gegebenenfalls manuell gestoppt werden.</value>
   </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Technische Details</value>
@@ -72,7 +69,7 @@
     <value>BEOBACHTET</value>
   </data>
   <data name="FooterNote.Text" xml:space="preserve">
-    <value>Das A2DP-Ereignis wird ausgegeben, wenn ein Stream geöffnet oder geschlossen wird. HFP-Anrufe und LE Audio verwenden unterschiedliche Codecs.</value>
+    <value>Ein Codec-Ereignis dieses Geräts ist erforderlich. HFP und LE Audio verwenden andere Wege. Eine Stream-Zusammenfassung zeigt den zuletzt beobachteten Codec.</value>
   </data>
   <data name="StatusReady" xml:space="preserve">
     <value>Bereit</value>
@@ -99,7 +96,7 @@
     <value>Auf ein A2DP-Stream-Ereignis wird gewartet</value>
   </data>
   <data name="ProtocolRetryHint" xml:space="preserve">
-    <value>Wiedergabe stoppen oder neu verbinden, dann erneut versuchen</value>
+    <value>Beim Stoppen der Wiedergabe erneut versuchen oder Protokoll exportieren</value>
   </data>
   <data name="DeviceChecking" xml:space="preserve">
     <value>Wird geprüft…</value>
@@ -168,7 +165,7 @@
     <value>Kein Codec-Ereignis beobachtet</value>
   </data>
   <data name="MessageNoEventDefaultBody" xml:space="preserve">
-    <value>Windows hat während des 30-Sekunden-Fensters keinen A2DP-Stream geöffnet oder geschlossen.</value>
+    <value>Kein verwendbares Codec-Ereignis empfangen. Starte erneut und stoppe alle Wiedergaben oder verbinde den Kopfhörer während der Überwachung neu und spiele kurz Audio ab.</value>
   </data>
   <data name="MessageNoEventBodyFormat" xml:space="preserve">
     <value>{0} Die Verwendung des Headset-Mikrofons kann Windows auf HFP umschalten.</value>
@@ -198,12 +195,87 @@
     <value>LE Audio wird nicht unterstützt</value>
   </data>
   <data name="MessageLeAudioBody" xml:space="preserve">
-    <value>Dieses Gerät verwendet LE Audio mit dem LC3-Codec, der über die A2DP-Ablaufverfolgung nicht erkannt werden kann.</value>
+    <value>Diese Ausgabe verwendet Bluetooth LE. Die A2DP-Codec-Erkennung unterstützt diesen Endpunkt nicht.</value>
   </data>
   <data name="SupportTitle.Text" xml:space="preserve">
     <value>Entwicklung unterstützen</value>
   </data>
   <data name="SupportDescription.Text" xml:space="preserve">
     <value>Die Unterstützung ist freiwillig und schaltet keine Funktionen oder Inhalte frei.</value>
+  </data>
+  <data name="CodecPreparing" xml:space="preserve">
+    <value>Wird vorbereitet…</value>
+  </data>
+  <data name="StatusPreparing" xml:space="preserve">
+    <value>Vorbereitung</value>
+  </data>
+  <data name="ProtocolLastObserved" xml:space="preserve">
+    <value>Zuletzt beobachtet · A2DP</value>
+  </data>
+  <data name="MessageListeningBody" xml:space="preserve">
+    <value>Codec-Ereignisse werden erfasst. Alle laufenden Systemmedien-Sitzungen werden nach Möglichkeit pausiert und anschließend fortgesetzt. Andere Audioquellen erfordern möglicherweise einen manuellen Eingriff.</value>
+  </data>
+  <data name="ReasonToneFailed" xml:space="preserve">
+    <value>Der Testton konnte auf der gewählten Ausgabe nicht abgeschlossen werden. Starte eine neue Erkennung und spiele Audio manuell ab und stoppe es.</value>
+  </data>
+  <data name="ReasonMetadata" xml:space="preserve">
+    <value>Windows-Ereignisse wurden empfangen, ihre Codec-Metadaten konnten aber nicht gelesen werden. Exportiere das Diagnoseprotokoll für den Fehlerbericht.</value>
+  </data>
+  <data name="ReasonHandsFree" xml:space="preserve">
+    <value>Die Freisprechausgabe oder das Kopfhörermikrofon ist aktiv. Schließe Sprachanwendungen oder verwende das PC-Mikrofon und versuche es erneut.</value>
+  </data>
+  <data name="ReasonTargetUnresolved" xml:space="preserve">
+    <value>Die Standardausgabe konnte keinem physischen Bluetooth-Gerät zugeordnet werden. Wähle den Kopfhörer erneut und exportiere bei Bedarf das Protokoll.</value>
+  </data>
+  <data name="ReasonOutputChanged" xml:space="preserve">
+    <value>Die Standardausgabe hat sich geändert oder der Kopfhörer wurde getrennt. Wähle das gewünschte Gerät und versuche es erneut.</value>
+  </data>
+  <data name="ReasonExportLog" xml:space="preserve">
+    <value>Technische Einzelheiten stehen im exportierbaren Diagnoseprotokoll.</value>
+  </data>
+  <data name="ReasonStreamOpen" xml:space="preserve">
+    <value>Ein Bluetooth-Stream begann ohne bestätigtes Codec-Ereignis. Starte erneut und stoppe alle Wiedergaben, damit der Stream endet.</value>
+  </data>
+  <data name="ReasonNoProvider" xml:space="preserve">
+    <value>Es wurden keine A2DP-Ereignisse empfangen. Prüfe Ausgabe und Mikrofonnutzung, versuche es erneut oder exportiere das Protokoll.</value>
+  </data>
+  <data name="ReasonNoMatching" xml:space="preserve">
+    <value>Bluetooth-Ereignisse wurden empfangen, bestätigten aber keinen Codec dieses Kopfhörers. Versuche es beim Stoppen der Wiedergabe erneut oder exportiere das Protokoll.</value>
+  </data>
+  <data name="HelpHeader.Header" xml:space="preserve">
+    <value>Hilfe und Feedback</value>
+  </data>
+  <data name="PlaybackScanning" xml:space="preserve">
+    <value>Systemmedien-Sitzungen werden aufgelistet…</value>
+  </data>
+  <data name="PlaybackPausing" xml:space="preserve">
+    <value>Pausing playback…</value>
+  </data>
+  <data name="PlaybackRestoring" xml:space="preserve">
+    <value>Restoring playback…</value>
+  </data>
+  <data name="PlaybackManualTitle" xml:space="preserve">
+    <value>Audio ist möglicherweise weiterhin aktiv</value>
+  </data>
+  <data name="PlaybackManualBody" xml:space="preserve">
+    <value>Nach den Pausenanforderungen können Audiostreams weiterhin aktiv sein. Stoppen Sie während der Erkennung verbleibendes Audio auf diesem Headset, etwa von Webseiten, Spielen oder Remotesitzungen.</value>
+  </data>
+  <data name="PlaybackRestoreWarning" xml:space="preserve">
+    <value>Check playback recovery</value>
+  </data>
+  <data name="PlaybackRestoreFailed" xml:space="preserve">
+    <value>Einige Wiedergaben wurden wegen geänderter Sitzungen oder Medien oder einer abgelehnten Anfrage nicht fortgesetzt. Setzen Sie sie bei Bedarf manuell fort.</value>
+  </data>
+  <data name="PlaybackCleanupPending" xml:space="preserve">
+    <value>A media control request is still pending. Automatic recovery will be attempted when it completes. Check your player before resuming manually.</value>
+  </data>
+  <data name="PlaybackClosing" xml:space="preserve">
+    <value>Canceling detection and waiting for playback recovery before closing.</value>
+  </data>
+  <data name="PlaybackManualSources" xml:space="preserve">
+    <value>Von Windows gemeldete Audioprozesse: {0}</value>
+  </data>
+  <data name="PlaybackUnknownSource" xml:space="preserve">
+    <value>Unknown audio process</value>
   </data>
 </root>

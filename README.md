@@ -31,7 +31,7 @@ winget install --source msstore --id 9P8G2CQW77JT
 ### 离线安装包（MSI）
 
 从 [GitHub Releases](https://github.com/A-BenLi06/Bluetooth-Audio-Codec-Viewer-WinUI3/releases)
-下载 x64 或 ARM64 的离线 MSI 安装包。自包含单文件发布，无下载器和捆绑组件，
+下载 x64 或 ARM64 的离线 MSI 安装包。安装包包含完整原生程序和 WinUI 依赖，无下载器和捆绑组件，
 无需另装 .NET Runtime。
 
 ## 简介
@@ -47,11 +47,13 @@ Bluetooth Audio Codec 是一款专注、现代的 Windows 桌面工具。它监�
 
 - App 打开期间自动监听蓝牙音频设备的连接与断开，并刷新设备名和默认输出；
 - 检测当前 Bluetooth Classic A2DP 编解码器；
+- 检测时尝试暂停所有正在播放且支持控制的系统媒体会话（包括其他输出设备），结束或取消后恢复本次暂停的会话；原本暂停的内容不会被启动；
 - 识别 SBC、AAC、aptX Classic、aptX HD、aptX Low Latency、FastStream、
   LDAC、Samsung Scalable Codec、LHDC 等已知格式；
 - 显示标准 codec ID、vendor ID、vendor codec ID、默认输出设备和检测时间；
 - 无法识别的编解码器仍会保留其原始数字标识，便于排查；
-- 支持 x64 和 ARM64，自包含单文件发布，无需用户另装 .NET Runtime；
+- 本地轮转日志，以及统一的 **Report a problem** 入口：选择检测记录或应用上下文、预览并导出诊断 ZIP，可选附加近期脱敏日志；不会自动上传；
+- 支持 x64 和 ARM64，无需用户另装 .NET Runtime；离线 MSI 自包含，商店 MSIX 自动安装所需 Windows App Runtime；
 - 提供英语、简体中文、繁体中文、日语、法语、西班牙语、葡萄牙语、德语和
   意大利语界面。
 
@@ -60,7 +62,8 @@ Bluetooth Audio Codec 是一款专注、现代的 Windows 桌面工具。它监�
 1. 连接蓝牙耳机或音箱，并将其设为当前播放设备。
 2. 正常启动应用，无需以管理员身份运行整个界面。
 3. 点击 **Detect codec**，在 Windows 弹出提示时批准管理员权限。
-4. 应用会播放一段短促、安静的提示音以建立新的 A2DP 串流。
+4. helper 确认开始监听后，程序尝试暂停所有正在播放且支持暂停的 Windows 系统媒体会话，再在选定输出端点播放短促、安静的测试音。结束或取消后尝试恢复本次暂停的原会话。
+   暂停不保证音频流已关闭或驱动会上报 codec；网页、游戏和远程会话等其他音频可能需要手动处理，界面会提示仍活动的音频进程。
 5. 检测到事件后，主卡片会显示当前编解码器和输出设备；展开
    **Technical details** 可查看原始标识。
 
@@ -88,17 +91,55 @@ Windows 将蓝牙 codec trace 限制给提升权限的进程，因此检测时�
 - 仅检测 Bluetooth Classic 的 A2DP 播放链路；
 - 免提通话使用的 HFP（CVSD/mSBC）不属于 A2DP，不会显示；
 - Bluetooth LE Audio 使用不同的事件和 codec 路径，目前不检测 LC3；
-- 检测结果来自 Windows 建立或关闭串流时发出的事件。如果没有捕获到事件，请停止
-  播放后重新检测，或在检测期间重新连接耳机；
+- 检测结果来自 Windows 建立或关闭串流时发出的事件。如果没有捕获到事件，请暂停
+  其他播放后重新检测，或在监听窗口内重新连接同一耳机；原生版不会因为一次连接变化直接取消，但会重新核对当前输出，丢弃不属于目标设备的结果；
+- 结束汇总事件只代表最近观测到的串流编码，界面会明确标注；成功配置事件还必须有同一目标的新播放开始事件确认；
+- 某些第三方驱动不提供可解析的事件或设备拓扑。应用会报告具体原因，不会根据耳机型号猜测正在使用的编码；
 - 厂商驱动和 Windows 版本可能引入新的 ID。未知 ID 会原样显示，但名称可能需要后续
   补充。
 
+## 反馈问题与导出日志
+
+复现问题后，点击窗口下方 **报告问题… / Report a problem…**，选择出错的那次检测，
+可勾选“附加近期运行日志”，逐文件检查内容后保存一个 `.zip`。没有检测记录，或要报告启动问题时，
+选择“应用／启动问题”；不会伪造一次检测。保存后可显示文件、复制摘要或打开 GitHub。
+请在浏览器中登录、附上检查过的 ZIP，再提交问题；应用不会自动上传文件。
+
+**GitHub 问题及附件公开，选择附件时就会立即上传，早于提交问题。**
+不要附上原始 ETL、dump 或未过滤的设备记录。导出失败也可以先提交文字。
+
+标准报告包含构建 ID、Windows / 目标驱动版本、检测终态、数字错误、采集统计，以及
+当次检测开始和结束/失败时的设备关系。设备使用报告内匿名代号关联，不含原始地址、
+PnP / 容器 ID、设备昵称、音频或完整 ETW 负载；不会在导出时用当前状态覆盖故障现场。
+新快照还包含可读取的耳机产品型号、厂商及属性来源，缺失值保留为未知，不用昵称或驱动厂商猜测型号。
+多台设备分别关联默认输出，身份未解析时标记为未知；连接列表覆盖 Classic 音频/视频设备及已解析的默认蓝牙目标，
+不保证列出全部 LE 设备。Windows 属性未经用户确认，可在 GitHub 表单中补充或更正品牌和型号。
+附加的 `runtime-log.txt` 是经过过滤的近期运行历史，最多 512 KiB，可能跨越多次检测，并包含
+导出时读取的环境／输出状态；它与故障时快照分开标注。分享前需人工检查，不能保证任意日志文本完全匿名。
+格式、开发者接收校验和测试说明见 [diagnostics/README.md](diagnostics/README.md)。
+
+结构化记录位于 `%LOCALAPPDATA%\BluetoothAudioCodecViewer\Reports`，保留最多五次失败/
+未正常结束及最近一次成功/取消，最长七天，总量不超过 10 MiB；主动导出的文件不随之删除。
+构建版本来自编译元数据，MSIX 身份不等于来自 Microsoft Store。
+
+本地日志位于 `%LOCALAPPDATA%\BluetoothAudioCodecViewer\Logs`，约 1 MiB 后轮转，
+仅保留 `runtime.log` 和 `runtime.log.previous`。也支持
+`BluetoothAudioCodec.WinUI.exe --export-diagnostics "保存路径.txt"`。
+旧 TXT 命令保留兼容。界面已统一为“报告问题”，无需分别导出 ZIP 和 TXT。
+`BluetoothAudioCodec.WinUI.exe --export-report "保存路径.zip" --include-runtime-log` 可导出同样的组合包；
+没有检测记录时生成应用上下文报告。省略 `--include-runtime-log` 则不附加日志。
+
 ## 从源码开发
+
+在 VS 2026 中打开 `BluetoothAudioCodec.WinUI/BluetoothAudioCodec.WinUI.slnx`，
+选择 **Debug / x64**，以 **本地 Windows 调试器 / F5** 启动。
+Debug 已配置为自包含普通 EXE，无需部署或签名 MSIX。
+具体步骤和 helper 断点说明见 [VS 2026 测试说明](NATIVE_MIGRATION.md#在-visual-studio-2026-中测试)。
 
 ### 环境要求
 
-- Visual Studio（安装 .NET 桌面开发和 Windows 应用开发相关组件）；
-- .NET 10 SDK；
+- Visual Studio 2022/2026，安装 C++ 桌面开发、WinUI C++ 工具及 ARM64 交叉编译工具；
+- .NET SDK 仅用于 WiX 安装器构建；可选命令行版需要 .NET 10 SDK，GUI 无需 .NET；
 - Windows 10 SDK 10.0.26100 或更高版本；
 - 生成 Partner Center 上传包时，还需安装 Windows SDK 的 Debugging Tools
   （脚本会检查 `mspdbcmf.exe` 生成的 `.appxsym`）；
@@ -112,17 +153,23 @@ Windows 将蓝牙 codec trace 限制给提升权限的进程，因此检测时�
 BluetoothAudioCodec.WinUI/BluetoothAudioCodec.WinUI.slnx
 ```
 
-启动项目是 `BluetoothAudioCodec.WinUI.csproj`。选择 `x64` 或 `ARM64` 平台后即可
+启动项目是 `BluetoothAudioCodec.WinUI.vcxproj`。选择 `x64` 或 `ARM64` 平台后即可
 构建和调试。安装器是独立项目
 `BluetoothAudioCodec.Installer/BluetoothAudioCodec.Installer.wixproj`。
+
+GUI 已迁移为 C++20 / C++/WinRT + WinUI 3，保留原有 XAML、九种语言和现代界面。
+ETW/TDH、Core Audio COM、测试音、随机数及提权通信均使用 Windows 原生接口。
+应用直接引用 Windows App SDK 的 WinUI 组件，避开未使用的 AI/ML 等依赖。
+离线 MSI 包含 WinUI 原生运行文件；商店 MSIX 复用 Windows App Runtime。两者均无需 .NET。
+体积对比及发布依赖说明见
+[APP_SIZE.md](APP_SIZE.md)。
 
 ### 命令行构建
 
 ```powershell
-dotnet restore .\BluetoothAudioCodec.WinUI\BluetoothAudioCodec.WinUI.csproj
-dotnet build .\BluetoothAudioCodec.WinUI\BluetoothAudioCodec.WinUI.csproj `
-    --configuration Release `
-    -p:Platform=x64
+# 在 Visual Studio Developer PowerShell 中运行
+msbuild .\BluetoothAudioCodec.WinUI\BluetoothAudioCodec.WinUI.vcxproj `
+    /restore /p:Configuration=Release /p:Platform=x64
 ```
 
 生成本地测试用 x64 和 ARM64 MSI：
@@ -131,7 +178,9 @@ dotnet build .\BluetoothAudioCodec.WinUI\BluetoothAudioCodec.WinUI.csproj `
 .\build-store-installer.ps1 -Architecture all -Version 1.0.0
 ```
 
-输出位于 `artifacts/installer/`。没有受信任代码签名的构建仅供本地测试，不能上传
+输出位于 `artifacts/native/installer/`；可用 `-OutputDirectory` 指定独立目录。
+离线版采用 EXE + WinUI DLL/资源文件的目录布局；分发完整 MSI，或压缩完整发布目录，
+不可单独复制 EXE。没有受信任代码签名的构建仅供本地测试，不能上传
 Microsoft Store。
 
 ### 签名发布构建
@@ -145,7 +194,7 @@ Microsoft Store。
     -RequireSigning
 ```
 
-脚本会先签名并时间戳 EXE，再将它嵌入 MSI，最后签名 MSI；同时生成包含 SHA-256、
+脚本会先签名并时间戳主 EXE，再将完整发布目录嵌入 MSI，最后签名 MSI；同时生成包含 SHA-256、
 签名状态和静默安装命令的 release manifest。Store 发布前的完整步骤见
 [STORE_SUBMISSION.md](STORE_SUBMISSION.md)。
 
@@ -175,15 +224,16 @@ dotnet run .\BluetoothAudioCodec.cs -- --watch --no-tone
 
 - 所有检测和解析均在设备本地进行；
 - 仅在 App 打开期间读取已配对蓝牙音频设备的连接状态和显示名称；
-- 不收集遥测，不发送网络请求，不录制或保存音频；
-- 发生异常时会在本机应用数据目录写入有大小上限的技术诊断日志；日志不会自动上传，
-  超过 1 MB 后只保留当前文件和上一份文件；
+- 不自动上传遥测或报告，不录制或保存音频；用户主动打开 GitHub 时，浏览器 URL 会带入
+  报告 ID、构建 ID 和稳定原因，附件由用户在网页内提交；
+- 启动、检测、连接状态变化及异常会写入有大小上限的本地技术诊断日志；日志不会自动上传，
+  约 1 MiB 后轮转，只保留当前文件和上一份文件，可由用户主动导出；
 - 不修改蓝牙、音频或系统设置；
 - 不安装驱动、Windows 服务或常驻管理员进程；
 - 仅在用户主动开始检测时启动提升权限的 helper。
 
-准备公开隐私政策时，请先替换
-[StoreAssets/PRIVACY_POLICY.md](StoreAssets/PRIVACY_POLICY.md) 中的支持联系方式占位符。
+正式发布时，请核对 [StoreAssets/PRIVACY_POLICY.md](StoreAssets/PRIVACY_POLICY.md)
+的联系方式和线上版本，并把商店支持入口指向项目的 GitHub 支持页面。
 
 ## Support development
 

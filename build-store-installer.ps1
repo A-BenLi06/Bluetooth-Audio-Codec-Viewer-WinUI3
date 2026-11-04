@@ -13,14 +13,24 @@ param(
 
     [uri]$TimestampUrl = 'http://timestamp.digicert.com',
 
-    [switch]$RequireSigning
+    [switch]$RequireSigning,
+
+    [ValidateSet('microsoft-store', 'github-release', 'unknown')]
+    [string]$Distribution = 'unknown',
+
+    [ValidateNotNullOrEmpty()]
+    [string]$OutputDirectory = (Join-Path $PSScriptRoot 'artifacts\native'),
+
+    [string[]]$MSBuildArguments = @()
 )
 
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
-$appProject = Join-Path $root 'BluetoothAudioCodec.WinUI\BluetoothAudioCodec.WinUI.csproj'
+$appProject = Join-Path $root 'BluetoothAudioCodec.WinUI\BluetoothAudioCodec.WinUI.vcxproj'
+. (Join-Path $root 'build-native-common.ps1')
+$msbuild = Get-NativeMSBuild
 $installerProject = Join-Path $root 'BluetoothAudioCodec.Installer\BluetoothAudioCodec.Installer.wixproj'
-$artifactRoot = Join-Path $root 'artifacts'
+$artifactRoot = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputDirectory)
 
 if ($RequireSigning -and [string]::IsNullOrWhiteSpace($CertificateThumbprint)) {
     throw 'A trusted code-signing certificate thumbprint is required for a Store release.'
@@ -104,29 +114,41 @@ $signTool = if ($null -eq $signingCertificate) {
 
 $outputs = foreach ($targetArchitecture in $architectures) {
     $runtimeIdentifier = "win-$targetArchitecture"
-    $publishDirectory = Join-Path $artifactRoot "publish\$runtimeIdentifier"
+    # Fresh staging prevents obsolete .NET files or old runtime versions from
+    # entering a native installer, and leaves earlier release artifacts intact.
+    $buildId = "$Version-$([Guid]::NewGuid().ToString('N'))"
+    $buildDirectory = Join-Path $artifactRoot "build\$targetArchitecture\$buildId"
+    $publishDirectory = Join-Path $artifactRoot "publish\$runtimeIdentifier\$buildId"
 
-    # The app project defaults to the packaged (MSIX) Store configuration.
-    # The offline MSI path must override it back to the unpackaged,
-    # self-contained single-file layout this script has always produced.
-    dotnet publish $appProject `
-        --configuration Release `
-        --runtime $runtimeIdentifier `
-        --self-contained true `
+    & $msbuild $appProject /restore /t:Build /v:minimal /nologo @MSBuildArguments `
+        -p:Configuration=Release `
+        -p:WindowsAppSDKSelfContained=true `
         -p:Platform=$targetArchitecture `
         -p:Version=$Version `
         -p:WindowsPackageType=None `
+        -p:DiagnosticPackaging=msi `
+        -p:DiagnosticDistribution=$Distribution `
         -p:GenerateAppxPackageOnBuild=false `
         -p:EnableMsixTooling=true `
         -p:AppxBundle=Never `
         -p:UapAppxPackageBuildMode= `
-        -p:PublishSingleFile=true `
-        -p:IncludeAllContentForSelfExtract=true `
-        --output $publishDirectory | Out-Host
+        "-p:NativeOutputDir=$buildDirectory" |
+        ForEach-Object { Write-Information $_ -InformationAction Continue }
 
     if ($LASTEXITCODE -ne 0) {
         throw "Publishing failed for $targetArchitecture."
     }
+
+    New-Item -ItemType Directory -Path $publishDirectory -Force | Out-Null
+    $nativeBuildRoot = [IO.Path]::GetFullPath($buildDirectory).TrimEnd('\') + '\'
+    foreach ($file in Get-ChildItem -LiteralPath $buildDirectory -File -Recurse) {
+        if ($file.Extension -notin @('.exe', '.dll', '.pri', '.xbf', '.png', '.ico', '.manifest')) { continue }
+        $relative = $file.FullName.Substring($nativeBuildRoot.Length)
+        $destination = Join-Path $publishDirectory $relative
+        New-Item -ItemType Directory -Path (Split-Path $destination) -Force | Out-Null
+        Copy-Item -LiteralPath $file.FullName -Destination $destination
+    }
+    Assert-NativePayload -Directory $publishDirectory -Offline
 
     $application = Join-Path $publishDirectory 'BluetoothAudioCodec.WinUI.exe'
     if ($null -ne $signTool) {
@@ -138,7 +160,9 @@ $outputs = foreach ($targetArchitecture in $architectures) {
         -p:Platform=$targetArchitecture `
         -p:ProductVersion=$Version `
         -p:ProductManufacturer=$Manufacturer `
-        -p:AppPublishDir=$publishDirectory | Out-Host
+        -p:AppPublishDir=$publishDirectory `
+        "-p:OutputPath=$(Join-Path $artifactRoot "installer\$targetArchitecture")\" |
+        ForEach-Object { Write-Information $_ -InformationAction Continue }
 
     if ($LASTEXITCODE -ne 0) {
         throw "MSI creation failed for $targetArchitecture."
@@ -167,6 +191,7 @@ $manifestPackages = @($outputs | ForEach-Object {
     [ordered]@{
         architecture = $_.Architecture
         application = Split-Path $_.Application -Leaf
+        applicationDirectory = [IO.Path]::GetRelativePath($artifactRoot, (Split-Path $_.Application))
         applicationSha256 = (Get-FileHash $_.Application -Algorithm SHA256).Hash
         installer = Split-Path $_.Installer -Leaf
         installerSha256 = (Get-FileHash $_.Installer -Algorithm SHA256).Hash
@@ -179,6 +204,7 @@ $manifestPackages = @($outputs | ForEach-Object {
     product = 'Bluetooth Audio Codec'
     version = $Version
     manufacturer = $Manufacturer
+    layout = 'native-directory'
     generatedAtUtc = [DateTime]::UtcNow.ToString('o')
     packages = $manifestPackages
 } | ConvertTo-Json -Depth 4 | Set-Content -Path $manifestPath -Encoding utf8

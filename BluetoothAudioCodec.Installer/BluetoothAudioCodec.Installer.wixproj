@@ -8,6 +8,25 @@
     <AppIconPath Condition="'$(AppIconPath)' == ''">$(MSBuildThisFileDirectory)..\BluetoothAudioCodec.WinUI\Assets\AppIcon.ico</AppIconPath>
     <OutputName>BluetoothAudioCodec-$(ProductVersion)-$(Platform)</OutputName>
     <OutputPath>$(MSBuildThisFileDirectory)..\artifacts\installer\$(Platform)\</OutputPath>
+    <!-- Released installers must be independent of mutable intermediate files. -->
+    <CreateHardLinksForCopyFilesToOutputDirectoryIfPossible>false</CreateHardLinksForCopyFilesToOutputDirectoryIfPossible>
     <DefineConstants>ProductVersion=$(ProductVersion);ProductManufacturer=$(ProductManufacturer);AppPublishDir=$(AppPublishDir);AppIconPath=$(AppIconPath)</DefineConstants>
   </PropertyGroup>
+
+  <Target Name="TrackInstallerPayload" BeforeTargets="CoreCompile">
+    <!-- WiX tracks the previous build's bind paths. Also track the current
+         payload and preprocessor values so changing AppPublishDir cannot
+         silently reuse an MSI containing the old executable. -->
+    <WriteLinesToFile
+      File="$(IntermediateOutputPath)InstallerInputs.txt"
+      Lines="$(DefineConstants)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <Content Include="$(AppPublishDir)\**\*" />
+      <Content Include="$(AppIconPath)" />
+      <Content Include="$(IntermediateOutputPath)InstallerInputs.txt" />
+      <FileWrites Include="$(IntermediateOutputPath)InstallerInputs.txt" />
+    </ItemGroup>
+  </Target>
 </Project>
