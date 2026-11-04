@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup><ClCompile><AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)Services;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile></ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Services\AudioDiagnostics.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Services\BluetoothAudioDeviceWatcher.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\BluetoothAudioDeviceWatcher.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\BluetoothConnectionQuery.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\BluetoothConnectionState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\BluetoothContainerIdentity.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Services\BluetoothDeviceProfiles.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\BluetoothDeviceProfiles.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\CodecCapturePolicy.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Services\Diagnostics.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Services\DiagnosticsReport.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\DiagnosticsReport.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Services\NativeServices.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\NativeServices.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\pch.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Services\PlaybackControl.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\PlaybackControl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Services\PlaybackPolicy.h" />
+  </ItemGroup>
+</Project>

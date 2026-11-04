@@ -4,9 +4,9 @@
 #include <memory>
 #include <iostream>
 #include <stdexcept>
-#include "../BluetoothAudioCodec.WinUI/Services/BluetoothDeviceProfiles.h"
-#include "../BluetoothAudioCodec.WinUI/Services/NativeServices.h"
-#include "../BluetoothAudioCodec.WinUI/Services/BluetoothConnectionQuery.h"
+#include "../BluetoothAudioCodec.Core/Services/BluetoothDeviceProfiles.h"
+#include "../BluetoothAudioCodec.Core/Services/NativeServices.h"
+#include "../BluetoothAudioCodec.Core/Services/BluetoothConnectionQuery.h"
 namespace Native
 {
 std::optional<BluetoothStatus> Injected;

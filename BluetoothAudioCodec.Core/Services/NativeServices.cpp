@@ -551,19 +551,6 @@ void WINAPI OnEvent(EVENT_RECORD *record) noexcept
     }
 }
 } // namespace
-hstring Localize(std::wstring_view key)
-{
-    static Microsoft::Windows::ApplicationModel::Resources::ResourceManager manager;
-    try
-    {
-        return manager.MainResourceMap().GetSubtree(L"Resources").GetValue(hstring(key)).ValueAsString();
-    }
-    catch (...)
-    {
-        Log(L"localization", key);
-        return hstring(key);
-    }
-}
 std::wstring Format(std::wstring value, std::wstring_view argument)
 {
     if (auto index = value.find(L"{0}"); index != std::wstring::npos)

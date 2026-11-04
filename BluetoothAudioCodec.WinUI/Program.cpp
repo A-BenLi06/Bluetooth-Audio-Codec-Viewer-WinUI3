@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "App.xaml.h"
-#include "Services/NativeServices.h"
-#include "Services/DiagnosticsReport.h"
-#include "Services/PlaybackControl.h"
+#include "NativeServices.h"
+#include "DiagnosticsReport.h"
+#include "PlaybackControl.h"
 #include <shellapi.h>
 int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 {

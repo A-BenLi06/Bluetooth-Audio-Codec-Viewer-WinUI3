@@ -105,27 +105,11 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h"><DependentUpon>App.xaml</DependentUpon></ClInclude>
     <ClInclude Include="MainWindow.xaml.h"><DependentUpon>MainWindow.xaml</DependentUpon></ClInclude>
-    <ClInclude Include="Services\NativeServices.h" />
-    <ClInclude Include="Services\PlaybackControl.h" />
-    <ClInclude Include="Services\PlaybackPolicy.h" />
-    <ClInclude Include="Services\DiagnosticsReport.h" />
-    <ClInclude Include="Services\BluetoothDeviceProfiles.h" />
-    <ClInclude Include="Services\CodecCapturePolicy.h" />
-    <ClInclude Include="Services\BluetoothContainerIdentity.h" />
-    <ClInclude Include="Services\BluetoothAudioDeviceWatcher.h" />
-    <ClInclude Include="Services\BluetoothConnectionState.h" />
-    <ClInclude Include="Services\BluetoothConnectionQuery.h" />
     <ClCompile Include="pch.cpp"><PrecompiledHeader>Create</PrecompiledHeader></ClCompile>
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainWindow.xaml.cpp" />
     <ClCompile Include="Program.cpp" />
-    <ClCompile Include="Services\NativeServices.cpp" />
-    <ClCompile Include="Services\AudioDiagnostics.cpp" />
-    <ClCompile Include="Services\PlaybackControl.cpp" />
-    <ClCompile Include="Services\Diagnostics.cpp" />
-    <ClCompile Include="Services\DiagnosticsReport.cpp" />
-    <ClCompile Include="Services\BluetoothDeviceProfiles.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
-    <ClCompile Include="Services\BluetoothAudioDeviceWatcher.cpp" />
+    <ClCompile Include="Localization.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <Midl Include="MainWindow.idl" />
     <ApplicationDefinition Include="App.xaml" />
@@ -135,6 +119,7 @@
     <Image Include="Assets\*.png" />
     <ResourceCompile Include="Application.rc" />
   </ItemGroup>
+  <Import Project="..\BluetoothAudioCodec.Core\BluetoothAudioCodec.Core.vcxitems" Label="Shared" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug' and '$(WindowsPackageType)' == 'None'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>

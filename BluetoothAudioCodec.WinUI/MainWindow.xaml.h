@@ -1,8 +1,8 @@
 #pragma once
 #include "MainWindow.g.h"
-#include "Services/NativeServices.h"
-#include "Services/DiagnosticsReport.h"
-#include "Services/BluetoothAudioDeviceWatcher.h"
+#include "NativeServices.h"
+#include "DiagnosticsReport.h"
+#include "BluetoothAudioDeviceWatcher.h"
 namespace winrt::BluetoothAudioCodec::WinUI::implementation
 {
 struct MainWindow : MainWindowT<MainWindow>

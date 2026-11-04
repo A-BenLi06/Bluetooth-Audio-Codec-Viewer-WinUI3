@@ -50,9 +50,6 @@
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>SORTIE PAR DÉFAUT</value>
   </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>Après confirmation des droits administrateur, l’application tente de mettre en pause toutes les sessions multimédias en lecture, y compris sur les autres sorties, émet un son discret puis reprend les sessions qu’elle a mises en pause. Les autres sources peuvent nécessiter une intervention manuelle.</value>
-  </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Détails techniques</value>
   </data>

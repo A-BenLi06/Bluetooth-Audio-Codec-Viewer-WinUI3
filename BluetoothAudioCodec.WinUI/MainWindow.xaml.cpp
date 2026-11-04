@@ -5,7 +5,7 @@
 #include <format>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include <winrt/Windows.System.h>
-#include "Services/PlaybackControl.h"
+#include "PlaybackControl.h"
 using namespace winrt;
 using namespace Microsoft::UI;
 using namespace Microsoft::UI::Xaml;

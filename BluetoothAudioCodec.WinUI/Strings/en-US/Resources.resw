@@ -50,9 +50,6 @@
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>DEFAULT OUTPUT</value>
   </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>After administrator approval, the app tries to pause all playing system-media sessions, including those on other outputs, plays a short quiet sound, then restores the sessions it paused. Other audio may need manual attention.</value>
-  </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Technical details</value>
   </data>

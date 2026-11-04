@@ -50,9 +50,6 @@
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>SALIDA PREDETERMINADA</value>
   </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>Tras confirmar los permisos de administrador, la aplicación intenta pausar todas las sesiones multimedia en reproducción, incluidas las de otras salidas, reproduce un sonido suave y reanuda las sesiones que pausó. Puede ser necesario detener otro audio manualmente.</value>
-  </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>Detalles técnicos</value>
   </data>

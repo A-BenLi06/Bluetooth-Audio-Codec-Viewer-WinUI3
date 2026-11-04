@@ -16,6 +16,6 @@
     <ClCompile><LanguageStandard>stdcpp20</LanguageStandard><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions><RuntimeLibrary>MultiThreaded</RuntimeLibrary></ClCompile>
     <Link><SubSystem>Console</SubSystem><AdditionalDependencies>windowsapp.lib;bthprops.lib;cfgmgr32.lib;ole32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
   </ItemDefinitionGroup>
-  <ItemGroup><ClCompile Include="BluetoothDeviceProfilesTests.cpp" /><ClCompile Include="..\BluetoothAudioCodec.WinUI\Services\BluetoothDeviceProfiles.cpp" /></ItemGroup>
+  <ItemGroup><ClCompile Include="BluetoothDeviceProfilesTests.cpp" /><ClCompile Include="..\BluetoothAudioCodec.Core\Services\BluetoothDeviceProfiles.cpp" /></ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

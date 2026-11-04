@@ -50,9 +50,6 @@
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>默认输出</value>
   </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>管理员确认后，程序会尝试暂停所有正在播放的系统媒体会话（包括其他输出设备），播放一段轻柔测试音，再恢复本次暂停的会话。其他音频可能需要手动处理。</value>
-  </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技术详情</value>
   </data>

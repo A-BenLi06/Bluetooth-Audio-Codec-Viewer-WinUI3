@@ -50,9 +50,6 @@
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>デフォルト出力</value>
   </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>管理者の確認後、他の出力先を含む再生中のすべてのシステムメディアセッションの一時停止を試み、小さなテスト音を鳴らした後、今回停止したセッションを再開します。その他の音声は手動で停止する必要があります。</value>
-  </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技術詳細</value>
   </data>

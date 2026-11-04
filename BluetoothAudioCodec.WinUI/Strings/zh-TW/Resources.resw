@@ -50,9 +50,6 @@
   <data name="OutputLabel.Text" xml:space="preserve">
     <value>預設輸出</value>
   </data>
-  <data name="DetectHint.Text" xml:space="preserve">
-    <value>管理員確認後，程式會嘗試暫停所有正在播放的系統媒體工作階段（包括其他輸出裝置），播放一段輕柔測試音，再恢復本次暫停的工作階段。其他音訊可能需要手動處理。</value>
-  </data>
   <data name="DetailsHeader.Header" xml:space="preserve">
     <value>技術詳情</value>
   </data>

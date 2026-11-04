@@ -73,7 +73,6 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="1" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid ColumnSpacing="22">
                                 <Grid.ColumnDefinitions>
@@ -174,13 +173,6 @@
                                     </StackPanel>
                                 </Button>
                             </Grid>
-                            <TextBlock
-                                x:Uid="DetectHint"
-                                Grid.Row="3"
-                                FontSize="12"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Text="Windows will request administrator approval. A short quiet tone plays on the selected output after tracing is ready."
-                                TextWrapping="Wrap" />
                         </Grid>
                     </Border>
                     <InfoBar

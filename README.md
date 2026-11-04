@@ -134,12 +134,12 @@ PnP / 容器 ID、设备昵称、音频或完整 ETW 负载；不会在导出时
 在 VS 2026 中打开 `BluetoothAudioCodec.WinUI/BluetoothAudioCodec.WinUI.slnx`，
 选择 **Debug / x64**，以 **本地 Windows 调试器 / F5** 启动。
 Debug 已配置为自包含普通 EXE，无需部署或签名 MSIX。
-具体步骤和 helper 断点说明见 [VS 2026 测试说明](NATIVE_MIGRATION.md#在-visual-studio-2026-中测试)。
+具体步骤和 helper 断点说明见 [VS 2026 测试说明](docs/NATIVE_MIGRATION.md#在-visual-studio-2026-中测试)。
 
 ### 环境要求
 
 - Visual Studio 2022/2026，安装 C++ 桌面开发、WinUI C++ 工具及 ARM64 交叉编译工具；
-- .NET SDK 仅用于 WiX 安装器构建；可选命令行版需要 .NET 10 SDK，GUI 无需 .NET；
+- .NET SDK 仅用于 WiX 安装器构建；CLI 和 UI 均无需 .NET；
 - Windows 10 SDK 10.0.26100 或更高版本；
 - 生成 Partner Center 上传包时，还需安装 Windows SDK 的 Debugging Tools
   （脚本会检查 `mspdbcmf.exe` 生成的 `.appxsym`）；
@@ -162,7 +162,7 @@ ETW/TDH、Core Audio COM、测试音、随机数及提权通信均使用 Windows
 应用直接引用 Windows App SDK 的 WinUI 组件，避开未使用的 AI/ML 等依赖。
 离线 MSI 包含 WinUI 原生运行文件；商店 MSIX 复用 Windows App Runtime。两者均无需 .NET。
 体积对比及发布依赖说明见
-[APP_SIZE.md](APP_SIZE.md)。
+[APP_SIZE.md](docs/APP_SIZE.md)。
 
 ### 命令行构建
 
@@ -196,29 +196,45 @@ Microsoft Store。
 
 脚本会先签名并时间戳主 EXE，再将完整发布目录嵌入 MSI，最后签名 MSI；同时生成包含 SHA-256、
 签名状态和静默安装命令的 release manifest。Store 发布前的完整步骤见
-[STORE_SUBMISSION.md](STORE_SUBMISSION.md)。
+[STORE_SUBMISSION.md](docs/STORE_SUBMISSION.md)。
 
-## 可选命令行版本
+## CLI 与 UI：同一个内核
 
-仓库根目录的 `BluetoothAudioCodec.cs` 是独立的 .NET 10 file-based app，适合脚本
-或故障排查。请在管理员 PowerShell 中运行：
+UI 版的现有原生功能是基线。CLI 与 UI 均编译 `BluetoothAudioCodec.Core` 中的同一份
+C++20 源码，共享 ETW 解析、目标核对、提权管道、测试音、媒体暂停与恢复、设备查询和诊断报告。
+UI 提供图形交互与九种语言；CLI 提供终端参数、JSON 输出和退出码。
 
 ```powershell
-dotnet run .\BluetoothAudioCodec.cs -- --timeout 30
-dotnet run .\BluetoothAudioCodec.cs -- --json
-dotnet run .\BluetoothAudioCodec.cs -- --watch --no-tone
+./build-cli.ps1
+./BluetoothAudioCodec.Cli/bin/x64/Release/BluetoothAudioCodec.Cli.exe --timeout 30 --json
+./BluetoothAudioCodec.Cli/bin/x64/Release/BluetoothAudioCodec.Cli.exe --watch --no-tone
+./BluetoothAudioCodec.Cli/bin/x64/Release/BluetoothAudioCodec.Cli.exe --export-report report.zip --include-runtime-log
 ```
+
+CLI 可从普通终端启动，检测时由共享内核按需请求 UAC。`Ctrl+C` 取消检测并恢复本次暂停的媒体。
+`--watch` 重复执行完整检测，每次可能请求 UAC；它不是后台连接监听模式。
+完整参数及退出码见 [CLI 说明](BluetoothAudioCodec.Cli/README.md)。
+旧 C# file-based app 已移入 `archive/legacy-cli/`，仅供历史参考，不作为功能基线。
 
 ## 项目结构
 
-| 路径 | 内容 |
+| 路径 | 职责 |
 | --- | --- |
-| `BluetoothAudioCodec.WinUI/` | WinUI 3 应用、检测服务和本地化资源 |
-| `BluetoothAudioCodec.Installer/` | WiX 6 MSI 安装器 |
-| `BluetoothAudioCodec.cs` | 独立命令行检测程序 |
-| `build-store-installer.ps1` | x64/ARM64 发布、签名和 MSI 构建脚本 |
-| `StoreAssets/` | Store 图标、截图、商品页文本和认证说明 |
-| `STORE_SUBMISSION.md` | Microsoft Store MSI/EXE 上架清单 |
+| `BluetoothAudioCodec.slnx` | CLI、UI 的统一开发入口 |
+| `BluetoothAudioCodec.Core/` | 共享原生内核与共同源文件清单，不依赖 WinUI |
+| `BluetoothAudioCodec.WinUI/` | UI 入口、XAML、交互、本地化与 MSIX 定义 |
+| `BluetoothAudioCodec.Cli/` | CLI 入口、参数解析、终端与 JSON 呈现 |
+| `BluetoothAudioCodec.Installer/` | UI 的 WiX MSI 安装器 |
+| `tests/` | 共享设备身份、连接状态等原生测试 |
+| `diagnostics/` | 诊断契约、接收校验和测试工具 |
+| `docs/` | 构建、发布、迁移、审计与历史说明 |
+| `StoreAssets/` | 商店图标、截图、文案及宣传材料 |
+| `app-website/` | 产品网站（独立前端） |
+| `archive/legacy-cli/` | 已归档的旧 C# CLI |
+| 根目录 `build-*.ps1` / `test-*.ps1` | 构建、打包与验证入口 |
+
+依赖边界和维护规则见 [架构说明](docs/ARCHITECTURE.md)。构建产物留在被忽略的
+`bin/`、`obj/`、`artifacts/` 等目录，不混入源码。
 
 ## 隐私与安全
 

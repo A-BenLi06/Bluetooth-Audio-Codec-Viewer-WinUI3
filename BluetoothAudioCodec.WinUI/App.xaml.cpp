@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "App.xaml.h"
 #include "MainWindow.xaml.h"
-#include "Services/NativeServices.h"
+#include "NativeServices.h"
 namespace winrt::BluetoothAudioCodec::WinUI::implementation
 {
 App::App()

@@ -1,6 +1,6 @@
-#include "../BluetoothAudioCodec.WinUI/Services/BluetoothConnectionQuery.h"
-#include "../BluetoothAudioCodec.WinUI/Services/CodecCapturePolicy.h"
-#include "../BluetoothAudioCodec.WinUI/Services/BluetoothContainerIdentity.h"
+#include "../BluetoothAudioCodec.Core/Services/BluetoothConnectionQuery.h"
+#include "../BluetoothAudioCodec.Core/Services/CodecCapturePolicy.h"
+#include "../BluetoothAudioCodec.Core/Services/BluetoothContainerIdentity.h"
 #include <iostream>
 #include <stdexcept>
 using namespace Native;
