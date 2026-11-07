@@ -1,0 +1,64 @@
+{
+  "en": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "zh-cn": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "zh-tw": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "ja": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "fr": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "de": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "it": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "pt-br": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "es": {
+    "screenshots": 4,
+    "artwork_fields": 6,
+    "blank_fields": [],
+    "unchanged_fields": []
+  },
+  "english_trailer": {
+    "video_present": true,
+    "title": "Bluetooth Audio Codec Viewer - Fluent feature overview",
+    "thumbnail_present": true,
+    "captions_present": true,
+    "second_trailer_present": false,
+    "hero_trailer_selected": true
+  }
+}

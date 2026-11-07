@@ -1,0 +1,17 @@
+{
+  "localized_images_checked": 67,
+  "native_transparent_pngs_checked": 61,
+  "locales": [
+    "en",
+    "zh-cn",
+    "zh-tw",
+    "ja",
+    "fr",
+    "de",
+    "it",
+    "pt-br",
+    "es"
+  ],
+  "original_bluetooth_function_glyph_preserved": true,
+  "icon_background": "genuine alpha transparency"
+}

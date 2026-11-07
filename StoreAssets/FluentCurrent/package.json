@@ -1,5 +1,5 @@
 {
   "private": true,
-  "scripts": { "assets": "node build-icons.cjs && node render.cjs", "trailer": "node build-trailer.cjs" },
+  "scripts": { "assets": "node build-icons.cjs && node render.cjs", "trailer": "node build-trailer.cjs && node sync-legacy.cjs", "verify": "node verify-assets.cjs" },
   "dependencies": { "sharp": "^0.35.5" }
 }

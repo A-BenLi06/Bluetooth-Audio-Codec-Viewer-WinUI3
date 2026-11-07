@@ -4,7 +4,7 @@
 
 The user approved the audio information card, inspection lens and wireless-earbuds logo and authorized replacing app icons, Store assets, the trailer and GitHub README. The production logo must have genuine transparency. The existing Bluetooth function glyph inside the app must remain unchanged. `Icon/AppIcon-master.svg` is the scalable production master; `FluentCurrent/` contains current localized artwork and motion-trailer sources. Earlier `Approvals/`, `Concepts/` and `FluentB/` folders are historical and must not be deployed. Future redesigns still require approval.
 
-These files are prepared for the Microsoft Store MSI/EXE submission flow.
+The current `FluentCurrent/` set targets the Microsoft Store MSIX submission. The original screenshot files below are retained as historical captures; current gallery images are under `FluentCurrent/import/<locale>/`.
 
 ## Partner Center mapping
 

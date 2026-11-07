@@ -1,0 +1,18 @@
+{
+  "product_id": "9P8G2CQW77JT",
+  "submission_id": "1152921505702314893",
+  "listing_locales": ["en", "zh-cn", "zh-tw", "ja", "fr", "de", "it", "pt-br", "es"],
+  "image_fields_verified_by_export": 90,
+  "english_trailer_replaced": true,
+  "english_trailer_thumbnail_replaced": true,
+  "english_trailer_captions_replaced": true,
+  "old_english_trailer_removed_from_draft": true,
+  "package": "BluetoothAudioCodec.WinUI_1.1.1.0_x64_ARM64_bundle.msixupload",
+  "package_version": "1.1.1.0",
+  "package_status_observed_in_partner_center": "Validated",
+  "package_saved_to_existing_draft": true,
+  "package_sha256": "ed83cc0808ebc1fa9a7bdbf670bb2a27bcea6c32ff75b9257bcc416de4fe044e",
+  "certification_submitted": false,
+  "production_icon_has_real_alpha": true,
+  "in_app_bluetooth_function_glyph_preserved": true
+}

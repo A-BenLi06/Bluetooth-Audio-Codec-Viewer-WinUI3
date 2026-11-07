@@ -1,0 +1,16 @@
+{
+  "version": "1.1.1.0",
+  "upload_sha256": "ed83cc0808ebc1fa9a7bdbf670bb2a27bcea6c32ff75b9257bcc416de4fe044e",
+  "architectures": {
+    "x64": {
+      "version": "1.1.1.0",
+      "app_icon_sha256": "dab415a05f5b809a389d7fd1f63e8670baaf1cf4f6c172a70ea4b943fcb08a97",
+      "matches_current_transparent_icon": true
+    },
+    "arm64": {
+      "version": "1.1.1.0",
+      "app_icon_sha256": "dab415a05f5b809a389d7fd1f63e8670baaf1cf4f6c172a70ea4b943fcb08a97",
+      "matches_current_transparent_icon": true
+    }
+  }
+}
