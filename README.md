@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="StoreAssets/Icon/AppIcon-master.png" width="152" alt="Bluetooth Audio Codec">
+  <img src="StoreAssets/Icon/AppIcon-master.png" width="152" alt="Bluetooth Audio Codec Viewer">
 
-# Bluetooth Audio Codec
+# Bluetooth Audio Codec Viewer
 
 查看 Windows 与蓝牙耳机当前协商使用的 A2DP 编解码器
 
@@ -10,7 +10,7 @@ SBC · AAC · aptX · aptX HD · aptX LL · LDAC · LHDC 等
 Windows 10/11 · C++20 / WinUI 3 · x64 / ARM64
 </div>
 
-![检测结果截图](StoreAssets/Screenshots/en-US/01-codec-detected.png)
+![应用就绪界面](StoreAssets/FluentCurrent/import/zh-cn/01-feature.png)
 
 ## 下载
 

@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Bluetooth Audio Codec"
+    Title="Bluetooth Audio Codec Viewer"
     mc:Ignorable="d">
     <Window.SystemBackdrop>
         <MicaBackdrop Kind="BaseAlt" />
@@ -17,13 +17,13 @@
         </Grid.RowDefinitions>
         <Grid x:Name="TitleBarGrid" Padding="18,0" Background="Transparent">
             <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-                <FontIcon FontSize="16" Glyph="&#xE702;" IsHitTestVisible="False" />
+                <Image Source="ms-appx:///Assets/AppIcon.png" Width="20" Height="20" IsHitTestVisible="False" />
                 <TextBlock
                     x:Uid="AppTitle"
                     FontSize="13"
                     FontWeight="SemiBold"
                     IsHitTestVisible="False"
-                    Text="Bluetooth Audio Codec" />
+                    Text="Bluetooth Audio Codec Viewer" />
             </StackPanel>
         </Grid>
         <ScrollViewer

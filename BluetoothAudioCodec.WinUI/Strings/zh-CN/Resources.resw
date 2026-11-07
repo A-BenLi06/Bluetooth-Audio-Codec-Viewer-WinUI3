@@ -42,7 +42,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppTitle.Text" xml:space="preserve">
-    <value>蓝牙音频编解码器</value>
+    <value>Bluetooth Audio Codec Viewer</value>
   </data>
   <data name="HeaderTitle.Text" xml:space="preserve">
     <value>当前蓝牙编解码器</value>

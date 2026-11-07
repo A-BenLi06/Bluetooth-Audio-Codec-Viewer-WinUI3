@@ -1,5 +1,9 @@
 # Microsoft Store assets
 
+## Current approved design
+
+The user approved the audio information card, inspection lens and wireless-earbuds logo and authorized replacing app icons, Store assets, the trailer and GitHub README. The production logo must have genuine transparency. The existing Bluetooth function glyph inside the app must remain unchanged. `Icon/AppIcon-master.svg` is the scalable production master; `FluentCurrent/` contains current localized artwork and motion-trailer sources. Earlier `Approvals/`, `Concepts/` and `FluentB/` folders are historical and must not be deployed. Future redesigns still require approval.
+
 These files are prepared for the Microsoft Store MSI/EXE submission flow.
 
 ## Partner Center mapping
@@ -19,12 +23,9 @@ detected states.
 
 ## Application and installer icons
 
-- `Icon/AppIcon-master.png` preserves the original dark-tile artwork.
-- `Icon/AppIcon-transparent.png` is the transparent Windows 11 application
-  icon master used for executable, installer, and MSIX assets.
-- Run `Icon/build_msix_assets.py` with Pillow to regenerate the MSIX tile,
-  package logo, splash screen, and high-DPI/target-size shell icons from that
-  master. This prevents the WinUI template placeholder assets from returning.
+- `Icon/AppIcon-master.svg` is the clean transparent vector master.
+- `Icon/AppIcon-master.png` and `Icon/AppIcon-transparent.png` are transparent PNG derivatives used for the executable, installer, Store and MSIX assets.
+- Run `node FluentCurrent/build-icons.cjs` to regenerate package, splash, high-DPI, target-size and ICO resources from the approved master.
 - `Icon/source-concept.png` preserves the original supplied design.
 - `Icon/IMAGEGEN_PROMPT.md` records the final built-in imagegen prompt and
   transparency workflow.

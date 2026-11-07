@@ -1,20 +1,16 @@
 WEBVTT
 
-00:00:00.000 --> 00:00:05.000
-Bluetooth Audio Codec Viewer. See the codec Windows actually negotiated.
+00:00.000 --> 00:06.000
+See the codec. Understand your audio. Bluetooth Audio Codec Viewer.
 
-00:00:05.000 --> 00:00:11.000
-Connect your Bluetooth audio device, then select Detect codec.
+00:06.000 --> 00:12.000
+Connect your headphones, then start a local detection. A temporary helper requests administrator approval. The ready state is shown.
 
-00:00:11.000 --> 00:00:17.000
-Administrator approval appears only when detection starts. A short-lived helper reads one local Bluetooth A2DP trace.
+00:12.000 --> 00:18.000
+Inspect standard and vendor codec IDs from Windows events. A matching codec event is required.
 
-00:00:17.000 --> 00:00:24.000
-See the codec name, output device, codec and vendor identifiers, and observation time.
+00:18.000 --> 00:24.000
+Preview local diagnostics and export a report. You choose whether to share.
 
-00:00:24.000 --> 00:00:30.000
-No audio recording, telemetry, advertising, driver, service, or Bluetooth settings changes.
-
-00:00:30.000 --> 00:00:35.000
-Bluetooth Audio Codec Viewer for Windows 10 and Windows 11.
-
+00:24.000 --> 00:30.000
+Local detection, no audio recording. Bluetooth Classic A2DP only. HFP and LE Audio are outside scope.

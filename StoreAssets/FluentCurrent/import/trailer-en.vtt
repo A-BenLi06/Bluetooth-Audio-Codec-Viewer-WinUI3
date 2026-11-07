@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00.000 --> 00:06.000
+See the codec. Understand your audio. Bluetooth Audio Codec Viewer.
+
+00:06.000 --> 00:12.000
+Connect your headphones, then start a local detection. A temporary helper requests administrator approval. The ready state is shown.
+
+00:12.000 --> 00:18.000
+Inspect standard and vendor codec IDs from Windows events. A matching codec event is required.
+
+00:18.000 --> 00:24.000
+Preview local diagnostics and export a report. You choose whether to share.
+
+00:24.000 --> 00:30.000
+Local detection, no audio recording. Bluetooth Classic A2DP only. HFP and LE Audio are outside scope.

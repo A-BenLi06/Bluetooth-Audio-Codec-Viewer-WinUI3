@@ -1,0 +1,5 @@
+node_modules/
+motion/
+*-0?.svg
+backup/
+*.zip

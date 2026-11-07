@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "scripts": { "assets": "node build-icons.cjs && node render.cjs", "trailer": "node build-trailer.cjs" },
+  "dependencies": { "sharp": "^0.35.5" }
+}

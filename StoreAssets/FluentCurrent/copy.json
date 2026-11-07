@@ -1,0 +1,155 @@
+{
+  "en": {
+    "titles": [
+      "See the\nactive codec.",
+      "Look inside\nthe connection.",
+      "A clearer\nproblem report.",
+      "Your audio.\nYour device."
+    ],
+    "bodies": [
+      "Connect your headphones.\nStart a local detection.",
+      "Standard and vendor IDs.\nDetails from Windows events.",
+      "Preview, then export.\nShare only when you choose.",
+      "Local detection.\nNo audio recording."
+    ],
+    "tag": "See what Windows negotiated.",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "Ready state shown. A matching codec event is required."
+  },
+  "zh-cn": {
+    "titles": [
+      "查看当前\n蓝牙编解码器。",
+      "连接细节，\n清晰可见。",
+      "问题报告，\n先看再分享。",
+      "你的音频，\n留在本机。"
+    ],
+    "bodies": [
+      "连接蓝牙耳机，\n开始本机检测。",
+      "标准 ID 与厂商 ID，\n来自 Windows 事件。",
+      "预览并导出诊断报告，\n由你决定是否分享。",
+      "本机检测，\n不录制音频。"
+    ],
+    "tag": "看清 Windows 实际协商的编解码器。",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "图示为就绪状态，检测结果需要匹配的编解码器事件。"
+  },
+  "zh-tw": {
+    "titles": [
+      "查看目前的\n藍牙編解碼器。",
+      "連線細節，\n清楚呈現。",
+      "問題報告，\n先看再分享。",
+      "你的音訊，\n留在本機。"
+    ],
+    "bodies": [
+      "連接藍牙耳機，\n開始本機偵測。",
+      "標準 ID 與廠商 ID，\n來自 Windows 事件。",
+      "預覽並匯出診斷報告，\n由你決定是否分享。",
+      "本機偵測，\n不錄製音訊。"
+    ],
+    "tag": "看清 Windows 實際協商的編解碼器。",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "圖示為就緒狀態，偵測結果需要相符的編解碼器事件。"
+  },
+  "ja": {
+    "titles": [
+      "使用中の\nコーデックを確認。",
+      "接続の詳細を\n見やすく。",
+      "レポートを確認。\n共有は自分で。",
+      "音声は、\nこのデバイスに。"
+    ],
+    "bodies": [
+      "ヘッドホンを接続して、\nローカルで検出。",
+      "標準 ID とベンダー ID。\nWindows イベントから取得。",
+      "診断内容をプレビューし、\nZIP に保存できます。",
+      "ローカルで検出。\n音声は録音しません。"
+    ],
+    "tag": "Windows が実際に使用するコーデックを確認。",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "準備完了の画面です。検出には一致するイベントが必要です。"
+  },
+  "fr": {
+    "titles": [
+      "Le codec\nréellement utilisé.",
+      "Les détails\nde la connexion.",
+      "Un rapport\nplus clair.",
+      "Votre audio.\nVotre appareil."
+    ],
+    "bodies": [
+      "Connectez votre casque.\nLancez une détection locale.",
+      "Identifiants du codec\net du fournisseur.",
+      "Vérifiez, puis exportez.\nVous décidez du partage.",
+      "Détection locale.\nAucun enregistrement audio."
+    ],
+    "tag": "Découvrez le codec négocié par Windows.",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "État prêt affiché. Un événement de codec correspondant est requis."
+  },
+  "de": {
+    "titles": [
+      "Den aktiven\nCodec erkennen.",
+      "Details zur\nVerbindung.",
+      "Ein klarer\nProblembericht.",
+      "Ihr Audio.\nIhr Gerät."
+    ],
+    "bodies": [
+      "Kopfhörer verbinden.\nLokale Erkennung starten.",
+      "Codec- und Hersteller-IDs\naus Windows-Ereignissen.",
+      "Prüfen und exportieren.\nSie entscheiden, was Sie teilen.",
+      "Lokale Erkennung.\nKeine Audioaufnahme."
+    ],
+    "tag": "Sehen, was Windows ausgehandelt hat.",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "Bereitschaftszustand. Ein passendes Codec-Ereignis ist erforderlich."
+  },
+  "it": {
+    "titles": [
+      "Il codec\nin uso.",
+      "I dettagli\ndella connessione.",
+      "Un rapporto\npiù chiaro.",
+      "Il tuo audio.\nIl tuo dispositivo."
+    ],
+    "bodies": [
+      "Collega le cuffie.\nAvvia un rilevamento locale.",
+      "ID del codec e del produttore\ndagli eventi di Windows.",
+      "Controlla, poi esporta.\nDecidi tu cosa condividere.",
+      "Rilevamento locale.\nNessuna registrazione audio."
+    ],
+    "tag": "Scopri il codec negoziato da Windows.",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "È mostrato lo stato pronto. Serve un evento del codec corrispondente."
+  },
+  "pt-br": {
+    "titles": [
+      "Veja o codec\nem uso.",
+      "Os detalhes\nda conexão.",
+      "Um relatório\nmais claro.",
+      "Seu áudio.\nSeu dispositivo."
+    ],
+    "bodies": [
+      "Conecte seus fones.\nInicie uma detecção local.",
+      "IDs do codec e do fabricante\na partir de eventos do Windows.",
+      "Revise e exporte.\nVocê decide o que compartilhar.",
+      "Detecção local.\nSem gravação de áudio."
+    ],
+    "tag": "Veja o codec negociado pelo Windows.",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "Estado pronto exibido. É necessário um evento de codec correspondente."
+  },
+  "es": {
+    "titles": [
+      "El códec\nen uso.",
+      "Los detalles\nde la conexión.",
+      "Un informe\nmás claro.",
+      "Tu audio.\nTu dispositivo."
+    ],
+    "bodies": [
+      "Conecta tus auriculares.\nInicia una detección local.",
+      "ID del códec y del fabricante\na partir de eventos de Windows.",
+      "Revisa y exporta.\nTú decides qué compartir.",
+      "Detección local.\nSin grabación de audio."
+    ],
+    "tag": "Consulta el códec negociado por Windows.",
+    "foot": "Windows 10 / 11 · x64 / ARM64",
+    "note": "Se muestra el estado listo. Se requiere un evento de códec coincidente."
+  }
+}
